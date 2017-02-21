@@ -103,7 +103,7 @@
                 $L[i] = A[p+i-1]$
             \End
         \li \For $j=1$ \To $n_2$
-        \li \Do 
+        \li \Do
                 $R[j] = A[q+j]$
             \End
         \li $L[n_1+1] = \infty$
@@ -121,7 +121,35 @@
         \zi         \Comment{Add the number of inversions $(A[i], R[j]), (A[i+1], A[j]) \cdots (A[q],A[j])$ to $c$}
         \li         $c=c+(q-i+1)$  
         \li         $j=j+1$
+                \End
+            \End
       \end{codebox}
   \end{enumerate}
   
+  \section{[TC] Problem 3-2}
+  \begin{tabular}{cc|c|c|c|c|c|}
+    $A$ & $B$ & $O$ & $o$ & $\Omega$ & $\omega$ & $\Theta$ \\ \hline
+    $\lg^k n$ & $n^\epsilon$ & yes & yes & no & no & no \\ \hline
+    $n^k$ & $c^n$ & yes & yes & no & no & no \\ \hline
+    $\sqrt{n}$ & $n^sin{n}$ & no & no & no & no & no \\ \hline
+    $2^n$ & $2^{n/2}$ & no & no & yes & yes & no \\ \hline
+    $n^{\lg c}$ & $c^{\lg n}$ & yes & no & yes & no & yes \\ \hline
+    $\lg(n!)$ & $\lg(n^n)$ & yes & no & yes & no & yes \\ \hline
+  \end{tabular}
+  
+  \section{[TC] Problem 3-3}
+  \begin{enumerate}
+    \item List: 
+    \begin{tabbing}
+      -------------- \= -------------- \= -------------- \= -------------- \= -------------- \= -------------- \kill
+      1 \> $n^{1/\lg n}$ \> $\lg(\lg^*n)$ \> $\lg^*(\lg n)$ \> $\lg^* n$ \> $2^{\lg^* n}$ \\
+      $\ln\ln n$ \> $\sqrt{\lg n}$ \> $\ln n$ \> $\lg(n!)$ \> $\lg^2 n$ \> $2 ^{\sqrt{2 \lg n}}$ \\
+      $n$ \> $2^{\lg n}$ \> $n \lg n$ \> $n^2$ \> $4^{\lg n}$ \> $n^3$ \\
+      $\sqrt{2}^{\lg n}$ \> $(\lg n)!$ \> $(\lg n)^{\lg n}$ \> $n^{\lg \lg n}$ \> $(\frac{3}{2})^n$ \> $2^n$ \\
+      $e^n$ \> $n 2^n$ \> $n!$ \> $(n+1)!$ \> $2^{2^n}$ \> $2^{2^{n+1}}$
+    \end{tabbing}
+    Equivalence classes:
+    $\{1, n^{1/\lg n}\}$, $\{\lg(\lg^*n)\}$, $\{\lg^*(\lg n), \lg^* n\}$, $\{2^{\lg^* n}\}$, $\{\ln\ln n\}$, $\{\sqrt{\lg n}\}$,  $\{\ln n$, $\lg(n!)\}$, $\{\lg^2 n\}$, $\{2 ^{\sqrt{2 \lg n}}\}$, $\{n, 2^{\lg n}\}$, $\{n \lg n\}$, $\{n^2, 4^{\lg n}\}$, ${n^3}$, $\{\sqrt{2}^{\lg n}\}$, $\{(\lg n)!\}$, $\{(\lg n)^{\lg n}, n^{\lg \lg n}\}$, $\{(\frac{3}{2})^n\}$, $\{2^n\}$, $\{e^n\}$, $\{n 2^n\}$ , $\{n!\}$ , $\{(n+1)!\}$ , $\{2^{2^n}\}$ , $\{2^{2^{n+1}}\}$.
+    \item $f(n)=(2^{2^{n+2}})^{\sin n}$
+  \end{enumerate}
 \end{document}
