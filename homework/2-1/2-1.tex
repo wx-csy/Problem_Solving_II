@@ -152,4 +152,17 @@
     $\{1, n^{1/\lg n}\}$, $\{\lg(\lg^*n)\}$, $\{\lg^*(\lg n), \lg^* n\}$, $\{2^{\lg^* n}\}$, $\{\ln\ln n\}$, $\{\sqrt{\lg n}\}$,  $\{\ln n$, $\lg(n!)\}$, $\{\lg^2 n\}$, $\{2 ^{\sqrt{2 \lg n}}\}$, $\{n, 2^{\lg n}\}$, $\{n \lg n\}$, $\{n^2, 4^{\lg n}\}$, ${n^3}$, $\{\sqrt{2}^{\lg n}\}$, $\{(\lg n)!\}$, $\{(\lg n)^{\lg n}, n^{\lg \lg n}\}$, $\{(\frac{3}{2})^n\}$, $\{2^n\}$, $\{e^n\}$, $\{n 2^n\}$ , $\{n!\}$ , $\{(n+1)!\}$ , $\{2^{2^n}\}$ , $\{2^{2^{n+1}}\}$.
     \item $f(n)=(2^{2^{n+2}})^{\sin n}$
   \end{enumerate}
+  
+
+  \section{[TC] Problem 3-4}
+  \begin{enumerate}
+    \item False. Take $f(n) = n$, $g(n) = n^2$, $f(n) = O(g(n))$, but $g(n) \neq O(f(n))$.
+    \item False. Take $f(n) = n$, $g(n) = n^2$, $f(n) + g(n) = n + n^2 = \Theta(n^2) \neq \Theta(\min(f(n),g(n))) = \Theta(n)$.
+    \item True. Since $f(n) = O(g(n))$, there exists positive constant $c > 1$ such that for all sufficiently large $n$, $1 \leq f(n) \leq cg(n)$ holds. Therefore, $\lg (f(n)) \leq \lg c + \lg (g(n))$. Take $c' = \lg c +1 $, then  $0 \leq \lg (f(n)) \leq  c' \lg (g(n))$ for all sufficiently large $n$. Hence, $\lg (f(n)) = O(\lg (g(n)))$.
+    \item False. Take $f(n) = n \lg n$, $g(n) = \lg (n!)$, $f(n) = O(g(n))$, however, $2^{f(n)} = n^n \neq O(2^{g(n)}) = O(n!)$.
+    \item False. Take $f(n) = 1/n$, then $(f(n))^2 = 1/n^2$, however, $\lim\limits_{n \to \infty} f(n)/(f(n))^2 = +\infty$, that means, $f(n)$ could not be asymptotically upper-bounded by $(f(n))^2$.
+    \item True. By transpose symmetry we know this is true.
+    \item False. Take $f(n) = 4^n$, then $\Theta(f(n/2)) = \Theta(2^n)$, however $4^n \neq \Theta(2^n)$.
+    \item True. By the definition of $o$-notation, for any positive constant $c$, there exists a positive integer $n_0$, for any integer $n > n_0$, $0 \leq o(f(n)) \leq c f(n)$ holds. Take $c=1$, for sufficiently large positive integer $n$, $f(n) \leq f(n) + o(f(n)) \leq 2 f(n)$, therefore $f(n)+o(f(n)) = \Theta(f(n))$.
+  \end{enumerate}
 \end{document}
