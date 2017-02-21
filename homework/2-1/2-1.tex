@@ -1,0 +1,168 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{论题~2-1~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[TC] Problem 2-1}
+  \begin{enumerate}
+    \item For every sublist of length $k$, insertion sort can sort it in $\Theta(k^2)$ worst-case time, and there are $n/k$ sublists, so these sublists can be sorted by insertion sort in $\Theta(k^2)n/k=\Theta(nk)$ worst-case time.
+    \item Apply the divide-and-conquer approach. Divide these sublists into two groups, each contains $n/(2k)$ sublists, and merge these sublists recursively, and finally merge the two groups. Let $m$ denote the number of the sublists, i.e. $n/k$, and $T(m)$ denote the total running time of merging $m$ sublists. The ``divide'', ``conquer'' and ``combine'' steps take a running time of $\Theta(1)$, $2T(m/2)$, $\Theta(km)$, so the recurrence is
+        $$ T(m) = \begin{cases} \Theta(1) & m=1 \\ 2T(m/2) + \Theta(km) & m>1 \end{cases} .$$
+        Solve this recurrence, we obtain $T(m) = \Theta(km\log(m)) = \Theta(m\log(k))$.
+    \item A standard merge sort takes a running time of $\Theta(n \log n)$. When $k=\Theta(\log(n))$, $\Theta(nk+n\log(n/k)) = \Theta(n \log n)$. For every $k = \omega(\log n)$, $\Theta(nk+n\log(n/k)) = \Theta(nk) = \omega(n\log n )$. Therefore, the largest value of $k$ is $\Theta(\log n)$.
+    \item It mainly depends on the constant factors of merge sort and insertion sort. Let $c_1$ be the constant factor of merge sort, $c_2$ be the constant factor of insertion sort. We can rewrite the total running time as $T = c_1 n k + c_2 n \log (n/k)$. Minimize $T$ with respect to $k$. Since $T'_k = nc_1-nc_2/k$, $ k = c_2/c_1$ is a minimum point of $T$. So we can choose $k = c_1/c_2$ in practice.
+    \end{enumerate}
+
+  \section{[TC] Problem 2-2}
+  \begin{enumerate}
+    \item $\langle A'[1], A'[2], \cdots, A'[n] \rangle$ is a permutation of $\langle A[1], A[2], \cdots, A[n] \rangle$.
+    \item At the start of each iteration, the subarray $A[j..A.length]$ consists of the elements originally in $A[j..A.length]$, and $A[j]$ is the smallest item of $A[j..A.length]$. \par
+    \textbf{Initialization} Prior to the first iteration of this loop, we have $j = A.length$. Therefore, the subarray $A[j..A.length]$ consists only one element, and it is the original element in $A[j..A.length]$, and, of course, it is the smallest item of $A[j..A.length]$. \par
+    \textbf{Maintenance} In each iteration, we compare $A[j]$ with $A[j-1]$. If $A[j] \geq A[j-1]$, we do nothing. Because $A[j]$ is the smallest item of $A[j..A.length]$, $A[j-1]$ is the smallest item of $A[j-1..A.length]$. It $A[j] > A[j-1]$, we exchange $A[j]$ with $A[j-1]$. Because $A[j]$ is the smallest item of $A[j..A.length]$, $A[j-1]$ is the smallest item of $A[j-1..A.length]$ after exchanging, and $A[j-1..A.length]$ consists of the elements originally from $A[j-1..A.length]$. Summarizing, the invariant still holds after an iteration. \par
+    \textbf{Termination} Finally, we get $j=i$. Therefore, the subarray $A[i..A.length]$ consists of the elements originally in $A[i..A.length]$, and $A[i]$ is the smallest item of $A[i..A.length]$, and that is what we want.
+    \item At the start of each iteration, $A[1..i]$ contains the $i$ smallest elements of $A[1..A.length]$, in sorted order, and $A[i+1..A.length]$ are the rest of the elements. \par
+    \textbf{Initialization} Prior to the first iteration, we have $i=1$, and $A[1..i]$ contains only one element, in sorted order, trivially. Moreover, $A[i+1..A.length]$ are the rest of the elements obviously. \par
+    \textbf{Maintenance} After each iteration, $A[i+1..A.length]$ consists of the elements originally in $A[i+1..A.length]$, and $A[i+1]$ is the smallest item of $A[i+1..A.length]$. Since $A[1..i]$ are the $i$ smallest elements of $A[1..A.length]$, $A[i+1]$ is greater than or equal to every element in $A[1..i]$, but less than or equal to every element in $A[i+2..A.length]$. Therefore, $A[1..i+1]$ contains the $i+1$ smallest elements of $A[1..A.length]$ in sorted order, and $A[i+2..A.length]$ is the rest of the elements, i.e. the loop invariant still holds. \par
+    \textbf{Termination} Finally we get $i=A.length$, therefore $A[1..A.length]$ contains the $A.length$ smallest elements of $A[1..A.length]$ in sorted order. Hence, the algorithm is correct.
+    \item Whatever the original sequence is, lines 3-4 will always be executed $n(n-1)/2$ times, where $n$ is the number of the elements of the original sequence. Therefore the worst-case running time of bubble sort is $\Theta(n^2)$, as much as the worst-case running time of insertion sort.
+  \end{enumerate}
+
+  \section{[TC] Problem 2-3}
+  \begin{enumerate}
+    \item $\Theta(n)$.
+    \item Given the coefficients $a_0, a_1, \cdots , a_n$ and a value for $x$:
+      \begin{codebox}
+        \li $y = 0$
+        \li \For $i = 0$ \To $n$
+        \li \Do
+                $t = 1$
+        \li     \For $j = 1$ \To $i$
+        \li     \Do
+                    $t = t * x$
+                \End
+        \li     $y = y + a_i * t$
+            \End
+      \end{codebox}
+    \item \textbf{Initialization} Prior to the first iteration, we have $y=0$ and $i=n$, so the loop invariant trivially holds.
+    \textbf{Maintenance} Assume, prior the $t$th iteration, we have $i=i_t$ and $y=y_t$. After the iteration and incrementing $i$, we get $i_{t+1} = i_t - 1$ and
+    \begin{align*}
+     y_{t+1} &= a_{i_t} + x * y_t
+      = a_{i_t} + x*\sum_{k=0}^{n-(i_t+1)}a_{k+i_t+1}x^k \\
+      & = a_{i_t} + \sum_{k=0}^{n-(i_{t+1}+2)}a_{k+i_{t+1}+2}x^{k+1}
+      = a_{i_{t+1}+1} + \sum_{k=1}^{n-(i_{t+1}+1)}a_{k+i_{t+1}+1}x^{k} \\
+      & = \sum_{k=0}^{n-(i_{t+1}+1)}a_{k+i_{t+1}+1}x^{k} ,
+    \end{align*}
+    therefore the invariant still holds. \par
+    \textbf{Termination} At termination, we have $i = -1$. Substituting $i$ for $-1$ in invariant, we obtain
+    $$ y = \sum_{k=0}^{n}a_{k}x^k, $$
+    so the algorithm is correct.
+  \end{enumerate}
+
+  \section{[TC] Problem 2-3}
+  \begin{enumerate}
+    \item $(2,1), (3,1), (8,6), (8,1), (6,1)$.
+    \item $\{n,n-1, \cdots 1\}$. \\ $n(n-1)/2$.
+    \item Assume there are $I(n)$ inversions in the input array, then the running time of insertion sort is $\Theta(n+I(n))$.
+    Proof: In page 26, $t_j$ stands for the number of times the \kw{while} loop test is executed for that value of $j$. Every time we execute the \kw{while} loop, we insert $A[j]$ into the correct position, and exactly $t_j-1$ inversions are eliminated. Finally, all the inversions are eliminated, and the array is sorted in order. Substituting $\sum_{j=2}^n(t_j-1)$ for $I(n)$ and rewrite the formula, we get
+    $$ T(n) = an+bI(n)+c $$, therefore the running time of insertion sort is $\Theta(n+I(n))$.
+    \item Let $c$ be an integer which stores the number of inversions.
+      \begin{codebox}
+        \li $c = 0$
+        \li $\proc{Modified-Merge-Sort}(A, 1, A.length)$
+      \end{codebox}
+      \begin{codebox}
+        \Procname{$\proc{Modified-Merge-Sort}(A, p, r)$}
+        \li \If $p<r$
+        \li \Then
+                $q = \lfloor(p+r)/2\rfloor$
+        \li     $\proc{Modified-Merge-Sort}(A, p, q)$
+        \li     $\proc{Modified-Merge-Sort}(A, q+1, r)$
+        \li     $\proc{Modified-Merge}(A, p, q, r)$
+            \End
+      \end{codebox}
+      \begin{codebox}
+        \Procname{$\proc{Modified-Merge}(A, p, q, r)$}
+        \li $n_1=q-p+1$
+        \li $n_2=r-q$
+        \li Let $L[1..n_1+1]$ and $R[1..n_2+1]$ be new arrays
+        \li \For $i=1$ \To $n_1$
+        \li \Do
+                $L[i] = A[p+i-1]$
+            \End
+        \li \For $j=1$ \To $n_2$
+        \li \Do
+                $R[j] = A[q+j]$
+            \End
+        \li $L[n_1+1] = \infty$
+        \li $R[n_2+1] = \infty$
+        \li $i=1$
+        \li $j=1$
+        \li \For $k=p$ \To $r$
+        \li \Do
+                \If $L[i] \leq R[i]$
+        \li     \Then
+                    $A[k] = L[i]$
+        \li         $i=i+1$
+        \li     \Else
+        \li         $A[k] = R[j]$
+        \zi         \Comment{Add the number of inversions $(A[i], R[j]), (A[i+1], A[j]) \cdots (A[q],A[j])$ to $c$}
+        \li         $c=c+(q-i+1)$
+        \li         $j=j+1$
+                \End
+            \End
+      \end{codebox}
+  \end{enumerate}
+
+  \section{[TC] Problem 3-2}
+  \begin{tabular}{cc|c|c|c|c|c|}
+    $A$ & $B$ & $O$ & $o$ & $\Omega$ & $\omega$ & $\Theta$ \\ \hline
+    $\lg^k n$ & $n^\epsilon$ & yes & yes & no & no & no \\ \hline
+    $n^k$ & $c^n$ & yes & yes & no & no & no \\ \hline
+    $\sqrt{n}$ & $n^sin{n}$ & no & no & no & no & no \\ \hline
+    $2^n$ & $2^{n/2}$ & no & no & yes & yes & no \\ \hline
+    $n^{\lg c}$ & $c^{\lg n}$ & yes & no & yes & no & yes \\ \hline
+    $\lg(n!)$ & $\lg(n^n)$ & yes & no & yes & no & yes \\ \hline
+  \end{tabular}
+
+  \section{[TC] Problem 3-3}
+  \begin{enumerate}
+    \item List:
+    \begin{tabbing}
+      -------------- \= -------------- \= -------------- \= -------------- \= -------------- \= -------------- \kill
+      $2^{2^{n+1}}$\> $2^{2^n}$ \> $(n+1)!$ \> $n!$ \> $n 2^n$ \> $e^n$ \\ $2^n$ \>
+      $(\frac{3}{2})^n$ \> $n^{\lg \lg n}$ \> $(\lg n)^{\lg n}$ \> $(\lg n)!$ \> $\sqrt{2}^{\lg n}$ \\
+      $n^3$ \> $4^{\lg n}$ \> $n^2$ \> $n \lg n$ \> $2^{\lg n}$ \> $n$ \\
+      $2 ^{\sqrt{2 \lg n}}$ \> $\lg^2 n$ \> $\lg(n!)$ \> $\ln n$ \> $\sqrt{\lg n}$ \> $\ln\ln n$ \\
+      $2^{\lg^* n}$ \> $\lg^* n$ \> $\lg^*(\lg n)$ \> $\lg(\lg^*n)$ \> $n^{1/\lg n}$ \>1
+    \end{tabbing}
+    Equivalence classes:
+    $\{2^{2^{n+1}}\}$, $\{2^{2^n}\}$, $\{(n+1)!\}$, $\{n!\}$, $\{n 2^n\}$, $\{e^n\}$, $\{2^n\}$, $\{(\frac{3}{2})^n\}$, $\{(\lg n)^{\lg n}, n^{\lg \lg n}\}$, $\{(\lg n)!\}$, $\{\sqrt{2}^{\lg n}\}$, ${n^3}$, $\{n^2, 4^{\lg n}\}$, $\{n \lg n\}$, $\{n, 2^{\lg n}\}$, $\{2 ^{\sqrt{2 \lg n}}\}$, $\{\lg^2 n\}$, $\lg(n!)\}$, $\{\sqrt{\lg n}\}$,  $\{\ln n$, $\{\ln\ln n\}$, $\{2^{\lg^* n}\}$, $\{\lg^*(\lg n), \lg^* n\}$, $\{\lg(\lg^*n)\}$, $\{1, n^{1/\lg n}\}$.
+    \item $f(n)=(2^{2^{n+2}})^{\sin n}$
+  \end{enumerate}
+
+
+  \section{[TC] Problem 3-4}
+  \begin{enumerate}
+    \item False. Take $f(n) = n$, $g(n) = n^2$, $f(n) = O(g(n))$, but $g(n) \neq O(f(n))$.
+    \item False. Take $f(n) = n$, $g(n) = n^2$, $f(n) + g(n) = n + n^2 = \Theta(n^2) \neq \Theta(\min(f(n),g(n))) = \Theta(n)$.
+    \item True. Since $f(n) = O(g(n))$, there exists positive constant $c > 1$ such that for all sufficiently large $n$, $1 \leq f(n) \leq cg(n)$ holds. Therefore, $\lg (f(n)) \leq \lg c + \lg (g(n))$. Take $c' = \lg c +1 $, then  $0 \leq \lg (f(n)) \leq  c' \lg (g(n))$ for all sufficiently large $n$. Hence, $\lg (f(n)) = O(\lg (g(n)))$.
+    \item False. Take $f(n) = n \lg n$, $g(n) = \lg (n!)$, $f(n) = O(g(n))$, however, $2^{f(n)} = n^n \neq O(2^{g(n)}) = O(n!)$.
+    \item False. Take $f(n) = 1/n$, then $(f(n))^2 = 1/n^2$, however, $\lim\limits_{n \to \infty} f(n)/(f(n))^2 = +\infty$, that means, $f(n)$ could not be asymptotically upper-bounded by $(f(n))^2$.
+    \item True. By transpose symmetry we know this is true.
+    \item False. Take $f(n) = 4^n$, then $\Theta(f(n/2)) = \Theta(2^n)$, however $4^n \neq \Theta(2^n)$.
+    \item True. By the definition of $o$-notation, for any positive constant $c$, there exists a positive integer $n_0$, for any integer $n > n_0$, $0 \leq o(f(n)) \leq c f(n)$ holds. Take $c=1$, for sufficiently large positive integer $n$, $f(n) \leq f(n) + o(f(n)) \leq 2 f(n)$, therefore $f(n)+o(f(n)) = \Theta(f(n))$.
+  \end{enumerate}
+\end{document}
