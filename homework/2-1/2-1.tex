@@ -24,7 +24,9 @@
         $$ T(m) = \begin{cases} \Theta(1) & m=1 \\ 2T(m/2) + \Theta(km) & m>1 \end{cases} .$$
         Solve this recurrence, we obtain $T(m) = \Theta(km\lg(m)) = \Theta(n \lg(n/k))$.
     \item A standard merge sort takes a running time of $\Theta(n \lg n)$. When $k=\Theta(\lg(n))$, $\Theta(nk+n\lg(n/k)) = \Theta(n \lg n)$. For every $k = \omega(\lg n)$, $\Theta(nk+n\lg(n/k)) = \Theta(nk) = \omega(n\lg n )$. Therefore, the largest value of $k$ is $\Theta(\lg n)$.
-    \item It mainly depends on the constant factors of merge sort and insertion sort when $n$ is sufficiently large. Let $c_1$ be the constant factor of merge sort, $c_2$ be the constant factor of insertion sort. We can rewrite the total running time as $T = c_1 n k + c_2 n \lg (n/k)$. We should now minimize $T$ with respect to $k$. Since $T'_k = nc_1-(nc_2)/(k \ln 2)$, $ k = c_2/(c_1 \ln 2)$ is a minimum point of $T$. So we can choose $k = c_2/(c_1 \ln 2)$ in practice.
+    \item It mainly depends on the constant factors of merge sort and insertion sort when $n$ is sufficiently large. \\
+    Theoretically speaking, let $c_1$ be the constant factor of merge sort, $c_2$ be the constant factor of insertion sort. We can rewrite the total running time as $T = c_1 n k + c_2 n \lg (n/k)$. We should now minimize $T$ with respect to $k$. Since $T'_k = nc_1-(nc_2)/(k \ln 2)$, $ k = c_2/(c_1 \ln 2)$ is a minimum point of $T$. \\
+    However, the constant factors are machine- and implementation-dependent, so we can determine $k$ by experiment in practice.
     \end{enumerate}
 
   \section{[TC] Problem 2-2}
