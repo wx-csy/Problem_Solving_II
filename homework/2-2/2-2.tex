@@ -1,0 +1,31 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\begin{document}
+  \title{论题~2-2~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[CS] P9 Problem 9}
+  Since $$\left(\begin{matrix}n\\2\end{matrix}\right) = \frac{n(n-1)}{2} ,$$
+  we have $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) =  \frac{n(n-1)(n-2)}{2}$$
+  and $$\left(\begin{matrix}n\\2\end{matrix}\right)(n-1) =  \frac{n(n-1)(n-2)}{2},$$
+  therefore, $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-1).$$
+  \par
+  Consider choosing one member as the president and two other members as a committee. If we choose the president first, then choose the committee, there are $n\left(\begin{matrix}n-1\\2\end{matrix}\right)$ different ways. If we choose the committee first, then choose the president, there are $\left(\begin{matrix}n\\2\end{matrix}\right)(n-1)$ different ways. Because the number of ways has nothing to do with the order we choose, we get $n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-1)$.
+  
+  \section{[CS] P9 Problem 13}
+  Let $P_i$ be the set of the pennies I receive on Day $i$. By supposition, $|P_1| = 1$ and $|P_{i+1}| = 2|P_i|$. Therefore $|P_i| = 2^{i-1}$. For every positive integer $n$, $P_1, P_2, \cdots, P_n$ are disjoint sets. By the sum principle, the number of pennies I have on Day 20 is
+  $$ \left| \bigcup_{i=1}^{20} P_i \right| = 1 + 2 + \cdots + 2^{20} = 2^{21}-1 = 2\;097\;151 ,$$
+  and the number of pennies I have on day $n$ is
+  $$ \left| \bigcup_{i=1}^{n} P_i \right| = 1 + 2 + \cdots + 2^n = 2^{n+1} - 1 .$$
+\end{document}
