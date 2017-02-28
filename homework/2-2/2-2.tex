@@ -15,17 +15,75 @@
   \date{}
   \maketitle
 
-  \section{[CS] P9 Problem 9}
+  \section{[CS] 1.1 Problem 9}
   Since $$\left(\begin{matrix}n\\2\end{matrix}\right) = \frac{n(n-1)}{2} ,$$
   we have $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) =  \frac{n(n-1)(n-2)}{2}$$
   and $$\left(\begin{matrix}n\\2\end{matrix}\right)(n-1) =  \frac{n(n-1)(n-2)}{2},$$
   therefore, $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-1).$$
   \par
   Consider choosing one member as the president and two other members as a committee. If we choose the president first, then choose the committee, there are $n\left(\begin{matrix}n-1\\2\end{matrix}\right)$ different ways. If we choose the committee first, then choose the president, there are $\left(\begin{matrix}n\\2\end{matrix}\right)(n-1)$ different ways. Because the number of ways has nothing to do with the order we choose, we get $n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-1)$.
-  
-  \section{[CS] P9 Problem 13}
+
+  \section{[CS] 1.1 Problem 13}
   Let $P_i$ be the set of the pennies I receive on Day $i$. By supposition, $|P_1| = 1$ and $|P_{i+1}| = 2|P_i|$. Therefore $|P_i| = 2^{i-1}$. For every positive integer $n$, $P_1, P_2, \cdots, P_n$ are disjoint sets. By the sum principle, the number of pennies I have on Day 20 is
   $$ \left| \bigcup_{i=1}^{20} P_i \right| = 1 + 2 + \cdots + 2^{20} = 2^{21}-1 = 2\;097\;151 ,$$
   and the number of pennies I have on day $n$ is
   $$ \left| \bigcup_{i=1}^{n} P_i \right| = 1 + 2 + \cdots + 2^n = 2^{n+1} - 1 .$$
+
+  \section{[CS] 1.2 Problem 15}
+  First, numbering the members from 1 to $2n$. We can use a partition $P$ of $\{1, 2, \cdots, 2n\}$ to represent how we pair up the members, where $|p| = 2$ for every $p \in P$.  Then we define a 'sorted partition' $[(a_1, b_1), (a_2, b_2), \cdots, (a_n, b_n)]$ of $P$, such that (1) $P = \{\{a_1, b_1\}, \{a_2, b_2\}, \cdots, \{a_n, b_n\}\}$, (2) $a_1<b_1, a_2<b_2, \cdots, a_n<b_n$ and (3) $a_1<a_2< \cdots < a_n$ hold. \par
+  We can prove that $a_i = \min \{1, 2, \cdots, 2n\} \setminus \{a_1, b_1, \cdots, a_{i-1}, b_{i-1}\}$, because by (2) we have $a_i < a_{i+1} < \cdots < a_n$ and by (3) we have $b_{i+1} > a_{i+1} > a_i$,  $b_{i+2} > a_{i+2} > a_i$, $\cdots$. However, $b_i$ is an arbitrary element in $\{1, 2, \cdots, 2n\} \setminus \{a_1, b_1, \cdots, a_{i-1}, b_{i-1}, a_i\}$. Hence, by product principle, the number of the ways is
+  $$(2n-1)(2n-3) \cdots 1 = (2n-1)!! .$$ \par
+  If we have to determine who plays whom, just multiplying $2^n$, because for each pair, we have two ways to determine who plays whom. Therefore, we can specify our pairs in $(2n-1)!!2^n$ ways.
+
+  \section{[CS] 1.3 Problem 6}
+  The coefficient of $x_1^{n_1}x_2^{n_2} \cdots x_k^{n_k}$ in the expansion of $(x_1+x_2+ \cdots +x_k)^n$ is
+  $\left(\begin{matrix}n\\n_1, n_2, \cdots, n_k\end{matrix}\right)$. \par
+  Explanation: consider $x_1^{n_1}x_2^{n_2} \cdots x_k^{n_k}$ in the expansion of $(x_1+x_2+ \cdots +x_k)^n$. We have $\left(\begin{matrix}n\\n_1\end{matrix}\right)$ ways to choose $n_1$ $x_1$'s, and then $\left(\begin{matrix}n-n_1\\n_2\end{matrix}\right)$ ways to choose $n_2$ $x_2$'s, and so on. By the product principle, the coefficient of $x_1^{n_1}x_2^{n_2} \cdots x_k^{n_k}$ is
+  \begin{align*}
+  & \left(\begin{matrix}n\\n_1\end{matrix}\right)
+  \left(\begin{matrix}n-n_1\\n_2\end{matrix}\right) \cdots
+  \left(\begin{matrix}n-n_1-\cdots-n_{k-1}\\n_k\end{matrix}\right) \\
+  =& \frac{n!}{n_1!(n-n_1)!}\frac{(n-n_1)!}{n_2!(n-n_1-n_2)!} \cdots
+  \frac{(n-n_1-\cdots-n_{k-1})!}{n_k!(n-n_1-\cdots-n_k)!} \\
+  =& \frac{n!}{n_1!n_2! \cdots n_k!}
+  \end{align*}
+
+  \section{[CS] 1.3 Problem 9}
+  $$ (x+y)^n = \sum_{i=0}^n \left(\begin{matrix}n\\i\end{matrix}\right)x^i y^{n-i} $$
+
+  \section{[CS] 1.3 Problem 14}
+  \textbf{Method 1}:
+  Since
+  $$
+    \left(\begin{matrix}n\\k\end{matrix}\right)
+    \left(\begin{matrix}k\\j\end{matrix}\right)
+    = \frac{n!}{k!(n-k)!} \frac{k!}{j!(k-j)!}
+    = \frac{n!}{j!(k-j)!(n-k)!}
+  $$
+  and
+  $$
+    \left(\begin{matrix}n\\j\end{matrix}\right)
+    \left(\begin{matrix}n-j\\k-j\end{matrix}\right)
+    = \frac{n!}{j!(n-j)!} \frac{(n-j)!}{(k-j)!(n-k)!}
+    = \frac{n!}{j!(k-j)!(n-k)!} ,
+  $$
+  we get
+  $$
+    \left(\begin{matrix}n\\k\end{matrix}\right)
+    \left(\begin{matrix}n\\k\end{matrix}\right) =
+    \left(\begin{matrix}n\\j\end{matrix}\right)
+    \left(\begin{matrix}n-j\\k-j\end{matrix}\right).
+  $$
+  \par
+  \textbf{Method 2}: Consider choosing a $k$-element subset from an $n$-element set, then choosing a $j$-element subsubset from the $k$-element subset. By the product principle, there are $ \left(\begin{matrix}n\\k\end{matrix}\right)\left(\begin{matrix}k\\j\end{matrix}\right) $ different ways. \par
+  If we choose the $k$-element subsubset from the $n$-element set first, then choose the $k-j$ elements that are in the subset but not in the subsubset. By the product principle, there are $ \left(\begin{matrix}n\\j\end{matrix}\right)\left(\begin{matrix}n-j\\k-j\end{matrix}\right)$ different ways. \par
+  Therefore, $\left(\begin{matrix}n\\k\end{matrix}\right)\left(\begin{matrix}n\\k\end{matrix}\right) =
+    \left(\begin{matrix}n\\j\end{matrix}\right)\left(\begin{matrix}n-j\\k-j\end{matrix}\right) $.
+    
+  \section{[CS] 1.5 Problem 8}
+  
+  \section{[CS] 1.5 Problem 10}
+  
+  \section{[CS] 1.5 Problem 15}
+  
 \end{document}
