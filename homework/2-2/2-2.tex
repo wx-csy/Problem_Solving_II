@@ -79,11 +79,30 @@
   If we choose the $k$-element subsubset from the $n$-element set first, then choose the $k-j$ elements that are in the subset but not in the subsubset. By the product principle, there are $ \left(\begin{matrix}n\\j\end{matrix}\right)\left(\begin{matrix}n-j\\k-j\end{matrix}\right)$ different ways. \par
   Therefore, $\left(\begin{matrix}n\\k\end{matrix}\right)\left(\begin{matrix}n\\k\end{matrix}\right) =
     \left(\begin{matrix}n\\j\end{matrix}\right)\left(\begin{matrix}n-j\\k-j\end{matrix}\right) $.
-    
+
   \section{[CS] 1.5 Problem 8}
-  
+  \begin{enumerate}[a.]
+  \item Assume the checkers are different from each other, then we can place the checkers in $(k+n-1!)$ ways. We say two arrangements is equivalent, if and only if the checkers in the same place have the same color. Red checkers can be arbitrarily rearranged, and so are the black ones. Hence, the size of each equivalent class is $k!(n-1)!$. By quotient principle, we can place the checkers in a row in $\frac{(k-n-1)!}{k!(n-1)!}$ ways.
+  \item The $n-1$ black checkers divide the $k$ red checkers into $n$ groups. We define a function $f$ from an arrangement of red and black checkers to a $k$-element multiset of ($\{1,2, \cdots , n\}$), that is, for any arrangement of checkers $A$, $f(A)$ is a $k$-element multiset of $\{1,2, \cdots , n\}$, in which, for every positive integer $i\leq n$, the number of element $i$ exactly equals to the number of the red checkers in the $i$-th group. It can be verified that $f$ is a bijection. Therefore, the number of ways of placing $k$ red checkers and $n-1$ black checkers in a row equals to the number of  $k$-element multisets of an $n$-element set.
+  \item Think about that we have $n+k-1$ items(checkers). Now, we have to color $k$ of the checkers red, and color the rest of the checkers black. That is, we have to choose $k$ checkers of $n+k-1$ to be colored red. This is the same as placing $k$ red checkers and $n-1$ black checkers in a row. Therefore, the relation of the choice of $k$ items out of $n-k+1$ items to the placement of red and black checkers is one-to-one correspondence.
+  \end{enumerate}
+
   \section{[CS] 1.5 Problem 10}
+  Substituting $x_{1}'+1, x_{2}'+1, \cdots, x_{n}'+1$ for $x_1, x_2, \cdots, x_n$ respectively, we obtain $x_{1}'+x_{2}'+\cdots+ x_{n}' = k-n$, where  $x_{1}',x_{2}',\cdots, x_{n}'$ are non-negative integers. If $k-n < 0$, this equation has no solution. If $k-n > 0$, every solution could be regarded as a $(k-n)$-element multiset chosen from an $n$-element set. Hence, the number of the solutions is $ \left(\begin{matrix}k-1\\k-n\end{matrix}\right)$.
   
   \section{[CS] 1.5 Problem 15}
+  \begin{enumerate}[a.]
+  \item $n^k$
+  \item $n^{\underline{k}}$
+  \item $\left(\begin{matrix}n+k-1\\k\end{matrix}\right)$
+  \item $\left(\begin{matrix}n\\k\end{matrix}\right)$
+  \item $n^{\underline{k}}$
+  \item $n^k$
+  \item $\left(\begin{matrix}n\\k\end{matrix}\right)$
+  \item $\left(\begin{matrix}n+k-1\\k\end{matrix}\right)$
+  \item $n^{\underline{k}}$
+  \item $\left(\begin{matrix}n+k-1\\k\end{matrix}\right)$
+  \item $n^{\underline{k}}$
+  \end{enumerate}
   
 \end{document}
