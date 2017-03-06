@@ -7,11 +7,9 @@ private:
     unsigned _size;
     T** _ptr;
 public:
-    inline unsigned size(){
-        return _size;
-    }
+    const unsigned &size = _size;
 
-    T* operator [](unsigned x){
+    inline T* operator [](unsigned x){
         return _ptr[x];
     }
     matrix(unsigned n){
@@ -25,7 +23,7 @@ public:
         for (unsigned i=0; i<_size; i++){
             delete[] _ptr[i];
         }
-        delete _ptr;
+        delete[] _ptr;
     }
 
     matrix<T>& zero(){
@@ -37,11 +35,11 @@ public:
     }
 
     matrix<T>& operator += (matrix<T>& mat){
-        if (_size != mat.size()){
+        if (_size != mat.size){
             throw;
         }
-        for (unsigned i=0; i < mat.size(); i++){
-            for (unsigned j=0; j < mat.size(); j++){
+        for (unsigned i=0; i < mat.size; i++){
+            for (unsigned j=0; j < mat.size; j++){
                 _ptr[i][j] += mat[i][j];
             }
         }
@@ -49,21 +47,30 @@ public:
     }
 
     matrix<T>& operator -= (matrix<T>& mat){
-        if (_size != mat.size()){
+        if (_size != mat.size){
             throw;
         }
-        for (unsigned i=0; i < mat.size(); i++){
-            for (unsigned j=0; j < mat.size(); j++){
+        for (unsigned i=0; i < mat.size; i++){
+            for (unsigned j=0; j < mat.size; j++){
                 _ptr[i][j] -= mat[i][j];
             }
         }
         return *this;
     }
 
+    friend istream& operator >> (istream& is, matrix<T>& mat){
+        for (unsigned i=0; i < mat.size; i++){
+            for (unsigned j=0; j < mat.size; j++){
+                cin >> mat[i][j];
+            }
+        }
+        return is;
+    }
+
     friend ostream& operator << (ostream& os, matrix<T>& mat){
-        for (unsigned i=0; i < mat.size(); i++){
-            for (unsigned j=0; j < mat.size(); j++){
-                cout << mat[i][j] << " ";
+        for (unsigned i=0; i < mat.size; i++){
+            for (unsigned j=0; j < mat.size; j++){
+                cout << mat[i][j] << (j == mat.size-1 ? "" : " ");
             }
             cout << endl;
         }
@@ -73,17 +80,17 @@ public:
 
 template <typename T>
 void strassen(matrix<T>& A, matrix<T>& B, matrix<T>& ans){
-    if (A.size() != B.size() || A.size() != ans.size()){
+    if (A.size != B.size || A.size != ans.size){
         throw;
     }
-    if (A.size() == 1){
+    if (A.size == 1){
         ans[0][0] = A[0][0] * B[0][0];
         return;
     }
-    if (A.size() % 2 != 0){
+    if (A.size % 2 != 0){
         throw;
     }
-    unsigned n = A.size();
+    unsigned n = A.size;
     matrix<T> a11(n/2), a12(n/2), a21(n/2), a22(n/2);
 
     for (int i=0; i<n/2; i++){
@@ -186,15 +193,15 @@ void strassen(matrix<T>& A, matrix<T>& B, matrix<T>& ans){
         }
     }
 }
-#include <cstdlib>
-matrix<int> mat(4), mat2(4), mat3(4);
-int main(){
-    for (int i=0; i<4; i++)
-        for (int j=0; j<4; j++)
-            mat[i][j] = rand()%10, mat2[i][j] = rand()%10;
 
-    cout << mat << mat2;
-    strassen(mat, mat2, mat3);
-    cout << mat3;
+int order;
+int main(){
+    cin >> order;
+    matrix<int> matA(order), matB(order), matAns(order);
+    cin >> matA >> matB;
+    strassen(matA, matB, matAns);
+    cout << matAns;
+    strassen(matB, matA, matAns);
+    cout << matAns;
     return 0;
 }

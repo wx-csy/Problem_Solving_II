@@ -1,0 +1,134 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{clrscode3e}
+\usepackage{tikz}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{论题~2-3~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[TC] Problem 4.1-5}
+  \begin{codebox}
+    \Procname{$\proc{Find-Maximum-Subarray}(A, n)$}
+    \li $ans = 0$
+    \li $sum = 0$
+    \li \For $i = 1$ \To $n$
+    \li \Do
+            $sum = sum + A[i]$
+    \li     \If $sum > ans$
+    \li     \Then
+                $ans = sum$
+    \li     \ElseIf $sum < 0$
+            \Then
+    \li         $sum = 0$
+            \End
+        \End
+    \li \Return $ans$
+  \end{codebox}
+
+  \section{[TC] Problem 4.3-3}
+  We have to prove that $T(n) \geq cn \lg n$ for appropriate choice of constant $c > 0$.  We use mathematical induction to prove it. \par
+  For the base step, we have $T(1)=1$, $T(2) = 4$ and $T(3) = 5$. We should choose $c$ such that $T(1)=1 \geq 0$, $T(2) = 4 \geq 2c$, $T(3) = 5 \geq 3c \lg 3$. We can choose every $c < 1$. \par
+  For the induction step, assume that $T(m) \geq cm \lg m$ holds for every positive integer $m < n$, where $n \geq 4$. Substituting it into the recurrence, we obtain
+  \begin{align*}
+    T(n) &= 2 T(\lfloor n/2 \rfloor) + n \\
+         &\geq 2 (c \lfloor n/2 \rfloor \lg \lfloor n/2 \rfloor) + n \\
+         &\geq 2 (c (n/2-1) \lg (n/2-1)) + n \\
+         &\geq c(n-2)\lg((n-2)/2)+n \\
+         &= cn\lg(n-2)-2c\lg(n-2)+cn-2c+n\\
+         &= cn\lg n - cn\lg\frac{n}{n-2}-2c\lg(n-2)+cn-2c+n\\
+         &= cn\lg n + (cn- cn\lg\frac{n}{n-2}) + (n/2-2c\lg(n-2))+(n/2-2c)\\
+         &\geq cn\lg n
+  \end{align*}
+  The last step holds if we choose $c < \frac{1}{2}$, because
+  \begin{enumerate}[(1)]
+    \item $n \geq 4 \Rightarrow \lg\frac{n}{n-2} \leq 1 \Rightarrow cn \geq cn\lg\frac{n}{n-2}$ ;
+    \item $n \geq 4 \Rightarrow n/2 \geq \lg(n-2)$, $(n/2 \geq \lg(n-2)) \wedge (c < \frac{1}{2}) \Rightarrow n/2<2c\lg(n-2)$;
+    \item $n \geq 4 \Rightarrow n/2 > 1$, $(n/2 \geq 1) \wedge (c < \frac{1}{2}) \Rightarrow n/2 > 2c$.
+  \end{enumerate} \par
+  By mathematical induction, we conclude that for all positive constant $c < \frac{1}{2}$, $T(n) \geq cn\lg n$ holds. Hence the recurrence is also $\Omega(n \lg n)$. Therefore we conclude that the solution is $\Theta(n \lg n)$.
+
+  \section{[TC] Problem 4.3-7}
+  Assume $T(m) \leq c m^{\log_3 4}$ for sufficiently large $m < n$, especially for $m = n/3$ where $n$ is large enough. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= 4 T(n/3) + n \\
+         &\leq 4c(\frac{n}{3})^{\log_3 4} + n \\
+         &= cn^{\log_3 4} + n \\
+         &\nleq cn^{\log_3 4} & fails!
+  \end{align*}
+
+  We guess $T(n) \leq c(n^{\log_3 4}-n)$ instead and prove it by mathematical induction. \par
+  For the base step, when $n=3$, we have $T(n) = 7$ and $c(n^{\log_3 4}-n) = c$, therefore $T(n) \leq c(n^{\log_3 4}-n)$ holds for every $c > 7$. \par
+  For the induction step, assume $T(m) \leq c(m^{\log_3 4}-m)$ holds for every $m < n$, where $n > 3$. Substituting into the recurrence yields
+    \begin{align*}
+    T(n) &= 4 T(n/3) + n \\
+         &\leq 4c((\frac{n}{3})^{\log_3 4}-\frac{n}{3}) + n \\
+         &= cn^{\log_3 4} + (1-\frac{4c}{3}) n \\
+         &\leq cn^{\log_3 4}
+    \end{align*} \par
+  By mathematical induction, we conclude $T(n) \leq c(n^{\log_3 4}-n)$. Therefore $T(n) = O(n^{\log_3 4}-n) = O(n^{\log_3 4})$. \par
+  To complete the proof of $T(n) = \Omega(n^{\log_3 4})$, we assume $T(n) \geq c n^{\log_3 4}$. \par
+  For the base step, when $n=1$, we have $T(1) = 1$ and $c n^{\log_3 4} = c$, therefore $T(n) \geq c n^{\log_3 4}$ holds for every positive constant $c < 1$. \par
+  For the induction step, assume $T(m) \geq c m^{\log_3 4}$ holds for every $m < n$, where $n > 3$. Substituting into the recurrence yields
+    \begin{align*}
+    T(n) &= 4 T(n/3) + n \\
+         &\geq 4c(\frac{n}{3})^{\log_3 4} + n \\
+         &= cn^{\log_3 4} + n \\
+         &\geq cn^{\log_3 4}
+    \end{align*} \par
+  By mathematical induction, we conclude that $T(n) \geq c n^{\log_3 4}$. Hence $T(n) = \Omega(n^{\log_3 4})$. Therefore $T(n) = \Theta(n^{\log_3 4})$.
+
+  \section{[TC] Problem 4.4-2}
+  \begin{tikzpicture}
+    \node (l11) at (6,0) {$cn$};
+    \node (l21) at (4,-1.5) {$(\frac{n}{2})^2$};
+    \node (l22) at (8,-1.5) {$(\frac{n}{2})^2$};
+    \draw[-] (l11) -- (l21);
+    \draw[-] (l11) -- (l22);
+    \node (l31) at (3,-3) {$(\frac{n}{4})^2$};
+    \node (l32) at (5,-3) {$(\frac{n}{4})^2$};
+    \node (l33) at (7,-3) {$(\frac{n}{4})^2$};
+    \node (l34) at (9,-3) {$(\frac{n}{4})^2$};
+    \draw[-] (l21) -- (l31);
+    \draw[-] (l21) -- (l32);
+    \draw[-] (l22) -- (l33);
+    \draw[-] (l22) -- (l34);
+    \draw[-, dashed] (l31) -- (2.5,-4);
+    \draw[-, dashed] (l31) -- (3.5,-4);
+    \draw[-, dashed] (l32) -- (4.5,-4);
+    \draw[-, dashed] (l32) -- (5.5,-4);
+    \draw[-, dashed] (l33) -- (6.5,-4);
+    \draw[-, dashed] (l33) -- (7.5,-4);
+    \draw[-, dashed] (l34) -- (8.5,-4);
+    \draw[-, dashed] (l34) -- (9.5,-4);
+    \node at (6, -4.5) {$\vdots$};
+    \node (t1) at (11, 0) {$n^2$};
+    \node (t2) at (11, -1.5) {$\frac{n^2}{2}$};
+    \node (t3) at (11, -3) {$\frac{n^2}{4}$};
+    \draw[->, dashed] (l11) -- (t1);
+    \draw[->, dashed] (l22) -- (t2);
+    \draw[->, dashed] (l34) -- (t3);
+    \node (atop) at (1,0) {};
+    \node (nl) at (1,-2.5) {$\lg n$};
+    \node (abottom) at (1, -5) {};
+    \draw[->, thick] (nl) -- (atop);
+    \draw[->, thick] (nl) -- (abottom);
+    \node at (11, -4.5) {$\vdots$};
+    \draw[-] (9.5, -5) -- (11.2, -5);
+    \node at (10.3, -5.5) {Total: $O(n^2)$};
+  \end{tikzpicture}
+  %
+  % not done !!!
+  %
+\end{document}
