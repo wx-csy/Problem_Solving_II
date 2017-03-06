@@ -18,10 +18,10 @@
   \section{[CS] 1.1 Problem 9}
   Since $$\left(\begin{matrix}n\\2\end{matrix}\right) = \frac{n(n-1)}{2} ,$$
   we have $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) =  \frac{n(n-1)(n-2)}{2}$$
-  and $$\left(\begin{matrix}n\\2\end{matrix}\right)(n-1) =  \frac{n(n-1)(n-2)}{2},$$
-  therefore, $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-1).$$
+  and $$\left(\begin{matrix}n\\2\end{matrix}\right)(n-2) =  \frac{n(n-1)(n-2)}{2},$$
+  therefore, $$n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-2).$$
   \par
-  Consider choosing one member as the president and two other members as a committee. If we choose the president first, then choose the committee, there are $n\left(\begin{matrix}n-1\\2\end{matrix}\right)$ different ways. If we choose the committee first, then choose the president, there are $\left(\begin{matrix}n\\2\end{matrix}\right)(n-1)$ different ways. Because the number of ways has nothing to do with the order we choose, we get $n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-1)$.
+  Consider choosing one member as the president and two other members as a committee. If we choose the president first, then choose the committee, there are $n\left(\begin{matrix}n-1\\2\end{matrix}\right)$ different ways. If we choose the committee first, then choose the president, there are $\left(\begin{matrix}n\\2\end{matrix}\right)(n-2)$ different ways. Because the number of ways has nothing to do with the order we choose, we get $n\left(\begin{matrix}n-1\\2\end{matrix}\right) = \left(\begin{matrix}n\\2\end{matrix}\right)(n-2)$.
 
   \section{[CS] 1.1 Problem 13}
   Let $P_i$ be the set of the pennies I receive on Day $i$. By supposition, $|P_1| = 1$ and $|P_{i+1}| = 2|P_i|$. Therefore $|P_i| = 2^{i-1}$. For every positive integer $n$, $P_1, P_2, \cdots, P_n$ are disjoint sets. By the sum principle, the number of pennies I have on Day 20 is
@@ -30,8 +30,8 @@
   $$ \left| \bigcup_{i=1}^{n} P_i \right| = 1 + 2 + \cdots + 2^n = 2^{n+1} - 1 .$$
 
   \section{[CS] 1.2 Problem 15}
-  First, numbering the members from 1 to $2n$. We can use a partition $P$ of $\{1, 2, \cdots, 2n\}$ to represent how we pair up the members, where $|p| = 2$ for every $p \in P$.  Then we define a 'sorted partition' $[(a_1, b_1), (a_2, b_2), \cdots, (a_n, b_n)]$ of $P$, such that (1) $P = \{\{a_1, b_1\}, \{a_2, b_2\}, \cdots, \{a_n, b_n\}\}$, (2) $a_1<b_1, a_2<b_2, \cdots, a_n<b_n$ and (3) $a_1<a_2< \cdots < a_n$ hold. \par
-  We can prove that $a_i = \min \{1, 2, \cdots, 2n\} \setminus \{a_1, b_1, \cdots, a_{i-1}, b_{i-1}\}$, because by (2) we have $a_i < a_{i+1} < \cdots < a_n$ and by (3) we have $b_{i+1} > a_{i+1} > a_i$,  $b_{i+2} > a_{i+2} > a_i$, $\cdots$. However, $b_i$ is an arbitrary element in $\{1, 2, \cdots, 2n\} \setminus \{a_1, b_1, \cdots, a_{i-1}, b_{i-1}, a_i\}$. Hence, by product principle, the number of the ways is
+  First, numbering the members from 1 to $2n$. We can use a partition $P$ of $\{1, 2, \cdots, 2n\}$ to represent how we pair up the members, where $|p| = 2$ for every $p \in P$.  Then we define a 'sorted partition' $[(a_1, b_1), (a_2, b_2), \cdots, (a_n, b_n)]$ of $P$, such that (1) $P = \{\{a_1, b_1\}, \{a_2, b_2\}, \cdots, \{a_n, b_n\}\}$, (2) $a_1<b_1, a_2<b_2, \cdots, a_n<b_n$ and (3) $a_1<a_2< \cdots < a_n$. \par
+  We can prove that $a_i = \min (\{1, 2, \cdots, 2n\} \setminus \{a_1, b_1, \cdots, a_{i-1}, b_{i-1}\})$, because by (2) we have $a_i < a_{i+1} < \cdots < a_n$ and by (3) we have $b_{i+1} > a_{i+1} > a_i$,  $b_{i+2} > a_{i+2} > a_i$, $\cdots$. However, $b_i$ is an arbitrary element in $\{1, 2, \cdots, 2n\} \setminus \{a_1, b_1, \cdots, a_{i-1}, b_{i-1}, a_i\}$. Hence, by product principle, the number of the ways is
   $$(2n-1)(2n-3) \cdots 1 = (2n-1)!! .$$ \par
   If we have to determine who plays whom, just multiplying $2^n$, because for each pair, we have two ways to determine who plays whom. Therefore, we can specify our pairs in $(2n-1)!!2^n$ ways.
 
@@ -89,7 +89,7 @@
 
   \section{[CS] 1.5 Problem 10}
   Substituting $x_{1}'+1, x_{2}'+1, \cdots, x_{n}'+1$ for $x_1, x_2, \cdots, x_n$ respectively, we obtain $x_{1}'+x_{2}'+\cdots+ x_{n}' = k-n$, where  $x_{1}',x_{2}',\cdots, x_{n}'$ are non-negative integers. If $k-n < 0$, this equation has no solution. If $k-n > 0$, every solution could be regarded as a $(k-n)$-element multiset chosen from an $n$-element set. Hence, the number of the solutions is $ \left(\begin{matrix}k-1\\k-n\end{matrix}\right)$.
-  
+
   \section{[CS] 1.5 Problem 15}
   \begin{enumerate}[a.]
   \item $n^k$
@@ -104,5 +104,5 @@
   \item $\left(\begin{matrix}n+k-1\\k\end{matrix}\right)$
   \item $n^{\underline{k}}$
   \end{enumerate}
-  
+
 \end{document}
