@@ -10,7 +10,7 @@
 \usepackage{tikz}
 \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 
-\allowdisplaybreaks[4]
+%\allowdisplaybreaks[4]
 \renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
 \begin{document}
   \title{论题~2-3~作业}
@@ -51,7 +51,7 @@
          &= cn\lg n + (cn- cn\lg\frac{n}{n-2}) + (n/2-2c\lg(n-2))+(n/2-2c)\\
          &\geq cn\lg n
   \end{align*}
-  The last step holds if we choose $c < \frac{1}{2}$, because
+  the last step holds if we choose $c < \frac{1}{2}$, because
   \begin{enumerate}[(1)]
     \item $n \geq 4 \Rightarrow \lg\frac{n}{n-2} \leq 1 \Rightarrow cn \geq cn\lg\frac{n}{n-2}$ ;
     \item $n \geq 4 \Rightarrow n/2 \geq \lg(n-2)$, $(n/2 \geq \lg(n-2)) \wedge (c < \frac{1}{2}) \Rightarrow n/2<2c\lg(n-2)$;
@@ -79,7 +79,7 @@
     \end{align*} \par
   By mathematical induction, we conclude $T(n) \leq c(n^{\log_3 4}-n)$. Therefore $T(n) = O(n^{\log_3 4}-n) = O(n^{\log_3 4})$. \par
   To complete the proof of $T(n) = \Omega(n^{\log_3 4})$, we assume $T(n) \geq c n^{\log_3 4}$. \par
-  For the base step, when $n=1$, we have $T(1) = 1$ and $c n^{\log_3 4} = c$, therefore $T(n) \geq c n^{\log_3 4}$ holds for every positive constant $c < 1$. \par
+  For the base step, when $n=1$, we have $T(n) = 1$ and $c n^{\log_3 4} = c$, therefore $T(n) \geq c n^{\log_3 4}$ holds for every positive constant $c < 1$. \par
   For the induction step, assume $T(m) \geq c m^{\log_3 4}$ holds for every $m < n$, where $n > 3$. Substituting into the recurrence yields
     \begin{align*}
     T(n) &= 4 T(n/3) + n \\
@@ -90,8 +90,9 @@
   By mathematical induction, we conclude that $T(n) \geq c n^{\log_3 4}$. Hence $T(n) = \Omega(n^{\log_3 4})$. Therefore $T(n) = \Theta(n^{\log_3 4})$.
 
   \section{[TC] Problem 4.4-2}
+  Recursion tree:\\
   \begin{tikzpicture}
-    \node (l11) at (6,0) {$cn$};
+    \node (l11) at (6,0) {$n^2$};
     \node (l21) at (4,-1.5) {$(\frac{n}{2})^2$};
     \node (l22) at (8,-1.5) {$(\frac{n}{2})^2$};
     \draw[-] (l11) -- (l21);
@@ -119,8 +120,8 @@
     \draw[->, dashed] (l11) -- (t1);
     \draw[->, dashed] (l22) -- (t2);
     \draw[->, dashed] (l34) -- (t3);
-    \node (atop) at (1,0) {};
-    \node (nl) at (1,-2.5) {$\lg n$};
+    \node (atop) at (1, 0.4) {};
+    \node (nl) at (1,-2.2) {$\lg n$};
     \node (abottom) at (1, -5) {};
     \draw[->, thick] (nl) -- (atop);
     \draw[->, thick] (nl) -- (abottom);
@@ -128,7 +129,128 @@
     \draw[-] (9.5, -5) -- (11.2, -5);
     \node at (10.3, -5.5) {Total: $O(n^2)$};
   \end{tikzpicture}
-  %
-  % not done !!!
-  %
+
+  We guess that $T(n) \leq cn^2$ for an appropriate choice of positive constant $c$. For the base step, we have $T(1)=1$ and $cn^2=c$, so $T(n) \leq cn^2$ holds for $c>1$ when $n=1$. \par
+  For the induction step, assume that $T(m) \leq cm^2$ holds for all positive integer $m<n$, where $n>1$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= T(n/2) + n^2 \\
+         &\leq c^2\frac{n^2}{4} + n^2 \\
+         &= (1+\frac{c^2}{4})n^2 \\
+         &= cn^{2}
+  \end{align*}
+  where the last step holds as long as $c=2$. \par
+  By mathematical induction, we conclude that $T(n) \leq 2n^2$, i.e. $T(n) = O(n^2)$.
+
+  \section{[TC] Problem 4.4-8}
+  Recursion tree: \\
+  \begin{tikzpicture}
+    \node (l11) at (6,0) {$cn$};
+    \node (l21) at (4,-1.5) {$c(n-a)$};
+    \node (l22) at (8,-1.5) {$T(a)$};
+    \draw[-] (l11) -- (l21);
+    \draw[-] (l11) -- (l22);
+    \node (l31) at (3,-3) {$c(n-2a)$};
+    \node (l32) at (5,-3) {$T(a)$};
+    \draw[-] (l21) -- (l31);
+    \draw[-] (l21) -- (l32);
+    \draw[-, dashed] (l31) -- (2.5,-4);
+    \draw[-, dashed] (l31) -- (3.5,-4);
+    \node at (6, -4.5) {$\vdots$};
+    \node (t1) at (11, 0) {$cn$};
+    \node (t2) at (11, -1.5) {$c(n-a)+T(a)$};
+    \node (t3) at (11, -3) {$c(n-2a)+T(a)$};
+    \draw[->, dashed] (l11) -- (t1);
+    \draw[->, dashed] (l22) -- (t2);
+    \draw[->, dashed] (l32) -- (t3);
+    \node (atop) at (1, 0.4) {};
+    \node (nl) at (1,-2.2) {$\lg n$};
+    \node (abottom) at (1, -5) {};
+    \draw[->, thick] (nl) -- (atop);
+    \draw[->, thick] (nl) -- (abottom);
+    \node at (11, -4.5) {$\vdots$};
+    \draw[-] (9.5, -5) -- (11.2, -5);
+    \node at (10.3, -5.5) {Total: $O(n^2)$};
+  \end{tikzpicture}
+  \par
+  Adding up all levels of the tree, we get
+  \begin{align*}
+    T(n) &= cn + \sum_{i=1}^{n/a} (c(n-ia)+T(a)) \\
+         &= \frac{n}{a}T(a)+(\frac{n}{a}+1)cn-ca(1+\frac{n}{a})(\frac{n}{a})/2 \\
+         &= \frac{T(a)}{a}n+cn-cn/2+\frac{c}{a}n^2-\frac{c}{2a}n^2\\
+         &= \left(\frac{T(a)}{a}+\frac{c}{2}\right)n+\frac{c}{2a}n^2\\
+         &= O(n^2)
+  \end{align*}
+
+  \section{[TC] Problem 4-1}
+  \begin{enumerate}
+  \item $T(n) = O(n^4) = \Omega(n^4)$ \par
+  First, we have to prove that $T(n) = O(n^4)$, i.e. $T(n) \leq cn^4$ for appropriate choice of positive constant $c$. \par
+  For the base step, $T(n) = 1$, $n^4 = 1$, so for all $c > 1$, $T(n) \leq n^4$ holds when $n=1$. \par
+  For the induction step, assume that $T(m) \leq cm^4$ for all $m<n$ where $n > 1$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= 2T(n/2) + n^4 \\
+         &\leq 2c(n/2)^4+n^4 \\
+         &= (c/8+1)n^4 \\
+         &\leq cn^4
+  \end{align*}
+  the last step holds if we take $c=2$. \par
+  By mathematical induction, we conclude that $T(n) \leq 2n^4$ for all positive integer $n$. Hence $T(n) = O(n^4)$. \par
+  Second, we have to prove that $T(n) = \Omega(n^4)$, i.e. $T(n) \geq cn^4$ for appropriate choice of positive constant $c$. \par
+  For the base step, $T(n)=1$, $n^4=1$, so $T(n) \geq cn^4$ when $n=1$ if we choose $c<1$. \par
+  For the induction step, assume that $T(m) \geq cm^4$ for all positive integer $m<n$ where $n>1$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= 2T(n/2)+n^4 \\
+         &\geq 2c(n/2)^4+n^4 \\
+         &= (c/8+1)n^4 \\
+         &\geq cn^4
+  \end{align*}
+  the last step holds because $c<1$. \par
+  By mathematical induction, we conclude that $T(n) \geq cn^4$ for positive constant $c<1$. Therefore $T(n) = \Omega(n^4)$. \par
+  \item $T(n) = O(n) = \Omega(n)$ \par
+  First, we have to prove $T(n) = O(n)$, i.e. $T(n) \leq cn$ for appropriate choice of positive constant $c$. \par
+  For the base step, when $n=1$, $T(n)=1$, $n=1$, so $T(n) \leq cn$ holds for all $c > 1$. \par
+  For the induction step, assume that $T(m) \leq cm$ for all $m<n$ where $n>2$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= T(7n/10)+n \\
+         &\leq  (\frac{7c}{10}+1)n \\
+         &\leq cn
+  \end{align*}
+  the last step holds for all $c>10/3$. \par
+  By mathematical induction, we conclude that $T(n) \leq cn$ for all positive integer $n$ when $c > 10/3$. Hence $T(n) = O(n)$. \par
+  Second, we have to prove $T(n) = \Omega(n)$, i.e. $T(n) \geq cn$ for appropriate choice of positive constant $c$. \par
+  For the base step, when $n=1$, we have $T(n)=1$, $n^4=1$, so $T(n) \geq cn$ for all $c<1$. \par
+  For the induction step, assume that $T(m) \geq cm$ for all $m < n$ where $n>1$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= T(7n/10) + n\\
+        &\geq \left(\frac{7c}{10}+1\right)n \\
+        &\geq cn \\
+  \end{align*}
+  the last step holds because $c<1$. \par
+  By mathematical induction, we conclude that $T(n) \geq cn$ for $c<1$. Therefore $T(n) = \Omega(n)$.
+  \item $T(n) = O(n^2\lg n) = \Omega(n^2\lg n)$ \par
+  First, we have to prove that $T(n) = O(n^2 \lg n)$, i.e. $T(n) \leq c n^2 \lg n$ for appropriate choice of positive constant $c$. \par
+  For the base step, when $n=4$, $T(n) = 32$, $n^2 \lg n = 32$, so for all $c > 1$, $T(n) \leq c n^2 \lg n$ holds when $n=4$. \par
+  For the induction step, assume that $T(m) \leq cm^2\lg m $ for all $m<n$($m \geq 4$) where $n > 4$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= 16T(n/4) + n^2 \\
+        &\leq 16 c (n/4)^2 \lg (n/4) + n^2\\
+        &= c n^2 \lg n - 2cn^2 + n^2 \\
+        &\leq c n^2 \lg n
+  \end{align*}
+  the last step holds because $c > 1$. \par
+  By mathematical induction, we conclude that $T(n) \leq cn^2 \lg n$ for all positive integer $n$ when $c > 1$. \par
+  Second, we have to prove that $T(n) = \Omega(n^2 \lg n)$, i.e. $T(n) \geq cn^2 \lg n$ for appropriate choice of positive constant $c$. \par
+  For the base step, when $n=1$, we have $T(n)=1$, $n^2 \lg n=0$, so $T(n) \geq cn^2 \lg n$ holds. \par
+  For the second step, assume that $T(m) \geq cn^2 \lg n$ for all $m < n$ where $n>1$. Substituting into the recurrence yields
+  \begin{align*}
+    T(n) &= 16T(n/4) + n^2\\
+        &\geq 16c(n/4)^2 \lg (n/4) + n^2 \\
+        &= cn^2 \lg n - 2cn^2 + n^2 \\
+        &\geq cn^2 \lg n
+  \end{align*}
+  the last step holds for all $c<1/2$. \par
+  By mathematical induction, we conclude that $T(n) \geq cn^2\lg n$ for $c<1/2$. Therefore $T(n) = \Omega(n^2\lg n)$.
+  \item $T(n)=O(n^{\log_3 7})=\Omega(n^{\log_3 7})$
+  % not  done 
+  \end{enumerate}
 \end{document}
