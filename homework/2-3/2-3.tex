@@ -184,73 +184,41 @@
   \section{[TC] Problem 4-1}
   \begin{enumerate}
   \item $T(n) = O(n^4) = \Omega(n^4)$ \par
-  First, we have to prove that $T(n) = O(n^4)$, i.e. $T(n) \leq cn^4$ for appropriate choice of positive constant $c$. \par
-  For the base step, $T(n) = 1$, $n^4 = 1$, so for all $c > 1$, $T(n) \leq n^4$ holds when $n=1$. \par
-  For the induction step, assume that $T(m) \leq cm^4$ for all $m<n$ where $n > 1$. Substituting into the recurrence yields
-  \begin{align*}
-    T(n) &= 2T(n/2) + n^4 \\
-         &\leq 2c(n/2)^4+n^4 \\
-         &= (c/8+1)n^4 \\
-         &\leq cn^4
-  \end{align*}
-  the last step holds if we take $c=2$. \par
-  By mathematical induction, we conclude that $T(n) \leq 2n^4$ for all positive integer $n$. Hence $T(n) = O(n^4)$. \par
-  Second, we have to prove that $T(n) = \Omega(n^4)$, i.e. $T(n) \geq cn^4$ for appropriate choice of positive constant $c$. \par
-  For the base step, $T(n)=1$, $n^4=1$, so $T(n) \geq cn^4$ when $n=1$ if we choose $c<1$. \par
-  For the induction step, assume that $T(m) \geq cm^4$ for all positive integer $m<n$ where $n>1$. Substituting into the recurrence yields
-  \begin{align*}
-    T(n) &= 2T(n/2)+n^4 \\
-         &\geq 2c(n/2)^4+n^4 \\
-         &= (c/8+1)n^4 \\
-         &\geq cn^4
-  \end{align*}
-  the last step holds because $c<1$. \par
-  By mathematical induction, we conclude that $T(n) \geq cn^4$ for positive constant $c<1$. Therefore $T(n) = \Omega(n^4)$. \par
+    For this recurrence, we have $a=2$, $b=2$, $f(n)=n^4$, and thus we have $n^{\log_a b}=n^{\log_2 2}=n$. Hence $f(n) = \Omega(n^{\log_2 2 + \epsilon})$ where $\epsilon = 3$. The regularity condition holds for $f(n)$ because $2f(n/2)=2(n/2)^4=n^4/8 \leq cn^4$ where $c = 1/8 < 1$. Therefore, the master theorem, case 3 applies and we obtain $T(n) = \Theta(n^4)$.
   \item $T(n) = O(n) = \Omega(n)$ \par
-  First, we have to prove $T(n) = O(n)$, i.e. $T(n) \leq cn$ for appropriate choice of positive constant $c$. \par
-  For the base step, when $n=1$, $T(n)=1$, $n=1$, so $T(n) \leq cn$ holds for all $c > 1$. \par
-  For the induction step, assume that $T(m) \leq cm$ for all $m<n$ where $n>2$. Substituting into the recurrence yields
-  \begin{align*}
-    T(n) &= T(7n/10)+n \\
-         &\leq  (\frac{7c}{10}+1)n \\
-         &\leq cn
-  \end{align*}
-  the last step holds for all $c>10/3$. \par
-  By mathematical induction, we conclude that $T(n) \leq cn$ for all positive integer $n$ when $c > 10/3$. Hence $T(n) = O(n)$. \par
-  Second, we have to prove $T(n) = \Omega(n)$, i.e. $T(n) \geq cn$ for appropriate choice of positive constant $c$. \par
-  For the base step, when $n=1$, we have $T(n)=1$, $n^4=1$, so $T(n) \geq cn$ for all $c<1$. \par
-  For the induction step, assume that $T(m) \geq cm$ for all $m < n$ where $n>1$. Substituting into the recurrence yields
-  \begin{align*}
-    T(n) &= T(7n/10) + n\\
-        &\geq \left(\frac{7c}{10}+1\right)n \\
-        &\geq cn \\
-  \end{align*}
-  the last step holds because $c<1$. \par
-  By mathematical induction, we conclude that $T(n) \geq cn$ for $c<1$. Therefore $T(n) = \Omega(n)$.
+    For this recurrence, we have $a=1$, $b=10/7$, $f(n)=n$, and thus we have $n^{\log_a b}=n^{\log_{10/7} 1}=n^0$. Hence $f(n) = \Omega(n^{\log_{10/7} 1 + \epsilon})$ where $\epsilon = 1$. The regularity condition holds for $f(n)$ because $f(7n/10)=7n/10\leq cn$ where $c=7/10<1$. Therefore, the master theorem, case 3 applies and we obtain $T(n) = \Theta(n)$.
   \item $T(n) = O(n^2\lg n) = \Omega(n^2\lg n)$ \par
-  First, we have to prove that $T(n) = O(n^2 \lg n)$, i.e. $T(n) \leq c n^2 \lg n$ for appropriate choice of positive constant $c$. \par
-  For the base step, when $n=4$, $T(n) = 32$, $n^2 \lg n = 32$, so for all $c > 1$, $T(n) \leq c n^2 \lg n$ holds when $n=4$. \par
-  For the induction step, assume that $T(m) \leq cm^2\lg m $ for all $m<n$($m \geq 4$) where $n > 4$. Substituting into the recurrence yields
-  \begin{align*}
-    T(n) &= 16T(n/4) + n^2 \\
-        &\leq 16 c (n/4)^2 \lg (n/4) + n^2\\
-        &= c n^2 \lg n - 2cn^2 + n^2 \\
-        &\leq c n^2 \lg n
-  \end{align*}
-  the last step holds because $c > 1$. \par
-  By mathematical induction, we conclude that $T(n) \leq cn^2 \lg n$ for all positive integer $n$ when $c > 1$. \par
-  Second, we have to prove that $T(n) = \Omega(n^2 \lg n)$, i.e. $T(n) \geq cn^2 \lg n$ for appropriate choice of positive constant $c$. \par
-  For the base step, when $n=1$, we have $T(n)=1$, $n^2 \lg n=0$, so $T(n) \geq cn^2 \lg n$ holds. \par
-  For the second step, assume that $T(m) \geq cn^2 \lg n$ for all $m < n$ where $n>1$. Substituting into the recurrence yields
-  \begin{align*}
-    T(n) &= 16T(n/4) + n^2\\
-        &\geq 16c(n/4)^2 \lg (n/4) + n^2 \\
-        &= cn^2 \lg n - 2cn^2 + n^2 \\
-        &\geq cn^2 \lg n
-  \end{align*}
-  the last step holds for all $c<1/2$. \par
-  By mathematical induction, we conclude that $T(n) \geq cn^2\lg n$ for $c<1/2$. Therefore $T(n) = \Omega(n^2\lg n)$.
-  \item $T(n)=O(n^{\log_3 7})=\Omega(n^{\log_3 7})$
-  % not  done 
+    For this recurrence, we have $a=16$, $b=4$, $f(n)=n^2$, and thus we have $n^{\log_a b}=n^{\log_4 16}=n^2$. Hence $f(n)=\Theta(n^2)$. Therefore, the master theorem, case 2 applies and we obtain $T(n)=\Theta(n^2\lg n)$.
+  \item $T(n)=O(n^2)=\Omega(n^2)$ \par
+    For this recurrence, we have $a=7$, $b=3$, $f(n)=n^2$, and thus we have $n^{\log_a b}=n^{\log_3 7}$. Hence $f(n)=\Omega(n^{\log_3 7 + \epsilon})$ where $\epsilon = 2 - \log_3 7 > 0$. The regularity condition holds for $f(n)$ because $7f(n/3) = 7(n/3)^2=7n/9=cn$ where $c=7/9<1$. Therefore, the master theorem, case 3 applies and we obtain $T(n) = \Theta(n^2)$.
+  \item $T(n)=O(n^{\log_2 7})=\Omega(n^{\log_2 7})$ \par
+    For this recurrence, we have $a=7$, $b=2$, $f(n)=n^2$, and thus we have $n^{\log_a b}=n^{\log_2 7}$. Hence $f(n)=O(n^{\log_2 7 - \epsilon})$ where $\epsilon = \log_2 7-2 >0$. Therefore, the master theorem, case 1 applies and we obtain $T(n) = \Theta(n^{\log_2 7})$.
+  \item $T(n)=O(\sqrt{n}\lg n)=\Omega(\sqrt{n}\lg n)$ \par
+    For this recurrence, we have $a=2$, $b=4$, $f(n)=\sqrt{n}$, and thus we have $n^{\log_a b}=n^{\log_4 2}=\sqrt{n}$. Hence $f(n)=\Theta(\sqrt{n})$. Therefore, the master theorem, case 2 applies and we obtain $T(n)=\Theta(\sqrt(n) \lg n)$.
+  \item $T(n)=O(n^3)=\Omega(n^3)$. \par
+    We use mathematical induction to prove the upper bounds and the lower bounds. \par
+    First, we have to prove $T(n) = O(n^3)$, i.e, $T(n) \leq cn^3$ for an appropriate choice of positive constant $c$.\par
+    For the base step, $T(1) \leq c$, $T(2) \leq 8c$, $T(3) \leq 27c$, $T(4) \leq 64c$, $T(5) = 125c$, so $T(n) \leq cn^3$ holds for all $c > \max \{ T(1), T(2)/8, T(3)/27, T(4)/64, T(5)/125\}$ when $n=1,2,3,4,5$. \par
+    For the induction step, assume $T(m) \leq cm^3$ holds for all $m<n$ where $n>5$. Substituting into the recurrence yields
+    \begin{align*}
+      T(n) &= T(n-2) + n^2 \\
+           &\leq c(n-2)^3 + n^2 \\
+           &= cn^3+(1-6c)n^2 + 24cn -8c \\
+           &\leq cn^3+((1-6c)n+24c)n \\
+           &\leq cn^3
+    \end{align*}
+    the last step holds if we choose $c>1$ because $n>5$. \par
+    By mathematical induction, we conclude that $T(n) \leq cn^3$ holds for all positive integer $n$ when $c > \max\{1, T(1), T(2)/8, T(3)/27, T(4)/64, T(5)/125\}$, i.e. $T(n) = O(n^3)$. \par
+    Second, we have to prove that $f(n) \geq cn^3$ for an appropriate choice of positive constant $c$. \par
+    For the base step, $T(1) \geq c$, $T(2) \geq 8c$, so $T(n) \geq cn^3$ holds for all $c < \min \{ T(1), T(2)/8 \}$ when $n=1,2$. \par
+    For the induction step, assume $T(m) \geq cm^3$ holds for all $m<n$ where $n>2$. Substituting into the recurrence yields
+    \begin{align*}
+      T(n) &= T(n-2) + n^2 \\
+           &\geq c(n-2)^3+n^2 \\
+           &=cn^3 + (1-6c)n^2 + 24cn -8c \\
+           &\geq cn^3
+    \end{align*}
+    the last step holds if we choose $c<1/6$. \par
+    By mathematical induction, we conclude that $T(n) \geq cn^3$ holds for all positive integer $n$ when $c < \min \{1/6, T(1), T(2)/8 \} $, i.e. $T(n) = \Omega(n^3)$.
   \end{enumerate}
 \end{document}
