@@ -221,4 +221,55 @@
     the last step holds if we choose $c<1/6$. \par
     By mathematical induction, we conclude that $T(n) \geq cn^3$ holds for all positive integer $n$ when $c < \min \{1/6, T(1), T(2)/8 \} $, i.e. $T(n) = \Omega(n^3)$.
   \end{enumerate}
+  
+  \section{[TC] Problem 4-2}
+  \begin{enumerate}
+    \item \textbf{Strategy 1} $T(n) = T(n/2) + \Theta(1)$, $T(n) = O(\lg n)$. \par
+    \textbf{Strategy 2} $T(n) = T(n/2) + \Theta(N)$, $T(n) = O(N \lg n)$. \par
+    \textbf{Strategy 3} $T(n) = T(n/2) + \Theta(n)$, $T(n) = O(n)$. \par
+    \item \textbf{Strategy 1} $T(n) = 2T(n/2) + \Theta(n)$, $T(n) = O(n \lg n)$. \par
+    \textbf{Strategy 2} $T(n) = 2T(n/2) + \Theta(N)$, $T(n) = O(Nn)$. \par
+    \textbf{Strategy 3} $T(n) = 2T(n/2) + \Theta(n)$, $T(n) = O(n \lg n)$. \par
+  \end{enumerate}
+  
+  \section{[TC] Problem 4-4}
+  \begin{enumerate}
+    \item \begin{align*}
+      z+z\mathcal{F}(z)+z^2\mathcal{F}(z) &= z + z \sum_{i=0}^{\infty} F_iz^i + z^2 \sum_{i=0}^{\infty} F_iz^i \\
+      &= z + \sum_{i=1}^{\infty} F_{i-1}z^i + \sum_{i=2}^{\infty} F_{i-2}z^i \\
+      &= z + F_0z^1 + \sum_{i=2}^{\infty} (F_{i-2}+F_{i-1})z^i \\
+      &= 0 + z + \sum_{i=2}^{\infty} F_iz^i \\
+      &= \sum_{i=0}^{\infty} F_iz^i \\
+      &= \mathcal{F}(z)
+    \end{align*}
+    \item
+    \begin{align*}
+       &\mathcal{F}(z) = z + z \mathcal{F}(z) + z^2 \mathcal{F}(z) \\
+      \Rightarrow & \mathcal{F}(z)(1-z-z^2) = z \\
+      \Rightarrow & \mathcal{F}(z) = \frac{z}{1-z-z^2} 
+    \end{align*}
+    \begin{align*}
+        & \frac{1}{\sqrt{5}}\left(\frac{1}{1 - \phi z}-\frac{1}{1-\hat{\phi} z}\right)\\
+       =& \frac{1}{\sqrt{5}}\frac{\phi z - \hat{\phi} z}{(1-\phi z)(1-\hat{\phi} z)} \\
+       =& \frac{1}{\sqrt{5}}\frac{\sqrt{5}z}{1-(\phi+\hat{\phi}) z + (\phi \cdot \hat{\phi})z^2} \\
+       =& \frac{z}{1- z - z^2} = \mathcal{F}(z)
+    \end{align*}
+    \item For every constant $k$, define $f_k(x) := \frac{1}{1-kx}$, and we have \\
+    \begin{align*}
+        f_k(x) &= \frac{1}{1-kx} & f_k(0) & = 1 \\
+        f'_k(x) &= \frac{k}{(1-kx)^2} & f'_k(0) & = k \\
+        f''_k(x) &= \frac{k^2}{2(1-kx)^2} & f'_k(0) &= \frac{k^2}{2} \\
+        \cdots & & \cdots \\
+        f^{(n)}_k(x) &= \frac{k^n}{n!(1-kx)^n} & f^{(n)}_k(0) &= \frac{k^n}{n!}
+    \end{align*}
+    Therefore, 
+    \begin{align*}
+        \mathcal{F}(z) &= \frac{1}{\sqrt{5}}\left(\frac{1}{1 - \phi z}-\frac{1}{1-\hat{\phi} z}\right) \\
+        &= \frac{1}{\sqrt{5}}\left(f_{\phi}(z)-f_{\hat{\phi}}(z)\right) \\
+        &= \frac{1}{\sqrt{5}}\left(\sum_{i=0}^{\infty}i!f^{(i)}_{\phi}(0)z^i+\sum_{i=0}^{\infty}i!f^{(i)}_{\hat{\phi}}(0)z^i\right) \\
+        &= \frac{1}{\sqrt{5}}\sum_{i=0}^{\infty}i!\left(\frac{\phi^i}{i!} - \frac{\hat{\phi}^i}{i!}\right)z^i \\
+        &= \sum_{i=0}^{\infty}\frac{1}{\sqrt{5}}\left(\phi^i - \hat{\phi}^i\right)z^i \\
+    \end{align*}
+    \item Since $|\hat{\phi}|<1$, we have $|\hat{\phi}^i| < 1$ and thus $|\hat{\phi}^i|/\sqrt{5}<0.5$ for all positive integer $i$. Therefore, $\left|F_i - \phi^i/\sqrt{5}\right| = |\hat{\phi}^i|/\sqrt{5}<0.5$, i.e. $F_i = \phi^i/\sqrt{5}$ rounded to the nearest integer.
+  \end{enumerate}
 \end{document}
