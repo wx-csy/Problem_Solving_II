@@ -70,14 +70,14 @@ struct rational{
 
     friend ostream& operator << (ostream& os, const rational& num){
         if (num.denominator == 1){
-            cout << num.numerator;
+            os << num.numerator;
         } else {
-            cout << num.numerator << '/' << num.denominator;
+            os << num.numerator << '/' << num.denominator;
         }
         return os;
     }
     friend istream& operator >> (istream& is, rational& num){
-        cin >> num.numerator >> num.denominator;
+        is >> num.numerator >> num.denominator;
         num.reduce();
         return is;
     }

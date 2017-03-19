@@ -61,7 +61,7 @@ public:
     friend istream& operator >> (istream& is, matrix<T>& mat){
         for (unsigned i=0; i < mat.size; i++){
             for (unsigned j=0; j < mat.size; j++){
-                cin >> mat[i][j];
+                is >> mat[i][j];
             }
         }
         return is;
@@ -70,9 +70,9 @@ public:
     friend ostream& operator << (ostream& os, matrix<T>& mat){
         for (unsigned i=0; i < mat.size; i++){
             for (unsigned j=0; j < mat.size; j++){
-                cout << mat[i][j] << (j == mat.size-1 ? "" : " ");
+                os << mat[i][j] << (j == mat.size-1 ? "" : " ");
             }
-            cout << endl;
+            os << endl;
         }
         return os;
     }
