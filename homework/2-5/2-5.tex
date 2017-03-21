@@ -100,14 +100,14 @@
   $$ |E| = N_e(\varnothing) = \sum_{K:K \in P} (-1)^{|K|}N_a(K) =\sum_{i=0}^{n}(-1)^{i}\begin{pmatrix} n \\ i \end{pmatrix}(n-i)! = \sum_{i=0}^{n}(-1)^{i}\frac{n!}{i!} $$
   Therefore, the probability is
   $$ P(E) = |E|/n! = \sum_{i=0}^{n}(-1)^{i}\frac{1}{i!} $$
-  
+
   \section{[CS] Problem 5.3-3}
   Let the sample space $S = \{T,F\}^3$, and $|S| = 8$. $P$ is the uniform probability measure defined on $S$. Let $E_1$ denote the event of at most one tail, i.e. $E_1 = \{FFF, TFF, FTF, FFT\}$, $E_2$ denote the event that all not all flips are identical, i.e. $E_2 = \{TFF, FTF, FFT, TTF, TFT, FTT\}$. Calculate the probability of these events:
   $$ P(E_1) = \frac{|E_1|}{|S|} = \frac{1}{2} = 0.5 $$
   $$ P(E_2) = \frac{|E_2|}{|S|} = \frac{3}{4} = 0.75 $$
   $$ P(E_1 \cap E_2) = \frac{|E_1 \cap E_2|}{|S|} = \frac{3}{8} = 0.375 $$ \par
   Since $P(E_1 \cap E_2) = P(E_1) P(E_2)$, by product principle for independent probabilities, the two events are independent.
-  
+
   \section{[CS] Problem 5.3-4}
   The sample space $S=\{1,2,3,4,5,6\}^2$, and $P$ is the uniform probability measure defined on $S$. \par
   Let $E_{1,i}$ denote the event that ``$i$ dots are on top of the first die'', i.e. $E_{1,i} = \{i1,i2,i3,i4,i5,i6\}$, and $E_{2,j}$ denote the event that ``$j$ dots are on top of the second die'' likewise. Therefore
@@ -115,7 +115,17 @@
   $$ P(E_{2,j}) = \frac{|E_{2,j}|}{|S|} = \frac{1}{6} $$
   $$ P(E_{1,i} \cap E_{2,j}) = \frac{|E_{1,i} \cap E_{2,j}|}{|S|} = \frac{|\{ij\}|}{|S|} = \frac{1}{36} $$
   Since, $P(E_{1,i})P(E_{2,j}) = P(E_{1,i} \cap E_{2,j})$, the two events are independent.
+
+  \section{[CS] Problem 5.3-8}
+  Let the sample space $S$ be the set of all 13-element subset of the 52 cards. Let $E_1$ denote the event that a bridge hand has four aces, $E_2$ denote the event that it has at least one ace, $E_3$ denote the event that it has the ace of spades. $P$ is the uniform probability measure defined on $S$. Calculate the probabilities:
+  $$ P(E_1) = \frac{|E_1|}{|S|} = \begin{pmatrix} 48 \\ 9 \end{pmatrix} / \begin{pmatrix} 52 \\ 13 \end{pmatrix} = \frac{11}{4165} \approx 0.00264 $$
+  $$ P(E_2) = 1 - \frac{|S~\backslash~E_2|}{|S|} = 1 - \begin{pmatrix} 48 \\ 13 \end{pmatrix} / \begin{pmatrix} 52 \\ 13 \end{pmatrix} = \frac{14,498}{20,825} \approx 0.696 $$
+  $$ P(E_3) = 1 - \frac{|S~\backslash~E_3|}{|S|} = 1 - \begin{pmatrix} 51 \\ 13 \end{pmatrix} / \begin{pmatrix} 52 \\ 13 \end{pmatrix} = \frac{1}{4} = 0.25 $$ \par
+  Therefore 
+  $$ P(E_1|E_2) = \frac{|E_1 \cap E_2|}{|E_2|} = \frac{|E_1|}{|E_2|} = \frac{5}{1316} \approx 0.00379$$
+  $$ P(E_1|E_3) = \frac{|E_1 \cap E_3|}{|E_3|} = \frac{|E_1|}{|E_3|} = \frac{44}{4165} \approx 0.01056$$
+  The latter one is larger.
   
-  \section{[CS] Problem 5.3-5}
-  
+  \section{[CS] Problem 5.3-11}
+  $E$ and $F$ are independent if and only if $P(E \cap F) = P(E) P(F)$. Since $E \cap F = \varnothing$, $E$ and $F$ are independent if and only if $P(E) = 0$ or $P(F) = 0$.
 \end{document}
