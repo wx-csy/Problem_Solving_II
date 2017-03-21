@@ -21,7 +21,7 @@
     \item $\{(P,P), (P,N), (P,D), (N,P), (N,D), (D,P), (D, N)\}$ \\
     Weights: \\
     $(P,P), (P,N), (P,D), (N,P), (D,P)$: 1/6; \\
-    $(N,D), (D,N)$: 1/12. 
+    $(N,D), (D,N)$: 1/12.
     \item $P(\text{getting 11 cents}) = P(\{(P,D), (D,P)\}) = 1/3$.
   \end{enumerate}
 
@@ -32,31 +32,31 @@
   Using five-element permutations as model. The sample space $S$ is all the five permutations of the 52 cards, and $|S| = 52^{\underline{5}}$. $P$ is the uniform probability measure defined on $S$. The event $E$ is the set of all the elements of $S$ which are straights, and we have $|E| = 4^5 \times 10 \times 5!$. Therefore, the probability that a five-card hand is a straight is
   $$P(E) = \frac{|E|}{|S|} = \frac{1,228,800}{311,875,200} = \frac{128}{32,487} \approx 0.00394$$ \par
   The answers are same by using two different models.
-  
+
   \section{[CS] Problem 5.1-11}
   We use $T$ or $F$ to represent whether or not he answers a single question correctly. The sample space $S$ is $\{T,F\}^{10}$, and we assume that the weights of all the outcomes are the same, i.e. $P$ is the uniform probability measure defined on $S$. Each problem is worth 10 points. \par
   The event that the student gets a score of 80 or higher is $E_1$, and $|E_1| = 1 + 10 + 10 \times 9/2 = 56$. So the probability is
   $$P(E_1) = \frac{|E_1|}{|S|} = \frac{56}{1024} = \frac{7}{128} \approx 0.0547$$ \par
   The event $E_2$ that the student gets a score of 70 or lower is the complement of $E_1$, therefore
   $$P(E_2) = 1 - P(E_1) = 1 - \frac{7}{128} = \frac{121}{128} \approx 0.945$$
-  
+
   \section{[CS] Problem 5.1-12}
-  Let $S, C, T$ represent square, circle and triangle respectively. The sample space $S$ is $\{S, C, T\}^2$.  The event $E$, is $\{(S,S),(C,C),(T,T)\}$. The probability that the two shapes on the top are the same is
-  $$ P(E) = P((S,S)) + P((C,C)) + P((T,T)) = \frac{1}{36} + \frac{1}{9} + \frac{1}{4} = \frac{7}{18} \approx 0.389 $$
-  
+  Let $S, C, T$ represent square, circle and triangle respectively. The sample space $S$ is $\{S, C, T\}^2$.  The event $E$, is $\{SS,CC,TT\}$ ($SS$ stands for $(S,S)$, the same below). The probability that the two shapes on the top are the same is
+  $$ P(E) = P(SS) + P(CC) + P(TT) = \frac{1}{36} + \frac{1}{9} + \frac{1}{4} = \frac{7}{18} \approx 0.389 $$
+
   \section{[CS] Problem 5.1-13}
   For Event 1, the sample space $S_1$ is the set of all two-element subsets of the 13 spades. $P$ is the uniform probability measure defined on $S_1$. The event $E_1$ is $\{\{\spadesuit \text{A}, \spadesuit \text{K}\}\}$. The probability of Event 1 is
   $$ P(E_1) = \frac{|E_1|}{|S_1|} =  \frac{1}{13\times12/2} = \frac{1}{78} \approx 0.0128 $$ \par
   For Event 2, the sample space $S_2$ is the set of all two-element subsets of all 52 cards. $P$ is the uniform probability measure defined on $S_2$. The event $E_1$ is the sets of all two-element sets of an ace and a king. The probability of Event 2 is
   $$ P(E_2) = \frac{|E_2|}{|S_2|} =  \frac{4 \times 4}{52 \times 51 /2} = \frac{8}{663} \approx 0.0121 $$ \par
     Therefore, the two events are not equally likely.
-    
+
   \section{[CS] Problem 5.2-2}
   Let $E, F$ represent the events that $\spadesuit \text{K}$ or $\spadesuit \text{Q}$ is selected, respectively. The event that the king or queen of spades is among the cards selected is $E \cup F$. Therefore, the probability is
-  $$ P(E \cup F) = P(E)+P(F)-P(E\cap F) = \frac{7}{28} + \frac{7}{28} - \frac{1}{28} = \frac{15}{28} \approx 0.536$$ 
-  
+  $$ P(E \cup F) = P(E)+P(F)-P(E\cap F) = \frac{7}{28} + \frac{7}{28} - \frac{1}{28} = \frac{15}{28} \approx 0.536$$
+
   \section{[CS] Problem 5.2-9}
-  The sample space $S$ is the set of all possible arrangements, and $|S|=n!$. Let $E_i$ denote the event that the $i$-th person who gets the letter intended for him or her. Then, by inclusion-exclusion principle, we have 
+  The sample space $S$ is the set of all possible arrangements, and $|S|=n!$. Let $E_i$ denote the event that the $i$-th person who gets the letter intended for him or her. Then, by inclusion-exclusion principle, we have
   \begin{align*}
     \left| \bigcup_{i=1}^{n} E_i \right| &= \sum_{k=1}^{n}(-1)^{k+1} \sum_{\substack{i_1, i_2, \cdots i_k: \\ 1 \leq i_1 < i_2 < \cdots < i_k \leq n }} \left| \bigcap_{j=1}^k E_{i_j}\right| \\
     &= \sum_{k=1}^{n}(-1)^{k+1}\begin{pmatrix}n\\k\end{pmatrix}(n-k)! \\
@@ -68,7 +68,7 @@
   \end{align*}
   And the probability $P(E)$ is
   $$ P(E) = \sum_{k=0}^{n}(-1)^{k}\frac{n!}{k!} / n! = \sum_{k=0}^{n}(-1)^{k}\frac{1}{k!} $$
-  
+
   \section{[CS] Problem 5.2-10}
   The sample space $S=\{L_1,L_2,\cdots,L_k\}^n$, and $|S| = k^n$. Let $E_i$ represent the event that there is no key in the $i$-th location. For $i_1 < i_2 < \cdots < i_j$, we have
   $$\left| \bigcap_{l=1}^j E_{i_l} \right| = (k-j)^n$$ \par
@@ -78,7 +78,7 @@
   $$ k^n - \sum_{j=1}^{k} (-1)^{j+1} \begin{pmatrix} k \\ j \end{pmatrix} (k-j)^n = \sum_{i=0}^{k} (-1)^{i} \begin{pmatrix} k \\ i \end{pmatrix} (k-i)^n $$
   And the probability $P(E)$ is
   $$ P(E) = \frac{\sum_{i=0}^{k} (-1)^{i} \begin{pmatrix} k \\ i \end{pmatrix} (k-i)^n}{k^n} $$
-  
+
   \section{[CS] Problem 5.2-14}
   Let the sample space $S$ be the set of all possible circular permutations, and $|S|=(2n-1)!$. Let $E_i$ represent the event that the $i$-th couple are side-by-side. For $i_1 < i_2 < \cdots < i_k$, we have
   $$\left| \bigcap_{j=1}^k E_{i_j} \right| = (2n-k-1)!2^k$$ \par
@@ -86,18 +86,36 @@
   $$\left| \bigcup_{i=1}^{n} E_i \right| = \sum_{j=1}^{n} (-1)^{j+1} \sum_{\substack{i_1,i_2,\cdots,i_j: \\ 1 \leq i_1 < i_2 < \cdots < i_j \leq n}} \left| \bigcap_{l=1}^j E_{i_l} \right| = \sum_{i=1}^{n} (-1)^{i+1} \begin{pmatrix} n \\ i \end{pmatrix} (2n-i-1)!2^i$$
   The number of circular permutations that no husband and wife are side-by-side is
   $$(2n-1)!-\sum_{i=1}^{n} (-1)^{i+1} \begin{pmatrix} n \\ i \end{pmatrix} (2n-i-1)!2^i = \sum_{i=0}^{n} (-1)^{i} \begin{pmatrix} n \\ i \end{pmatrix} (2n-i-1)!2^i $$
-  The probability $P(E)$ is 
+  The probability $P(E)$ is
   $$ P(E) = \frac{\sum_{i=0}^{n} (-1)^{i} \begin{pmatrix} n \\ i \end{pmatrix} (2n-i-1)!2^i}{(2n-1)!} $$
-  
+
   \section{[CS] Problem 5.2-15}
   Let $C$ be the set of all these $m$ objects. Let $E_i$ be the set of objects which have the $i$-th property. By inclusion-exclusion principle, we have
   $$\left| \bigcup_{i=1}^{p} E_i \right| = \sum_{j=1}^{p} (-1)^{j+1} \sum_{\substack{i_1,i_2,\cdots,i_j: \\ 1 \leq i_1 < i_2 < \cdots < i_j \leq p}} \left| \bigcap_{l=1}^j E_{i_l} \right| = \sum_{i=1}^{p} (-1)^{i+1} \sum_{K: K \subseteq P, |K| = i} N_a(K)$$
-  And we know that $C = N_a(\varnothing)$. Therefore, 
+  And we know that $C = N_a(\varnothing)$. Therefore,
   $$N_e(\varnothing) = |C| - \left| \bigcup_{i=1}^{p} E_i \right| = \sum_{i=0}^{|P|} (-1)^{i} \sum_{K: K \subseteq P, |K| = i} N_a(K) =  \sum_{K: K \subseteq P}(-1)^{|K|} N_a(K)$$ \par
   Explanation: For each element $b$ in $B$, we define a property $b$ for the functions. A function $f$ has the property $b$ if and only if for every $a \in A$, $(a, b) \notin f$. $N_a(K)$ means the number of the functions from $A$ to $B ~\backslash~ K$, i.e. $N_a(K) = (|B|-|K|)^{|A|}$. $N_e(\varnothing)$ means the number of the onto functions, and
   $$ N_e(\varnothing) = \sum_{K: K \subseteq P}(-1)^{|K|} N_a(K) = \sum_{i=0}^{|B|} (-1)^i \begin{pmatrix} |B| \\ i \end{pmatrix} (|B|-i)^{|A|}$$ \par
   Application to Problem 9: Define $n$ properties for the arrangements. The $i$-th property means that the $i$-th person gets the correct letter. The sample $S$ is the set of all possible arrangements, and $|S| = n!$. The event $E$ is that nobody gets the correct letter, and we have
   $$ |E| = N_e(\varnothing) = \sum_{K:K \in P} (-1)^{|K|}N_a(K) =\sum_{i=0}^{n}(-1)^{i}\begin{pmatrix} n \\ i \end{pmatrix}(n-i)! = \sum_{i=0}^{n}(-1)^{i}\frac{n!}{i!} $$
   Therefore, the probability is
-  $$ P(E) = |E|/n! = \sum_{i=0}^{n}(-1)^{i}\frac{1}{i!} $$                                                                                            
+  $$ P(E) = |E|/n! = \sum_{i=0}^{n}(-1)^{i}\frac{1}{i!} $$
+  
+  \section{[CS] Problem 5.3-3}
+  Let the sample space $S = \{T,F\}^3$, and $|S| = 8$. $P$ is the uniform probability measure defined on $S$. Let $E_1$ denote the event of at most one tail, i.e. $E_1 = \{FFF, TFF, FTF, FFT\}$, $E_2$ denote the event that all not all flips are identical, i.e. $E_2 = \{TFF, FTF, FFT, TTF, TFT, FTT\}$. Calculate the probability of these events:
+  $$ P(E_1) = \frac{|E_1|}{|S|} = \frac{1}{2} = 0.5 $$
+  $$ P(E_2) = \frac{|E_2|}{|S|} = \frac{3}{4} = 0.75 $$
+  $$ P(E_1 \cap E_2) = \frac{|E_1 \cap E_2|}{|S|} = \frac{3}{8} = 0.375 $$ \par
+  Since $P(E_1 \cap E_2) = P(E_1) P(E_2)$, by product principle for independent probabilities, the two events are independent.
+  
+  \section{[CS] Problem 5.3-4}
+  The sample space $S=\{1,2,3,4,5,6\}^2$, and $P$ is the uniform probability measure defined on $S$. \par
+  Let $E_{1,i}$ denote the event that ``$i$ dots are on top of the first die'', i.e. $E_{1,i} = \{i1,i2,i3,i4,i5,i6\}$, and $E_{2,j}$ denote the event that ``$j$ dots are on top of the second die'' likewise. Therefore
+  $$ P(E_{1,i}) = \frac{|E_{1,i}|}{|S|} = \frac{1}{6} $$
+  $$ P(E_{2,j}) = \frac{|E_{2,j}|}{|S|} = \frac{1}{6} $$
+  $$ P(E_{1,i} \cap E_{2,j}) = \frac{|E_{1,i} \cap E_{2,j}|}{|S|} = \frac{|\{ij\}|}{|S|} = \frac{1}{36} $$
+  Since, $P(E_{1,i})P(E_{2,j}) = P(E_{1,i} \cap E_{2,j})$, the two events are independent.
+  
+  \section{[CS] Problem 5.3-5}
+  
 \end{document}
