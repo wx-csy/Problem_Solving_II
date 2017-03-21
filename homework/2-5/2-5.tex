@@ -5,7 +5,7 @@
 \usepackage{mathptmx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-
+\usepackage{tikz}
 \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 
 %\allowdisplaybreaks[4]
@@ -121,11 +121,109 @@
   $$ P(E_1) = \frac{|E_1|}{|S|} = \begin{pmatrix} 48 \\ 9 \end{pmatrix} / \begin{pmatrix} 52 \\ 13 \end{pmatrix} = \frac{11}{4165} \approx 0.00264 $$
   $$ P(E_2) = 1 - \frac{|S~\backslash~E_2|}{|S|} = 1 - \begin{pmatrix} 48 \\ 13 \end{pmatrix} / \begin{pmatrix} 52 \\ 13 \end{pmatrix} = \frac{14,498}{20,825} \approx 0.696 $$
   $$ P(E_3) = 1 - \frac{|S~\backslash~E_3|}{|S|} = 1 - \begin{pmatrix} 51 \\ 13 \end{pmatrix} / \begin{pmatrix} 52 \\ 13 \end{pmatrix} = \frac{1}{4} = 0.25 $$ \par
-  Therefore 
+  Therefore
   $$ P(E_1|E_2) = \frac{|E_1 \cap E_2|}{|E_2|} = \frac{|E_1|}{|E_2|} = \frac{5}{1316} \approx 0.00379$$
   $$ P(E_1|E_3) = \frac{|E_1 \cap E_3|}{|E_3|} = \frac{|E_1|}{|E_3|} = \frac{44}{4165} \approx 0.01056$$
   The latter one is larger.
-  
+
   \section{[CS] Problem 5.3-11}
   $E$ and $F$ are independent if and only if $P(E \cap F) = P(E) P(F)$. Since $E \cap F = \varnothing$, $E$ and $F$ are independent if and only if $P(E) = 0$ or $P(F) = 0$.
+  
+  \section{[CS] Problem 5.3-12}
+  Let $B$ denote a boy, $G$ denote a girl, then the sample space $S = \{BB, BG, GB, GG\}$. Assume every outcome has the same weight, i.e. $P$ is the uniform probability measure. \par
+  Let $E_1$ be the event that the family has two girls, $E_2$ be the event that one of the children is a girl. We have $P(E_1)=0.25$, $P(E_2)=0.75$, therefore
+  $$P(E_1|E_2) = \frac{P(E_1 \cap E_2)}{P(E_2)} = \frac{P(E_1)}{P(E_2)} = \frac{1}{3} $$
+  Let $E_3$ be the event that the children are both boys, $E_4$ be the event that the older child is a boy. We have $P(E_3)=0.25$, $P(E_4)=0.5$, therefore
+  $$P(E_3|E_4) = \frac{P(E_3 \cap E_4)}{P(E_4)} = \frac{P(E_3)}{P(E_4)} = 0.5$$
+  
+  \section{[CS] Problem 5.3-13}
+  Let $A$, $B$, $C$ denote the three curtains. The first step of this process is to determine a curtain behind which is a new car randomly. The second step is that you pick a curtain randomly. The third step is that the emcee rules out a curtain that you didn't pick randomly. We use a tree diagram to illustrate the whole process. \\[0.2cm]
+  %\scriptsize
+  \begin{tikzpicture}[line width = 1pt,
+                    solid/.style = {circle, draw, fill = black, minimum size = 0.3cm},
+                    empty/.style = {circle, draw, fill = white, minimum size = 0.3cm}]
+  \node at (3,-1)[align=center]{Step 1};
+  \node at (6,-1)[align=center]{Step 2};
+  \node at (9,-1)[align=center]{Step 3};
+  \node [empty] (T01) at (0,-7.5) {};
+  \node [empty] (T11) at (3,-4) {A};
+  \node [empty] (T12) at (3,-7.5) {B};
+  \node [empty] (T13) at (3,-11) {C};
+  \node [empty] (T21) at (6,-2.5) {A};
+  \node [empty] (T22) at (6,-4) {B};
+  \node [empty] (T23) at (6,-5) {C};
+  \node [empty] (T24) at (6,-6) {A};
+  \node [empty] (T25) at (6,-7.5) {B};
+  \node [empty] (T26) at (6,-9) {C};
+  \node [empty] (T27) at (6,-10) {A};
+  \node [empty] (T28) at (6,-11) {B};
+  \node [empty] (T29) at (6,-12.5) {C};
+  \node [empty, label = right:{AAB, 1/18}] (T31) at (9,-2) {B};
+  \node [empty, label = right:{AAC, 1/18}] (T32) at (9,-3) {C};
+  \node [empty, label = right:{ABC, 1/9}] (T33) at (9,-4) {C};
+  \node [empty, label = right:{ACB, 1/9}] (T34) at (9,-5) {B};
+  \node [empty, label = right:{BAC, 1/9}] (T35) at (9,-6) {C};
+  \node [empty, label = right:{BBA, 1/18}] (T36) at (9,-7) {A};
+  \node [empty, label = right:{BBC, 1/18}] (T37) at (9,-8) {C};
+  \node [empty, label = right:{BCA, 1/9}] (T38) at (9,-9) {A};
+  \node [empty, label = right:{CAB, 1/9}] (T39) at (9,-10) {B};
+  \node [empty, label = right:{CBA, 1/9}] (T310) at (9,-11) {C};
+  \node [empty, label = right:{CCA, 1/18}] (T311) at (9,-12) {A};
+  \node [empty, label = right:{CCB, 1/18}] (T312) at (9,-13) {B};
+  
+  \node at (1.5,-5.1) {1/3};
+  \node at (1.5,-7.2) {1/3};
+  \node at (1.5,-9.8) {1/3};
+  \draw (T01)--(T11);
+  \draw (T01)--(T12);
+  \draw (T01)--(T13);
+  
+  \node at (4.5,-2.8) {1/3};
+  \node at (4.5,-3.7) {1/3};
+  \node at (4.5,-4.8) {1/3};
+  \node at (4.5,-6.3) {1/3};
+  \node at (4.5,-7.2) {1/3};
+  \node at (4.5,-8.6) {1/3};
+  \node at (4.5,-10.2) {1/3};
+  \node at (4.5,-11.3) {1/3};
+  \node at (4.5,-12.1) {1/3};
+  \draw (T11)--(T21);
+  \draw (T11)--(T22);
+  \draw (T11)--(T23);
+  \draw (T12)--(T24);
+  \draw (T12)--(T25);
+  \draw (T12)--(T26);
+  \draw (T13)--(T27);
+  \draw (T13)--(T28);
+  \draw (T13)--(T29);
+  
+  \node at (7.5,-2) {1/2};
+  \node at (7.5,-3) {1/2};
+  \node at (7.5,-3.7) {1};
+  \node at (7.5,-4.7) {1};
+  \node at (7.5,-5.7) {1};
+  \node at (7.5,-7) {1/2};
+  \node at (7.5,-8) {1/2};
+  \node at (7.5,-8.7) {1};
+  \node at (7.5,-9.7) {1};
+  \node at (7.5,-10.7) {1};
+  \node at (7.5,-12) {1/2};
+  \node at (7.5,-13) {1/2};
+  \draw (T21)--(T31);
+  \draw (T21)--(T32);
+  \draw (T22)--(T33);
+  \draw (T23)--(T34);
+  \draw (T24)--(T35);
+  \draw (T25)--(T36);
+  \draw (T25)--(T37);
+  \draw (T26)--(T38);
+  \draw (T27)--(T39);
+  \draw (T28)--(T310);
+  \draw (T29)--(T311);
+  \draw (T29)--(T312);
+  \end{tikzpicture} \par
+  \normalsize
+  The sample space $S = \{AAB, AAC, ABC, ACB, BAC, BBA, BBC, BCA, CAB, CBA, CCA, CCB\}$. The weight of each outcome is shown in the diagram. Let $E_1$ be the event that the car is behind the curtain you first chose, i.e. $E_1 = \{AAB, AAC, BBA, BBC, CCA, CCB\}$, $E_2$ be the event that the car is behind the curtain you switch. $E_2$ is the complement of $E_1$. Calculate the probabilities:
+  $$ P(E_1) = 6 \times \frac{1}{18} = \frac{1}{3}, \quad P(E_2) = 1 - P(E_2) = \frac{2}{3}$$
+  So you'd better switch.
 \end{document}
