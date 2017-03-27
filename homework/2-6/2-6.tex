@@ -1,0 +1,118 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{论题~2-6~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[CS] Problem 5.6-4}
+  Let $X$ denote the amount of money one wins by playing this game once, and $X$ is a random variable. The expectation of $X$ is
+  $$E(X) = \frac{1}{4}(1+E(X)) + \frac{1}{4} \times 2 + \frac{1}{4} \times 3 + \frac{1}{4} \times 4$$
+  Solve this equation, we obtain
+  $$E(X) = \frac{10}{3} \approx 3.33$$ \par
+  Therefore, the maximum amount of money a rational person would pay to play this game is \$3.33 .
+
+  \section{[CS] Problem 5.6-8}
+  \begin{align*}
+    \sum_{i=1}^{n} E(X|F_i)P(F_i) &= \sum_{i=1}^n P(F_i) \sum_{s:s \in F_i} X(s) \frac{P(s)}{P(F_i)} \\
+    &= \sum_{i=1}^n \sum_{s:s \in F_i} X(s)P(s) \\
+    &= \sum_{s:s \in S} X(s)P(s) \\
+    &= E(X)
+  \end{align*}
+  
+  \section{[CS] Problem 5.7-1}
+  $X$ follows the binomial distribution with parameters $n=5$ and $p=0.6$. The expectation and variance is
+  $$E(X) = 5 \times 0.6 = 3$$
+  $$V(X) = 5 \times 0.6 \times 0.4 = 1.2$$
+  Therefore, 
+  $$E(X-3) = E(X) - E(3) = 3 - 3 =0$$
+  $$E((X-3)^2) = E((X-E(X))^2) = V(X) = 1.2$$
+  
+  \section{[CS] Problem 5.7-2}
+  Every question is one Bernoulli trial with probability 0.6 of success, therefore
+  $E(X_i) = p = 0.6$
+  $V(X_1) = p(1-p) = 0.24$
+  The sum of the variances of $X_1$ through $X_5$ is 1.2, which equals to the variance of $X$, because random variables $X_1$ through $X_5$ are independent.
+  
+  \section{[CS] Problem 5.7-4}
+  Let random variable $X$ be the number of right answers. $X$ follows the binomial distribution with parameters $n=100$ and $p=0.6$. Therefore
+  $$ E(X) = np = 100 \times 0.6 = 60$$
+  $$ V(X) = np(1-p) = 100 \times 0.6 \times 0.4 = 24 $$
+  $$ \sigma(X) = \sqrt{V(X)} = 2 \sqrt{6} \approx 4.90 $$
+  
+  \section{[CS] Problem 5.7-6}
+  Let random variable $X_i$ be the number of right answers in an $i$-question quiz. $X_i$ follows the binomial distribution with parameters $n=i$ and $p=0.8$. Therefore
+  $$ V(X_{25}) = 25p(1-p) = 4$$
+  $$ V(X_{100}) = 100p(1-p) = 16$$
+  $$ V(X_{400}) = 400p(1-p) = 64$$ \par
+  To ``correct'' these variances, we can use the standard deviation, i.e. the square root of the variance, instead of variance.
+  
+  \section{[CS] Problem 5.7-12}
+  Assume there are $n$ questions on a short-answer test. Let random variable $X$ denote the number of questions a student who knows 80\% of the course material answers correctly. $X$ follows the binomial distribution with parameter $n$ and $p=0.8$. \par
+  By the central limit theorem, the distribution of $X$ converges to the normal distribution with expectation $np$ and variance $np(1-p)$, as $n$ grows large. Hence, if we are 95\% sure that such student gets a grade between 75\% and 85\%, 2 standard deviations should not be greater than 5\% of $n$ approximately, i.e.
+  $$ 2\sqrt{np(1-p)} \leq 0.05n $$
+  Solve this inequality and we get 
+  $$ n \geq 1600 p(1-p) = 256$$ \par
+  Therefore, about 256 questions are needed. (Actually, the exact minimum of $n$ is 245)
+  
+  \section{[CS] Problem 5.7-16}
+  \begin{enumerate}
+    \item 
+    \begin{align*}
+      V(X) &= E((X-E(X))^2) \\
+       &= \sum_{i=1}^n(X(x_i)-E(X))^2P(x_i) \\
+       &\geq \sum_{i=1}^k (X(x_i)-E(X))^2P(x_i) \\
+       &> \sum_{i=1}^k P(x_i) r^2 \\
+       &= P(E) r^2
+    \end{align*}
+    \item
+    Dividing by $r^2$ on both sides yields
+    $$ P(E) < V(X)/r^2 $$
+    That means, the probability of $|X(x) - E(X)| \geq r$ is no more than $V(X)/r^2$.
+  \end{enumerate}
+  
+  \section{[CS] Problem 5.7-18}
+  \begin{enumerate}
+    \item $X$ follows the binomial distribution with parameter $n$ and $p$. The expectation of $X$ is $np$. By Chebyshev's law, we get
+    $$ P(|X(x)-np| \geq sn) = P(|X(x)-E(X)| \geq sn) \leq V(X)/(s^2n^2) = np(1-p)/(s^2n^2) = p(1-p)/(s^2n) $$ 
+     
+    \item For every positive $\epsilon$ (arbitrarily small), if we take $n > \frac{p(1-p)}{s^2 \epsilon}$, $P(|X(x) - np| < ns) > 1 - \epsilon $ holds, because
+        \begin{align*}
+          P(|X(x) - np| < ns) &= 1 - P(|X(x)-E(X)| \geq sn) \\
+          & > 1 - p(1-p)/(s^2n) \\
+          &\geq 1 - \frac{p(1-p)}{s^2} \frac{s^2\epsilon}{p(1-p)} \\
+          &= 1 - \epsilon
+        \end{align*}
+    That means, the probability of $X(x)$ being between $np-sn$ and $np+sn$ can be arbitrarily close to 1 if $n$ is sufficiently large.
+  \end{enumerate}
+  
+  \section{[TC] Problem 5.2-1}
+  When hiring exactly once, the first candidate is the best candidate among the $n$ candidates. Therefore, the probability of hiring exactly once is $1/n$. \par
+  When hiring exactly $n$ times, the candidates are in increasing order of quality. Since there are $n!$ possible permutations of these candidates, the probability of hiring exactly $n$ times is $1/n!$.
+  
+  \section{[TC] Problem 5.2-2}
+  The first candidate must be hired. Despite the first candidate, exactly one of the remaining candidates is hired. Let $p_i$ denote the probability that the $i-$th candidate is hired, and we have $p_i = 1/i$. Then the probability of hiring twice, denoted as $P$, is
+  \begin{align*}
+    P &= \sum_{i=2}^{n} (1-p_2) \cdots p_i \cdots (1-p_n) \\
+    &= \sum_{i=2}^{n} (1-p_2) \cdots (1-p_n) \frac{p_i}{1-p_i}\\
+    &= \sum_{i=2}^{n} \left( \prod_{j=2}^{n} (1-p_j) \right) \frac{p_i}{1-p_i}\\
+    &= \sum_{i=2}^{n} \left( \prod_{j=2}^{n} \frac{j-1}{j} \right) \frac{1/i}{1-1/i}\\
+    &= \frac{1}{n}  \sum_{i=2}^{n} \frac{1}{i-1}\\
+    &= \frac{\ln n}{n} + O(1/n)
+  \end{align*}
+  
+  \section{[TC] Problem 5.2-4}
+  Let $X_i$ be the indicator random variable associated with the event that the $i-$th customer gets his own hat back. We have $X = X_1 + X_2 + \cdots + X_n$, and by the linearity of expectation, we get
+  $$ E[X] = E \left[\sum_{i=1}^{n} X_i\right] = \sum_{i=1}^{n} E[X_i] = \sum_{i=1}^{n} 1/n = 1$$
+\end{document}
