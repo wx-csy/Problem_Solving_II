@@ -17,7 +17,7 @@
   \maketitle
 
   \section{[CS] Problem 5.6-4}
-  Let $X$ denote the amount of money one wins by playing this game once, and $X$ is a random variable. The expectation of $X$ is
+  Let $X$ denote the amount of money one wins by playing this game once, and $X$ is a random variable. The expectation of $X$ satisfies
   $$E(X) = \frac{1}{4}(1+E(X)) + \frac{1}{4} \times 2 + \frac{1}{4} \times 3 + \frac{1}{4} \times 4$$
   Solve this equation, we obtain
   $$E(X) = \frac{10}{3} \approx 3.33$$ \par
@@ -41,8 +41,7 @@
 
   \section{[CS] Problem 5.7-2}
   Every question is one Bernoulli trial with probability 0.6 of success, therefore
-  $E(X_i) = p = 0.6$
-  $V(X_1) = p(1-p) = 0.24$
+  $E(X_i) = p = 0.6$ and $V(X_1) = p(1-p) = 0.24$. 
   The sum of the variances of $X_1$ through $X_5$ is 1.2, which equals to the variance of $X$, because random variables $X_1$ through $X_5$ are independent.
 
   \section{[CS] Problem 5.7-4}
@@ -109,7 +108,7 @@
     &= \sum_{i=2}^{n} \left( \prod_{j=2}^{n} (1-p_j) \right) \frac{p_i}{1-p_i}\\
     &= \sum_{i=2}^{n} \left( \prod_{j=2}^{n} \frac{j-1}{j} \right) \frac{1/i}{1-1/i}\\
     &= \frac{1}{n} \sum_{i=2}^{n} \frac{1}{i-1}\\
-    &= \frac{\ln n}{n} + O(1/n)
+    &= \frac{\ln n}{n} + \Theta(1/n)
   \end{align*}
 
   \section{[TC] Problem 5.2-4}
@@ -153,7 +152,7 @@
       \li \While $r \neq 0$
           \Do 
       \li $t = \proc{Random}(1,n)$
-      \li \If $T[t] = x$
+      \li \If $A[t] = x$
           \Do
       \li \Return $t$
       \li \Else
