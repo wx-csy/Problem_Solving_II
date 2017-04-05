@@ -186,5 +186,26 @@
           &= n \sum_{i=1}^{n} \frac{1}{i} \\
           &= n \ln n + \Theta(n)
         \end{align*}
+        
+    \item The average running time of \proc{Deterministic-Search} is $\Theta((1 + 2 + \cdots + n)/n) = \Theta((n+1)/2) = \Theta(n)$. \par
+    The worst case occurs when $A[n] = x$, so the worst-case running time is $\Theta(n)$.
+    \item The probability that the minimum $i$ such that $A[i] = x$ is $i_0$ is
+    $$ P(\min_{A[i]=x} i = i_0) = \binom{n-i_0}{k-1}/\binom{n}{k} $$
+    Let $X$ denote the average running time, then we have 
+    \begin{align*}
+       X &= \Theta(1) \sum_{i_0 = 1}^{n-k+1} P(\min_{A[i]=x} i = i_0) i \\
+       &= \Theta(1) \sum_{i_0 = 1}^{n-k+1} \binom{n-i_0}{k-1}i_0 / \binom{n}{k} \\
+       &= \Theta(1) \frac{n+1}{k+1} \\
+       &= \Theta\left(\frac{n}{k+1}\right)
+    \end{align*}
+    The worst-case occurs when the last $k$ elements are all $x$. So the worst-case running time is $\Theta(n-k+1) = \Theta(n-k)$.
+    \item The running time is always $\Theta(n+1)=\Theta(n)$, for any input. So the average-case running time and the worst-case running time are both $\Theta(n)$.
+    \item The running time of \proc{Scramble-Search} is the running time of generating random permutation, plus the time of searching. Assume the running time of randomly permuting is $\Theta(n)$. \par
+    For $k=0$, the worst-case and expected running time are both $\Theta(n)+\Theta(n) = \Theta(n)$. \par
+    For $k=1$, the worst-case running time is $\Theta(n) + \Theta(n) = \Theta(n)$, the average-case running time $\Theta(n) + \Theta((n+1)/2) = \Theta(n)$. \par
+    For $k\geq 1$, the worst-case running time is $\Theta(n)+\Theta(n-k) = \Theta(n)$, the average-case running time is $\Theta(n) + \Theta \left(\frac{n}{k+1}\right) = \Theta(n)$.
+    \item I prefer \proc{Deterministic-Search}. \par
+    First, I will not use \proc{Random-Search}, because it performs worse than the other two algorithms in average, and its running time is not upper bounded for a certain input. \par
+    In \proc{Scramble-Search}, every element will be visited at least once because the whole input will be randomly permuted. However, in \proc{Deterministic-Search}, every element will be visited at most once because only the first element you want to search for and the elements before it will be visited. So \proc{Deterministic-Search} performs better than \proc{Scramble-Search}.
   \end{enumerate}
 \end{document}
