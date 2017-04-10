@@ -1,0 +1,280 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{论题~2-8~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[TC] Problem 10.1-4}
+  \begin{codebox}
+      \Procname{$\proc{Enqueue}(Q, x)$}
+      \li \If ($\attrib{Q}{head} \isequal \attrib{Q}{tail} + 1$) or ($\attrib{Q}{head} \isequal 1$ and $\attrib{Q}{tail} \isequal \attrib{Q}{length}$)
+      \li \Do \Error ``overflow''
+          \End
+      \zi $\cdots \cdots$
+  \end{codebox}
+  \begin{codebox}
+      \Procname{$\proc{Dequeue}(Q, x)$}
+      \li \If ($\attrib{Q}{head} \isequal \attrib{Q}{tail}$)
+      \li \Do \Error ``underflow''
+          \End
+      \zi $\cdots \cdots$
+  \end{codebox}
+
+  \section{[TC] Problem 10.1-5}
+  \begin{codebox}
+      \Procname{$\proc{Push-Front}(Q, x)$}
+      \zi \Comment $Q$ is an array, with two indices $tail$ and $head$
+      \li $\attrib{Q}{head} \gets \attrib{Q}{head} - 1$
+      \li \If $\attrib{Q}{head} \isequal 0$
+      \li \Do
+          $\attrib{Q}{head} \gets \attrib{Q}{length}$
+          \End
+      \li $Q[\attrib{Q}{head}] \gets x$
+  \end{codebox}
+
+  \begin{codebox}
+      \Procname{$\proc{Pop-Front}(Q)$}
+      \li $x \gets Q[\attrib{Q}{head}]$
+      \li \If $\attrib{Q}{head} \isequal \attrib{Q}{length}$
+      \li \Do
+          $\attrib{Q}{head} \gets 1$
+      \li \Else
+        $\attrib{Q}{head} \gets \attrib{Q}{head} + 1$
+          \End
+      \li \Return $x$
+  \end{codebox}
+
+  \begin{codebox}
+      \Procname{$\proc{Push-Back}(Q, x)$}
+      \li $Q[\attrib{Q}{tail}] \gets x$
+      \li \If $\attrib{Q}{tail} \isequal \attrib{Q}{length}$
+      \li \Do
+          $\attrib{Q}{tail} \gets 1$
+      \li \Else
+          $\attrib{Q}{tail} \gets \attrib{Q}{tail} + 1 $
+          \End
+  \end{codebox}
+
+  \begin{codebox}
+      \Procname{$\proc{Pop-Back}(Q)$}
+      \li $\attrib{Q}{tail} \gets \attrib{Q}{tail} - 1$
+      \li \If $\attrib{Q}{tail} \isequal 0$
+      \li \Do
+          $\attrib{Q}{tail} \gets \attrib{Q}{length}$
+          \End
+      \li $ x \gets Q[\attrib{Q}{tail}] $
+      \li \Return $x$
+  \end{codebox}
+
+  \section{[TC] Problem 10.1-6}
+  \begin{codebox}
+      \Procname{$\proc{Enqueue}(S1, S2, x)$}
+      \zi \Comment $S1$ and $S2$ are two stacks
+      \li \While not $\proc{Stack-Empty}(S2)$
+      \li \Do
+             $\proc{Push}(S1, \proc{Pop}(S2))$
+          \End
+      \li $\proc{Push}(S1, x)$
+  \end{codebox}
+  \begin{codebox}
+      \Procname{$\proc{Dequeue}(S1, S2)$}
+      \li \While not $\proc{Stack-Empty}(S1)$
+      \li \Do
+             $\proc{Push}(S2, \proc{Pop}(S1))$
+          \End
+      \li \Return $\proc{Pop}(S2)$
+  \end{codebox}
+  For each operation, the best-case running time is $O(1)$, the worst-case running time is $O(length)$, and the average-case running time is $O(length)$, where $length$ is the length of the queue.
+  
+  \section{[TC] Problem 10.2-1}
+  Operation \proc{Insert} can be implemented in $O(1)$ time. 
+  \begin{codebox}
+      \Procname{$\proc{Insert}(L, x)$}
+      \li $\attrib{x}{next} \gets \attrib{L}{head}$
+      \li $\attrib{L}{head} \gets x$
+  \end{codebox}
+  \par
+  Operation \proc{Delete} can be implemented in an average-case running time of $O(1)$. (assuming that copying the key takes a running time of $O(1)$, and no pointers to the elements of the linked list are outside the list itself)
+  \begin{codebox}
+      \Procname{$\proc{Delete}(L, x)$}
+      \li \If $\attrib{x}{next} \neq \const{nil}$ \Comment judge whether $x$ is the last element
+      \li \Do  $\attrib{x}{key} \gets \attribb{x}{next}{key}$
+      \li   $\attrib{x}{next} \gets \attribb{x}{next}{next}$
+      \li \Else
+      \li \If $\attrib{L}{head} = x$
+      \li \Do $\attrib{L}{head} = \const{nil}$
+      \li \Else 
+            $y \gets \attrib{L}{head}$
+      \li \While $\attrib{y}{next} \neq x$
+      \li \Do $y \gets \attrib{y}{next}$
+          \End
+      \li $\attrib{y}{next} \gets \const{nil}$
+          \End
+  \end{codebox}
+  Operation \proc{Delete} can be implemented in a best-case running time of $O(1)$, as long as we use a sentinel (a dummy object), as the textbook states in page 238-239.
+  \begin{codebox}
+      \Procname{$\proc{Delete'}(L, x)$}
+      \li \If $\attribb{x}{next}{next} \isequal x$
+      \zi \Comment the list contains only $x$ and the dummy object
+      \li \Do $\attribb{x}{next}{next} \gets \attrib{x}{next}$
+      \li \Else
+      \li $\attrib{x}{key} \gets \attribb{x}{next}{key}$
+      \li $\attrib{x}{next} \gets \attribb{x}{next}{next}$
+          \End
+  \end{codebox}
+
+  \section{[TC] Problem 10.2-2}
+  \begin{codebox}
+      \Procname{$\proc{Stack-Empty}(L)$}
+      \li \Return $\attrib{L}{head} \isequal \const{nil}$
+  \end{codebox}
+  \begin{codebox}
+      \Procname{$\proc{Push}(L, x)$}
+      \li $\attrib{x}{next} \gets \attrib{L}{head}$
+      \li $\attrib{L}{head} \gets x$
+  \end{codebox}
+  \begin{codebox}
+      \Procname{$\proc{Pop}(L)$}
+      \li \If $\attrib{L}{head} \isequal \const{nil}$
+      \li \Do
+          \Error ``underflow''
+          \End
+      \li $x \gets \attrib{L}{head}$
+      \li $\attrib{L}{head} \gets \attribb{L}{head}{next}$
+      \li \Return $x$
+  \end{codebox}
+
+  \section{[TC] Problem 10.2-3}
+  We should add an attribute $tail$, pointing to the last element of the list.
+  \begin{codebox}
+      \Procname{$\proc{Enqueue}(L, x)$}
+      \li \If $\attrib{L}{head} \isequal \const{nil}$
+      \li \Do $\attrib{L}{head} \gets x$
+      \li     $\attrib{L}{tail} \gets x$
+      \li \Else
+      \li     $\attribb{L}{tail}{next} \gets x$
+      \li     $\attrib{L}{tail} \gets x$
+          \End
+  \end{codebox}
+  \begin{codebox}
+      \Procname{$\proc{Dequeue}(L)$}
+      \li \If $\attrib{L}{head} \isequal \const{nil}$
+      \li \Do \Error ``underflow''
+      \li \ElseIf $\attrib{L}{head} \isequal \attrib{L}{tail} $
+      \li \Do $x \gets \attrib{L}{head}$
+      \li     $\attrib{L}{head} \gets \const{nil}$
+      \li     $\attrib{L}{tail} \gets \const{nil}$
+      \li \Else
+      \li     $x \gets \attrib{L}{head}$
+      \li     $\attrib{L}{head} \gets \attribb{L}{head}{next}$
+          \End
+      \li \Return $x$
+  \end{codebox}
+
+  \section{[TC] Problem 10.3-4}
+  When we allocate an object, we store the object in position $free$, and increment $free$ by 1. \par
+  When we free an object, we first copy the last element (both key and pointers), denoted by $P1$, to the position which the object we want to free is in, denoted by $P2$. Then adjust the corresponding pointers ($\attribb{P2}{next}{prev} \gets P2$ if $\attrib{P2}{next} \neq \const{nil}$, and  $\attribb{P2}{prev}{next} \gets P2$ if $\attrib{P2}{prev} \neq \const{nil}$). Finally, decrement $free$ by 1.
+
+  \section{[TC] Problem 10.3-5}
+  \begin{codebox}
+    \Procname{$\proc{Swap-Elements}(i, j)$}
+    \zi \Comment this procedure swaps two elements in doubly linked list(s) without changing the logical structure
+    \li \If $i \isequal j$  \Comment judge whether $i \isequal j$
+    \li \Do \Return
+        \End
+    \li \If $i.next \isequal j$ or $j.next \isequal i$ \Comment judge whether $i$ and $j$ are adjacent
+    \li \Do Exchange $key[i]$ with $key[j]$
+    \li     \Return
+        \End
+    \zi \Comment $i$ and $j$ are neither the same nor adjacent
+    \li Exchange $key[i]$ with $key[j]$, $prev[i]$ with $prev[j]$, $next[i]$ with $next[j]$
+    \li \If $next[i] \neq \const{nil}$
+    \li \Do $prev[next[i]] \gets i$
+        \End
+    \li \If $next[j] \neq \const{nil}$
+    \li \Do $prev[next[j]] \gets j$
+        \End
+    \li \If $prev[i] \neq \const{nil}$
+    \li \Do $next[prev[i]] \gets i$
+        \End
+    \li \If $prev[j] \neq \const{nil}$
+    \li \Do $next[prev[j]] \gets j$
+        \End
+  \end{codebox}
+
+  \begin{codebox}
+    \Procname{$\proc{Compactify-List}(L, F)$}
+    \zi \Comment make the free list a doubly linked list
+    \li $x \gets \attrib{F}{head}$
+    \li \If $x \neq \const{nil}$
+    \li \Do  $\attrib{x}{prev} \gets \const{nil}$
+        \End
+    \li \While $\attrib{x}{next} \neq \const{nil}$
+    \li \Do $\attribb{x}{next}{prev} \gets x$
+    \li     $x \gets \attrib{x}{next}$
+        \End
+    \zi \Comment move the elements of $L$
+    \li $i \gets 1$
+    \li $x \gets \attrib{L}{head}$
+    \li \While $x \neq \const{nil}$
+    \li \Do $y = \attrib{x}{next}$ \Comment note that `$x$' will point to the wrong element after swapping
+    \li     $\proc{Swap-Elements}(x,i)$
+    \li     $i \gets i+1$
+    \li     $x = y$
+        \End
+  \end{codebox} \par
+  The correctness of the first loop is obvious. We use a loop invariant to prove the partial correctness of the second loop:
+  \begin{quote}
+    Prior to the $i$-th iteration, the first $i-1$ elements of $L$ occupy array positions $1,2, \ldots, i-1$.
+  \end{quote} \par
+  \textbf{Initialization} Prior to the first iteration, $i-1 = 0$, the invariant holds. \par
+  \textbf{Maintenance} Prior to the $k$-th iteration, the first $k-1$ elements of $L$ occupy array positions $1,2, \ldots, k-1$. After the iteration, the $k$-th element has been moved to position $k$, so the loop invariant still holds.\par
+  \textbf{Termination} Finally, we get $i = n + 1$. Therefore, all the elements in $L$ occupy array positions $1,2, \ldots, n$. \par
+  Note that the data and the logical structure of the two linked lists are not changed during the whole procedure, so the rest $m-n$ positions must stores the free list. In each loop, every element in the free list or object list is visited exactly once, so the procedure can terminate. Hence, the procedure is totally correct.
+  
+  \section{[TC] Problem 10.4-2}
+  \begin{codebox}
+      \Procname{$\proc{Print-Keys}(T)$}
+      \li \If $T \neq \const{nil}$
+      \li \Do print $\attrib{T}{key}$
+      \li $\proc{Print-Keys}(\attrib{T}{left})$
+      \li $\proc{Print-Keys}(\attrib{T}{right})$
+          \End
+  \end{codebox}
+  
+  \section{[TC] Problem 10.4-3}
+  \begin{codebox}
+      \Procname{$\proc{Print-Keys}(T)$}
+      \li let $S$ be a new stack
+      \li $\proc{Push}(S,T)$
+      \li \While not $\proc{Empty}(S)$
+      \li \Do $x \gets \proc{Pop}(S)$
+      \li    \If $x \neq \const{nil}$
+      \li    \Do print $\attrib{T}{key}$
+      \li       $\proc{Push}(S, \attrib{T}{left})$
+      \li       $\proc{Push}(S, \attrib{T}{right})$
+  \end{codebox}
+  
+  \section{[TC] Problem 10.4-4}
+  \begin{codebox}
+      \Procname{$\proc{Print-Keys}(T)$}
+      \li \If $T \neq \const{nil}$
+      \li \Do print $\attrib{T}{key}$
+      \li $\proc{Print-Keys}(\attrib{T}{left-child})$
+      \li $\proc{Print-Keys}(\attrib{T}{right-sibling})$
+          \End
+  \end{codebox}
+\end{document}
