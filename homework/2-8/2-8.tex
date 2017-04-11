@@ -98,9 +98,9 @@
       \li \Return $\proc{Pop}(S2)$
   \end{codebox}
   For each operation, the best-case running time is $O(1)$, the worst-case running time is $O(length)$, and the average-case running time is $O(length)$, where $length$ is the length of the queue.
-  
+
   \section{[TC] Problem 10.2-1}
-  Operation \proc{Insert} can be implemented in $O(1)$ time. 
+  Operation \proc{Insert} can be implemented in $O(1)$ time.
   \begin{codebox}
       \Procname{$\proc{Insert}(L, x)$}
       \li $\attrib{x}{next} \gets \attrib{L}{head}$
@@ -116,7 +116,7 @@
       \li \Else
       \li \If $\attrib{L}{head} = x$
       \li \Do $\attrib{L}{head} = \const{nil}$
-      \li \Else 
+      \li \Else
             $y \gets \attrib{L}{head}$
       \li \While $\attrib{y}{next} \neq x$
       \li \Do $y \gets \attrib{y}{next}$
@@ -124,7 +124,7 @@
       \li $\attrib{y}{next} \gets \const{nil}$
           \End
   \end{codebox}
-  Operation \proc{Delete} can be implemented in a best-case running time of $O(1)$, as long as we use a sentinel (a dummy object), as the textbook states in page 238-239.
+  Operation \proc{Delete} can be implemented in a worst-case running time of $O(1)$, as long as we use a sentinel (a dummy object), as the textbook states in page 238-239.
   \begin{codebox}
       \Procname{$\proc{Delete'}(L, x)$}
       \li \If $\attribb{x}{next}{next} \isequal x$
@@ -244,7 +244,7 @@
   \textbf{Maintenance} Prior to the $k$-th iteration, the first $k-1$ elements of $L$ occupy array positions $1,2, \ldots, k-1$. After the iteration, the $k$-th element has been moved to position $k$, so the loop invariant still holds.\par
   \textbf{Termination} Finally, we get $i = n + 1$. Therefore, all the elements in $L$ occupy array positions $1,2, \ldots, n$. \par
   Note that the data and the logical structure of the two linked lists are not changed during the whole procedure, so the rest $m-n$ positions must stores the free list. In each loop, every element in the free list or object list is visited exactly once, so the procedure can terminate. Hence, the procedure is totally correct.
-  
+
   \section{[TC] Problem 10.4-2}
   \begin{codebox}
       \Procname{$\proc{Print-Keys}(T)$}
@@ -254,7 +254,7 @@
       \li $\proc{Print-Keys}(\attrib{T}{right})$
           \End
   \end{codebox}
-  
+
   \section{[TC] Problem 10.4-3}
   \begin{codebox}
       \Procname{$\proc{Print-Keys}(T)$}
@@ -267,7 +267,7 @@
       \li       $\proc{Push}(S, \attrib{T}{left})$
       \li       $\proc{Push}(S, \attrib{T}{right})$
   \end{codebox}
-  
+
   \section{[TC] Problem 10.4-4}
   \begin{codebox}
       \Procname{$\proc{Print-Keys}(T)$}
@@ -277,4 +277,29 @@
       \li $\proc{Print-Keys}(\attrib{T}{right-sibling})$
           \End
   \end{codebox}
+
+  \section{[TC] Problem 10-3}
+  \begin{enumerate}
+    \item For \proc{Compact-List-Search'}, it randomly chooses at most $t$ indices. If there is a key with value $k$, the procedure returns the index. Otherwise, it picks the largest key which is smaller than $k$. Then, it searches from the key. Since the list is sorted, \proc{Compact-List-Search'} works correctly, and it returns the same answer as \proc{Compact-List-Search}. \par
+        We only have to consider the case that the \For loop was executed less than $t$ times. For each iteration of \While loop, the pointer $i$ advances, and the distance from $i$ to the desired key is decremented by 1. However, for each \While iteration in \proc{Compact-List-Search}, it not only advances the pointer but also randomly picks an element and judge whether it is closer to the desired key, therefore, the distance from $i$ to the desired key is decremented by at least 1. Hence, the total number of iterations of both the \For and \While loops within \proc{Compact-List-Search'} is at least $t$.
+    \item The procedure ends in either line 7 or line 10-12, which takes an expected running time of $O(t)$ and $O(t+E[X_t])$ respectively. So the expected running time of $\proc{Compact-List-Search'}(L,n,k,t)$ is $O(t+E[X_t])$.
+    \item When $r$ is not less than the distance from the first element to $k$, the probability of $X_t \geq r$ is $(1-r/n)^t$. When $r$ is less than the the distance from the first element to $k$, $X_t \geq r$ is impossible. Therefore, we have
+    $$ P(X_t \geq r) \leq (1-r/n)^t $$ \par
+    By Equation (C.25), we get
+    $$ E[X_t] = \sum_{r=1}^{n} P(X_t \geq r) \leq \sum_{r=1}^{n} (1-r/n)^t $$
+    \item Since $r^t \leq \int_{r}^{r+1} r^t \text{d} r $ when $r, t \geq 0$, we have
+    $$ \sum_{r=0}^{n-1} r^t \leq \int_{0}^{n} r^t \text{d} r = n^{t+1}/(t+1) $$
+    \item By \emph{\textbf{c.}} and \emph{\textbf{d.}}, we have
+    \begin{align*}
+      E[X_t] &\leq \sum_{r=1}^{n} (1-r/n)^t \\
+      &= \sum_{r=1}^{n} (n-r)^t/n^t \\
+      &= \sum_{r=0}^{n-1} (r)^t/n^t \\
+      &\leq n^{t+1}/(t+1)/n^t \\
+      &= n/(t+1)
+    \end{align*}
+    \item By \emph{\textbf{b.}} and \emph{\textbf{e.}}, the expected running time of $\proc{Compact-List-Search'}(L,n,k,t)$ is
+    $$ O(t+E[X_t]) = O(t+n/(t+1)) = O(t+n/t)$$
+    \item Let $f(n)$ denote the expected running time of \proc{Compact-List-Search'}, $g(n)$ denote the expected running time of \proc{Compact-List-Search}. From \emph{\textbf{a.}} and \emph{\textbf{f.}} we know that for every $t$, $ g(n) = O(f(n)) = O(t+n/t)$ holds. Take $t = \lfloor \sqrt{n} \rfloor$, we obtain $g(n) = O(\sqrt{n})$, i.e. \proc{Compact-List-Search} runs in $O(\sqrt{n})$ expected time. 
+    \item When the keys is not distinct, the probability of $X_t \geq r$ in \emph{\textbf{c.}} might not be $(1-r/n)^t$. For example, if all the keys in the list are the same, and the desired key is larger than the keys in the list, then the pointer $i$ only advances, but never skips, so the running time is $\Theta(n)$, and the bound we obtained in \emph{\textbf{g.}} no longer applies.
+  \end{enumerate}
 \end{document}
