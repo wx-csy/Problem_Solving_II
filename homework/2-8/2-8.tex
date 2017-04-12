@@ -183,9 +183,18 @@
           \End
       \li \Return $x$
   \end{codebox}
-
+  
+  \section{[TC] Problem 10.2-6}
+  We may use singly linked lists to store the set. The attribute $tail$ should be added, for the sake of visiting the last element in $O(1)$ time.
+  \begin{codebox}
+    \Procname{$\proc{Union}(S1, S2)$}
+    \li $S1.tail.next \gets S2.head$
+    \li $S1.tail \gets S2.tail$
+    \li \Return $S1$
+  \end{codebox}
+  
   \section{[TC] Problem 10.3-4}
-  When we allocate an object, we store the object in position $free$, and increment $free$ by 1. \par
+  When we allocate an object, we store the object in position $free$, link it to the first element of the list, update $head$, and increment $free$ by 1.  \par
   When we free an object, we first copy the last element (both key and pointers), denoted by $P1$, to the position which the object we want to free is in, denoted by $P2$. Then adjust the corresponding pointers ($\attribb{P2}{next}{prev} \gets P2$ if $\attrib{P2}{next} \neq \const{nil}$, and  $\attribb{P2}{prev}{next} \gets P2$ if $\attrib{P2}{prev} \neq \const{nil}$). Finally, decrement $free$ by 1.
 
   \section{[TC] Problem 10.3-5}
@@ -299,7 +308,7 @@
     \end{align*}
     \item By \emph{\textbf{b.}} and \emph{\textbf{e.}}, the expected running time of $\proc{Compact-List-Search'}(L,n,k,t)$ is
     $$ O(t+E[X_t]) = O(t+n/(t+1)) = O(t+n/t)$$
-    \item Let $f(n)$ denote the expected running time of \proc{Compact-List-Search'}, $g(n)$ denote the expected running time of \proc{Compact-List-Search}. From \emph{\textbf{a.}} and \emph{\textbf{f.}} we know that for every $t$, $ g(n) = O(f(n)) = O(t+n/t)$ holds. Take $t = \lfloor \sqrt{n} \rfloor$, we obtain $g(n) = O(\sqrt{n})$, i.e. \proc{Compact-List-Search} runs in $O(\sqrt{n})$ expected time. 
+    \item Let $f(n)$ denote the expected running time of \proc{Compact-List-Search'}, $g(n)$ denote the expected running time of \proc{Compact-List-Search}. From \emph{\textbf{a.}} and \emph{\textbf{f.}} we know that for every $t$, $ g(n) = O(f(n)) = O(t+n/t)$ holds. Take $t = \lfloor \sqrt{n} \rfloor$, we obtain $g(n) = O(\sqrt{n})$, i.e. \proc{Compact-List-Search} runs in $O(\sqrt{n})$ expected time.
     \item When the keys is not distinct, the probability of $X_t \geq r$ in \emph{\textbf{c.}} might not be $(1-r/n)^t$. For example, if all the keys in the list are the same, and the desired key is larger than the keys in the list, then the pointer $i$ only advances, but never skips, so the running time is $\Theta(n)$, and the bound we obtained in \emph{\textbf{g.}} no longer applies.
   \end{enumerate}
 \end{document}
