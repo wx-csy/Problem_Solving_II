@@ -1,0 +1,165 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{论题~2-9~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+  
+  NOTE: ``$\lg x$'' stands for ``$\log_2 x$''.
+  
+  \section{[TC] Problem 6.1-2}
+  We use mathematical induction to prove this. \par
+  For base step, we have $n=1$, and the height is 0, so the conclusion is obviously correct. \par
+  For induction step, assume that for $n=k$, the conclusion is correct. Consider a heap with $n=k+1$ elements. If $k=2^p-1$ where $p$ is a positive integer, then a $k$-element heap is a complete binary tree. Thus, a $(k+1)$-element heap has one more level than a $k$-element heap, and the height is $\lfloor \lg k \rfloor + 1 = \lfloor \lg (k+1) \rfloor$. If $k \neq 2^p-1$ for every positive integer $p$, then a $k$-element heap is nearly but not exactly a complete binary tree. Thus, a $(k+1)$-element heap has the same level as a $k$-element heap, and the height is $\lfloor \lg k \rfloor = \lfloor \lg (k+1) \rfloor$. Therefore, the conclusion is correct for $n=k+1$. \par
+  By mathematical induction, we conclude that an $n$-element heap has height $\lfloor \lg n \rfloor$.
+
+  \section{[TC] Problem 6.1-4}
+  The smallest element must reside in a leaf. If it does not reside in a leaf, then it is smaller than its child(ren), which is contradict to the max-heap property.
+
+  \section{[TC] Problem 6.1-7}
+  We know that a leaf has no child. For index $i \leq \lfloor n/2 \rfloor$, the index of its left child is $2i$, which is not out of range, i.e. the node indexed by $i$ is not a leaf. However, for index $i > \lfloor n/2 \rfloor$, either the index of its left child $2i$ or the right child $2i+1$, which is out of range, i.e. the node indexed by $i$ is a leaf. Therefore, the leaves are nodes indexed by $\lfloor n/2 \rfloor + 1$, $\lfloor n/2 \rfloor + 2$, $\ldots$, $n$.
+  
+  \section{[TC] Problem 6.2-2}
+  \begin{codebox}
+  \Procname{$\proc{Min-Heapify}(A, i)$}
+    \li $l \gets \proc{Left}(i)$
+    \li $r \gets \proc{Right}(i)$
+    \li \If $l \leq \attrib{A}{heap-size}$ and $A[l] < A[i]$ 
+    \li \Do $smallest \gets l$
+    \li \Else $smallest \gets i$
+        \End
+    \li \If $r \leq \attrib{A}{heap-size}$ and $A[r] < A[smallest]$ 
+    \li \Do $smallest \gets r$
+        \End
+    \li \If $smallest \neq i$ 
+    \li \Do exchange $A[i]$ with $A[smallest]$
+    \li   $\proc{Min-Heapify}(A, smallest)$
+        \End
+  \end{codebox} \par
+  It has the same running time as \proc{Max-Heapify} asymptotically.
+  
+  \section{[TC] Problem 6.2-5}
+  \begin{codebox}
+  \Procname{$\proc{Max-Heapify}(A, i)$}
+    \li \While \const{true}
+    \li \Do $l \gets \proc{Left}(i)$
+    \li $r \gets \proc{Right}(i)$
+    \li \If $l \leq \attrib{A}{heap-size}$ and $A[l] > A[i]$
+    \li \Do $largest \gets l$
+    \li \Else $largest \gets i$
+        \End
+    \li \If $r \leq \attrib{A}{heap-size}$ and $A[r] > A[largest]$
+    \li \Do $largest \gets r$
+        \End
+    \li \If $largest \neq i$
+    \li \Do exchange $A[i]$ with $A[largest]$
+    \li $i \gets largest$
+    \li \Else \Return
+        \End
+        \End
+  \end{codebox} \par
+  
+  \section{[TC] Problem 6.2-6}
+  When the value of the node which causes the \proc{Max-Heapify} is the smallest in the whole tree, it must be swapped to a leaf. However, for each recursive call, it can only be swapped to its child. Therefore, it must be swapped $k$ times, where $k = \lfloor \lg n \rfloor$ is the height of the tree. Hence, the worst-case running time is $\Omega(\lg n)$.
+  
+  \section{[TC] Problem 6.3-3}
+  We have the following claims:
+\begin{quote}
+  \textbf{Claim 1:} For any $n$-element heap $A[1 \twodots n]$, $A[\lfloor n/2\rfloor + 1 \twodots n]$ exactly contains the elements of height 0, i.e. the leaves of the heap. \par
+  \textbf{Claim 2:} For any $n$-element heap $A[1 \twodots n]$, every left subarray of $A$ is still a heap. \par
+\end{quote} \par
+  By \textbf{Claim 1} and \textbf{Claim 2}, we obtain the following lemma: \par
+\begin{quote}
+  \textbf{Lemma} The height of element $A[i]$ in heap $A[1 \twodots \lfloor n/2\rfloor]$ is the height of element $A[i]$ in heap $A[1 \twodots n]$ minus 1.
+\end{quote} \par
+  Proof: assume that the height of $A[i]$ in heap $A[1 \twodots n]$ is $h$, that means, the length of the longest path from $A[i]$ to a leaf, say $A[l]$, is $h$. By \textbf{Claim 1}, $A[l]$ is in $A[\lfloor n/2 \rfloor + 1 \twodots n]$, but not in $A[1 \twodots \lfloor n/2 \rfloor]$, and its parent, $A[\lfloor l/2 \rfloor]$, is in $A[1 \twodots \lfloor n/2 \rfloor]$. That means, the longest path from $A[i]$ to a leaf of heap $A[1 \twodots \lfloor n/2 \rfloor]$ is from $A[i]$ to $A[\lfloor l/2 \rfloor]$, whose length is $h-1$, i.e. the height of $A[i]$ in $A[1 \twodots \lfloor n/2 \rfloor]$ is $h-1$. \hfill $\square$ \par
+  Let $f(n,h)$ denote the number of nodes of height $h$ in an $n$-element heap. By \textbf{Lemma} and \textbf{Claim 1} we get the following recurrence:
+  $$ f(n,h) = \begin{cases} f(\lfloor n/2 \rfloor, h-1) & h>0 \\ \lceil n/2 \rceil & h=0 \end{cases} $$
+  Solve this recurrence by iteration, we obtain $f(n,h) \leq \lceil n/2^{h+1} \rceil$. Therefore, there are at most $\lceil n/2^{h+1} \rceil$ nodes of height $h$ in any $n$-element heap.
+  
+  \section{[TC] Problem 6.4-2}
+  \textbf{Initialization:} Prior to the first iteration, $i = n$, $A[1 \twodots i]$ is a max-heap because \proc{Build-Max-Heap} has been executed, and of course it contains the $i$ smallest elements of $A[1 \twodots n]$. $A[i+1 \twodots n]$ is an empty array, so it contains the $n-i$ largest elements of $A[1 \twodots n]$ sorted trivially. Therefore, the loop invariant holds before the loop. \par
+  \textbf{Maintenance:}  By the property of the max-heap, $A[i]$ is the largest element in $A[1 \twodots i]$, but it is smaller than every element in $A[i+1, n]$ by the loop invariant. So after swapping, $A[i \twodots n]$ contains the $n-i+1$ largest elements $A[1 \twodots n]$, sorted, and after \proc{Max-Heapify} executed, $A[1..i]$ is a max-heap containing the $i-1$ smallest elements. So the loop invariant holds after each iteration. \par
+  \textbf{Termination:} By the loop invariant, we know that after the loop $A[1..n]$ contains all the elements sorted. Hence the procedure is partially correct. \par 
+  The \For loop will be exactly executed for $\attrib{A}{length}-1$ times, thus the procedure can terminate. Therefore, \proc{Heapsort} could sort a given array totally correctly.
+   
+  \section{[TC] Problem 6.4-4}
+  Consider a case, that the input array $A[1 \twodots n]$ stores a monotonously decreasing sequence, then it is already a max-heap, and \proc{Build-Max-Heap} does not change the array. For each iteration of \For loop, the smallest element is swapped to the root, and it takes at least $\lfloor \lg (i-1) \rfloor - 1$ swaps to max-heapify the array. Therefore, the total running time is
+  \begin{align*} 
+    \Omega\left(\sum_{i=2}^n \lfloor \lg (i-1) \rfloor - 1 \right) &= \Omega\left( - n + 1 + \sum_{i=(n-1)/2}^{n-1} \lfloor \lg i \rfloor \right) \\
+    &= \Omega\left( - n + 1 + \lfloor \frac{n-1}{2} \rfloor \lfloor \lg \lceil \frac{n-1}{2} \rceil \rfloor \right) \\
+    &= \Omega(n \lg n)
+  \end{align*}
+  Therefore, the worst-case running time of \proc{Heapsort} is $\Omega(n \lg n)$.
+  
+  \section{[TC] Problem 6.5-5}
+  \textbf{Initialization:} Before the \While loop. only $A[i]$ is increased, so it still satisfies the max-heap property, except that ``$A[i] \leq A[\proc{Parent}(i)]$'' may be violated. Therefore the loop invariant holds before the loop. \par
+  \textbf{Maintenance:} Before each iteration to execute, we have $A[\proc{Parent}(i)] < A[i]$, and the tree rooted at $A[\proc{Parent}(i)]$ is the largest element except $A[i]$, according to the loop invariant. After exchanging $A[i]$ with $A[\proc{Parent}(i)]$, the tree rooted at $A[\proc{Parent}(i)]$ is a heap. Then, $i$ is assigned $A[\proc{Parent}(i)]$, and after the assignment ``$A[\proc{Parent}(i)] < A[i]$'' may be violated. Therefore, the loop invariant holds after each iteration. \par
+  \textbf{Maintenance:} After the loop, $i \isequal 1$ or $A[\proc{Parent}(i)] > A[i]$. In the former case, \proc{Parent}(i) does not exist, thus the whole array is a heap. In the latter case, ``$A[\proc{Parent}(i)] < A[i]$'' is in fact not violated, therefore the whole array is also a heap. Hence, the procedure is partially correct. \par
+  For each iteration, the depth of $A[i]$ is decremented by 1, so the procedure can terminate. Therefore, the procedure is totally correct.
+  
+  \section{[TC] Problem 6.5-7}
+  Let $H$ be a max-priority queue. $\attrib{H}{insert}(k, x)$ inserts the element $x$ associated with key $k$ into the priority queue, $\attrib{H}{extract}()$ returns the element with the maximum key in $H$, and deletes it from $H$. Let $I$ be a global integer variable with initial value 0.\par
+  Implementation of queue: 
+  \begin{codebox}
+  \Procname{$\proc{Enqueue}(H, x)$}
+  \li $\attrib{H}{insert}(I, x)$
+  \li $I \gets I - 1$
+  \end{codebox}
+  \begin{codebox}
+  \Procname{$\proc{Dequeue}(H)$}
+  \li \Return $\attrib{H}{extract}()$
+  \end{codebox} \par
+  Implementation of stack:
+  \begin{codebox}
+  \Procname{$\proc{Push}(H, x)$}
+  \li $\attrib{H}{insert}(I, x)$
+  \li $I \gets I + 1$
+  \end{codebox}
+  \begin{codebox}
+  \Procname{$\proc{Pop}(H)$}
+  \li \Return $\attrib{H}{extract}()$
+  \end{codebox}
+  
+  \section{[TC] Problem 6.5-9}
+  \begin{codebox}
+  \Procname{$\proc{Multi-way-Merge}(lists)$}
+  \li Let $C[1 \twodots \attrib{lists}{count}]$ be a new array
+  \li Let $H$ be a min-priority queue of length $\attrib{lists}{count}$
+  \li $n \gets 0$
+  \li \For $i \gets 1$ \To $\attrib{lists}{count}$
+  \li \Do $C[i] \gets \attrib{lists[i]}{length}$
+  \li    $n \gets n + C[i]$
+  \li    \If $C[i] > 0$ 
+  \li    \Do $\attrib{H}{insert}(lists[i][C[i]], i)$
+  \li        $C[i] \gets C[i] - 1$
+         \End
+      \End
+  \li Let $A[1 \twodots n]$ be a new array
+  \li $j \gets 0$
+  \li \While $j < n$
+  \li \Do $j \gets j+1$
+  \li   $A[j] \gets \attrib{H}{min-key}$
+  \li   $i \gets \attrib{H}{extract}()$
+  \li   \If $C[i] > 0$ 
+  \li   \Do $\attrib{H}{insert}(lists[i][C[i]], i)$
+  \li       $C[i] \gets C[i]-1$
+        \End
+      \End
+  \li \Return $A$
+  \end{codebox}
+  
+  During the whole procedure, the size of the priority queue is at most $k$, and each element in all the input lists is inserted into and removed from the priority queue once, and the running time of each operation is $O(\lg k)$. Therefore, the algorithm merges $k$ sorted lists into one sorted list in a running time of $O(n \lg k)$. 
+\end{document}
