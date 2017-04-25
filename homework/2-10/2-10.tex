@@ -5,7 +5,7 @@
 \usepackage{mathptmx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{tikz}
+\usepackage{multirow}
 \usepackage{clrscode3e}
 \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 
@@ -49,15 +49,28 @@
   \section{[TC] Problem 11.2-3}
   Since the linked list is not randomly accessible, binary search does not apply and we can only use sequential search, so the modification does not affect the running time for successful searches and unsuccessful searches. \par
   We have to insert the item to the correct position in the list, so the average running time of insertions becomes $\Theta(1+ \alpha/2)$ where $\alpha$ is the load factor. \par
-  This modification does not affect the running time of deletions, which is still $O(1)$.
+  This modification does not affect the running time of deletions, which is still $O(1)$ if the lists are doubly linked.
 
-  \section{[CS] Problem 11.2-5}
+  \section{[TC] Problem 11.2-5}
   There are $|U|>nm$ elements (pigeons), but there are only $m$ slots (holes). By the pigeonhole principle, there exists a subset of $U$, consisting of $n$ keys that all hash to the same slot. If we want to search for the last element in the slot, the running time is $\Theta(n)$. Therefore, the worst-case searching time for hashing with chaining is $\Theta(n)$.
 
-  \section{[CS] Problem 11.2-6}
-  TODO
+  \section{[TC] Problem 11.2-6}
+  \begin{codebox}
+  \Procname{$\proc{Random-Select}(T, m, L)$}
+  \li \Repeat
+  \li    $x \gets \proc{Random}(1, m)$
+  \li    $y \gets \proc{Random}(1, L)$
+  \li \Until $y \leq \attrib{T[x]}{length}$
+  \li $t \gets \attrib{T[x]}{head}$
+  \li \For $i \gets 2$ \To $y$
+  \li \Do $t \gets \attrib{t}{next}$
+      \End
+  \li \Return $t$
+  \end{codebox} \par
+  In line 1-4, we repeat trying to choose a position in the hash table randomly, so the procedure chooses the key uniformly at random. \par
+  For each iteration in line 1-4, the probability of success is $n/mL = \alpha/L$. So the total number of iterations follows the geometric distribution with parameter $p=\alpha/L$, and its expectation is $1/p=L/\alpha$. In line 5-7, we search the element in a list, whose length is at most $L$, so the running time is $O(L)$. Therefore, the total expected running time is $O(L+L/\alpha) = O(L(1+1/\alpha))$.
 
-  \section{[CS] Problem 11.3-3}
+  \section{[TC] Problem 11.3-3}
   The string can be represented as
   $$ S = \sum_{i=0}^{n-1} S_i (2^p)^i $$ \par
   Consider $(2^p)^i \mod (2^p-1)$, we have
@@ -66,8 +79,8 @@
   $$ S \bmod (2^p-1) = \sum_{i=0}^{n-1} S_i (2^p)^i \bmod (2^p-1) = \sum_{i=0}^{n-1} S_i \bmod (2^p-1) $$
   The result is only in terms of the sum of the characters in the string and has nothing to do with the position of each character. That means, if string $y$ is a permutation of string $x$, then they hash to the same value. \par
   If there are many string pairs that one of them is a permutation of the other, such as `POT' and `TOP', in our application, then the hash function will lead to a lot of collisions, which is undesirable.
-  
-  \section{[CS] Problem 11.3-4}
+
+  \section{[TC] Problem 11.3-4}
   \begin{tabular}{ccccc}
     \hline
     % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
@@ -79,4 +92,72 @@
     65 & 40.17221 & .17221 & 172.21 & 172 \\
     \hline
   \end{tabular}
-\end{document} 
+
+  \section{[TC] Problem 11.4-2}
+  \begin{codebox}
+  \Procname{$\proc{Hash-Delete}(T, k)$}
+  \li $T[\proc{Hash-Search}(T,k)] \gets \const{deleted}$
+  \end{codebox}
+  \begin{codebox}
+  \Procname{$\proc{Hash-Insert}(T, k)$}
+  \li $i \gets 0$
+  \li \Repeat
+  \li   $j \gets h(k, i)$
+  \li   \If $T[j] \isequal \const{nil}$ or $T[j] \isequal \const{deleted}$
+  \li   \Do $T[j] \gets k$
+  \li       \Return $j$
+  \li   \Else
+  \li      $i \gets i+1$
+        \End
+  \li \Until $i \isequal m$
+  \li \Error ``hash table overflow''
+  \end{codebox}
+
+  \section{[TC] Problem 11.4-3}
+  By Theorem 11.6 and Theorem 11.8, when the load factor is $3/4$, the expected number of probes in an unsuccessful search is at most $1/(1-\alpha) = 4$, the expected number in a successful search is at most $(1/\alpha)\ln 1/(1-\alpha) = 1.848$; when the load factor is $7/8$, the expected number of probes in an unsuccessful search is at most $1/(1-\alpha) = 8$, the expected number in a successful search is at most $(1/\alpha)\ln 1/(1-\alpha) = 2.377$.
+  
+  \section{[TC] Problem 11-1}
+  \begin{enumerate}
+    \item If an insertion requires strictly more than $k$ probes, the first $k$ probes are unsuccessful. For the $(i+1)$th probe, the probability of unsuccessful probe is $(n-i)/(m-i) \leq 1/2$, since the probe sequence is a random permutation of $0, 1, \cdots, m-1$ according to uniform hashing assumption, and the probability that all the $k$ probes are unsuccessful is less than $2^{-k}$. So the probability is at most $2^{-k}$.
+    \item Substituting $k = 2 \lg n$ into \emph{\textbf{a.}} yields that the probability is at most $2^{-2 \lg n} = n^{-2}$, i.e. the probability is $O(1/n^2)$.
+    \item Consider the complementary event, that $X \leq 2 \lg n$, which is equivalent to that for all $i$, $X_i \leq 2 \lg n$. Because $X_1, X_2, \cdots, X_n$ are independent, we have
+        \begin{align*}
+          P(X \leq 2 \lg n) &= \prod_{i=1}^n (1-P(X_i > 2 \lg n)) \\
+          &\geq (1-n^{-2})^n \\
+          &\geq 1-1/n  & \text{(By Bernoulli's inequality)}
+        \end{align*}
+       Hence, 
+       $$ P(X > 2 \lg n) = 1 - P(X \leq 2 \lg n) \leq 1/n $$
+       Therefore, $P(X > 2 \lg n ) = O(1/n)$.
+    \item Since the probe sequence is a permutation of $1, 2, \cdots, m-1$, the maximum length of the probe sequence is the items in the hash table plus one, which is at most $n$. Hence, the expected length of the longest probe is
+      \begin{align*}
+        E[X] &= \sum_{i=1}^{n} i P(X = i) \\
+        &= \sum_{i=1}^{\lfloor 2 \lg n \rfloor} i P(X = i) + \sum_{i=\lfloor 2 \lg n \rfloor + 1}^{n} i P(X = i) \\ 
+        &\leq \lfloor 2 \lg n \rfloor \sum_{i=1}^{\lfloor 2 \lg n \rfloor} P(X = i) + n \sum_{i=\lfloor 2 \lg n \rfloor + 1}^{n} P(X = i) \\
+        &= \lfloor 2 \lg n \rfloor \sum_{i=1}^{\lfloor 2 \lg n \rfloor} P(X = i) + n P(X > 2 \lg n) \\
+        &\leq 2 \lg n + 1
+      \end{align*}
+      Therefore, $E[X] = O(\lg n)$.
+      
+      \section{[TC] Problem 11-2}
+      \begin{enumerate}
+        \item Let random variable $X_i$ denote the number of keys hashing to the $i$th slot. $X_i$ follows the binomial distribution with parameter $n$ and $p=1/n$. Therefore
+            $$Q_k = P(X_i=k) = \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} $$
+        \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore, 
+            $$ P_k = P(M = k) = P\left(\bigcup_{i=1}^n E_{i,k}\right) \leq \sum_{i=1}^n P(E_{i,k}) \leq nQ_k $$
+        \item First, we have to bound the binomial coefficient
+        \begin{align*}
+          \binom{n}{k} &= \frac{n!}{(n-k)!k!} \\
+          &\leq \frac{n^k}{k!} \\
+          &\leq n^k \left(\frac{e}{k}\right)^k & \text{(By equation (3.18), Stirling's approximation)}
+        \end{align*} \\ 
+        Then we have
+        \begin{align*}
+          Q_k &= \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} \\
+          &< \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} n^k \left(\frac{e}{k}\right)^k \\
+          &\leq \left(\frac{1}{n}\right)^k n^k \left(\frac{e}{k}\right)^k \\
+          &= e^k/k^k
+        \end{align*}
+      \end{enumerate}
+  \end{enumerate}
+\end{document}
