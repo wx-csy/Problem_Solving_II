@@ -115,7 +115,7 @@
 
   \section{[TC] Problem 11.4-3}
   By Theorem 11.6 and Theorem 11.8, when the load factor is $3/4$, the expected number of probes in an unsuccessful search is at most $1/(1-\alpha) = 4$, the expected number in a successful search is at most $(1/\alpha)\ln 1/(1-\alpha) = 1.848$; when the load factor is $7/8$, the expected number of probes in an unsuccessful search is at most $1/(1-\alpha) = 8$, the expected number in a successful search is at most $(1/\alpha)\ln 1/(1-\alpha) = 2.377$.
-  
+
   \section{[TC] Problem 11-1}
   \begin{enumerate}
     \item If an insertion requires strictly more than $k$ probes, the first $k$ probes are unsuccessful. For the $(i+1)$th probe, the probability of unsuccessful probe is $(n-i)/(m-i) \leq 1/2$, since the probe sequence is a random permutation of $0, 1, \cdots, m-1$ according to uniform hashing assumption, and the probability that all the $k$ probes are unsuccessful is less than $2^{-k}$. So the probability is at most $2^{-k}$.
@@ -126,31 +126,31 @@
           &\geq (1-n^{-2})^n \\
           &\geq 1-1/n  & \text{(By Bernoulli's inequality)}
         \end{align*}
-       Hence, 
+       Hence,
        $$ P(X > 2 \lg n) = 1 - P(X \leq 2 \lg n) \leq 1/n $$
        Therefore, $P(X > 2 \lg n ) = O(1/n)$.
     \item Since the probe sequence is a permutation of $1, 2, \cdots, m-1$, the maximum length of the probe sequence is the items in the hash table plus one, which is at most $n$. Hence, the expected length of the longest probe is
       \begin{align*}
         E[X] &= \sum_{i=1}^{n} i P(X = i) \\
-        &= \sum_{i=1}^{\lfloor 2 \lg n \rfloor} i P(X = i) + \sum_{i=\lfloor 2 \lg n \rfloor + 1}^{n} i P(X = i) \\ 
+        &= \sum_{i=1}^{\lfloor 2 \lg n \rfloor} i P(X = i) + \sum_{i=\lfloor 2 \lg n \rfloor + 1}^{n} i P(X = i) \\
         &\leq \lfloor 2 \lg n \rfloor \sum_{i=1}^{\lfloor 2 \lg n \rfloor} P(X = i) + n \sum_{i=\lfloor 2 \lg n \rfloor + 1}^{n} P(X = i) \\
         &= \lfloor 2 \lg n \rfloor \sum_{i=1}^{\lfloor 2 \lg n \rfloor} P(X = i) + n P(X > 2 \lg n) \\
         &\leq 2 \lg n + 1
       \end{align*}
       Therefore, $E[X] = O(\lg n)$.
-      
+
       \section{[TC] Problem 11-2}
       \begin{enumerate}
         \item Let random variable $X_i$ denote the number of keys hashing to the $i$th slot. $X_i$ follows the binomial distribution with parameter $n$ and $p=1/n$. Therefore
             $$Q_k = P(X_i=k) = \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} $$
-        \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore, 
+        \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore,
             $$ P_k = P(M = k) = P\left(\bigcup_{i=1}^n E_{i,k}\right) \leq \sum_{i=1}^n P(E_{i,k}) \leq nQ_k $$
         \item First, we have to bound the binomial coefficient
         \begin{align*}
           \binom{n}{k} &= \frac{n!}{(n-k)!k!} \\
           &\leq \frac{n^k}{k!} \\
           &\leq n^k \left(\frac{e}{k}\right)^k & \text{(By equation (3.18), Stirling's approximation)}
-        \end{align*} \\ 
+        \end{align*} \\
         Then we have
         \begin{align*}
           Q_k &= \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} \\
@@ -158,6 +158,25 @@
           &\leq \left(\frac{1}{n}\right)^k n^k \left(\frac{e}{k}\right)^k \\
           &= e^k/k^k
         \end{align*}
+        \item Assume that $n \geq 3$, otherwise $c \lg n / \lg \lg n$ is undefined. Consider
+        \begin{align*}
+          \frac{\lg Q_{k_0}}{\lg n} &< \frac{k_0 \lg e - k_0 \lg k_0}{\lg n} \\
+          &= \frac{c \lg n (\lg e - \lg (c \lg n / \lg \lg n))}{\lg n \lg \lg n}\\
+          &= \frac{c (\lg e - \lg c - \lg \lg n + \lg \lg \lg n)}{\lg \lg n} \\
+          &= c \left(\frac{\lg e}{\lg \lg n} - \lg c - 1 + \frac{\lg \lg \lg n}{\lg \lg n} \right) \\
+          &\leq c \left(\frac{\lg e}{\lg \lg 3} - \lg c \right) \\
+          &\leq c (3 - \lg c)
+        \end{align*}
+        Take $c = 16$, we get $\lg Q_{k_0}/\lg n < -16 < -3$, i.e. $Q_{k_0} < 1/n^3$. \par
+        Since $Q_{k+1}/Q_k = (n-k)/((n-1)(k+1)) \leq 1$ when $k \geq 1$, $\{Q_k\}$ is a monotonously decreasing sequence, and by \emph{\textbf{b.}} we get $P_k < 1/n^2$ for $k \geq k_0 = c \lg n / \lg \lg n$.
+        \item We have
+        \begin{align*}
+          E[M] &= \sum_{k=1}^{n} k P_k \\
+          &= \sum_{k=1}^{ \lfloor \frac{c \lg n}{\lg \lg n} \rfloor} k P_k + \sum_{k= \lfloor \frac{c \lg n}{\lg \lg n} \rfloor + 1}^{ n } k P_k \\
+          &\leq P\left(M > \frac{c \lg n}{\lg \lg n} \right) n + P\left(M \leq \frac{c \lg n}{\lg \lg n} \right) \frac{c \lg n}{\lg \lg n} 
+        \end{align*}
+        and by \emph{\textbf{b.}}, we have
+        $$ E[M] < n \cdot 1/n^2 \cdot n + \frac{c \lg n}{\lg \lg n} = O(\lg n / \lg \lg n)$$
       \end{enumerate}
   \end{enumerate}
 \end{document}
