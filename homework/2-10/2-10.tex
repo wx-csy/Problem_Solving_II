@@ -12,7 +12,7 @@
 \allowdisplaybreaks[4]
 \renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
 \begin{document}
-  \title{论题~2-9~作业}
+  \title{论题~2-10~作业}
   \author{姓名：陈劭源 \and 学号：161240004}
   \date{}
   \maketitle
@@ -23,7 +23,7 @@
     $$ P_1 = \frac{k^{\underline{n}}}{k^n} = \frac{k!}{(k-n)!k^n} $$
     and when $n > k$, the probability is 0.
     \item When $i \leq k+1$, the probability that the $i$th item is the first collision is
-    $$ P_2(i) = \frac{k^{\underline{i-1}}}{k^(i-1)} \times \frac{i-1}{k} = \frac{k!(i-1)}{(k-i+1)!k^i} $$
+    $$ P_2(i) = \frac{k^{\underline{i-1}}}{k^{i-1}} \times \frac{i-1}{k} = \frac{k!(i-1)}{(k-i+1)!k^i} $$
     and when $i > k+1$, the probability is 0.
     \item Let $X$ denote the number of items you hash until the first collision, then
     $$ E(X) = \sum_{i=2}^{k+1} (i-1) P_2(i) = \left( \sum_{i=2}^{k+1} \frac{k!(i-1)i}{(k-i+1)!k^i} \right) - 1 $$
@@ -74,7 +74,7 @@
   The string can be represented as
   $$ S = \sum_{i=0}^{n-1} S_i (2^p)^i $$ \par
   Consider $(2^p)^i \mod (2^p-1)$, we have
-  $$ (2^p)^i \bmod (2^p-1) = (2^p \bmod (2^p-1) )^i = 1^i = 1$$
+  $$ (2^p)^i \bmod (2^p-1) = (2^p \bmod (2^p-1) )^i \bmod (2^p-1) = 1^i \bmod (2^p-1) = 1$$
   therefore
   $$ S \bmod (2^p-1) = \sum_{i=0}^{n-1} S_i (2^p)^i \bmod (2^p-1) = \sum_{i=0}^{n-1} S_i \bmod (2^p-1) $$
   The result is only in terms of the sum of the characters in the string and has nothing to do with the position of each character. That means, if string $y$ is a permutation of string $x$, then they hash to the same value. \par
@@ -138,45 +138,46 @@
         &\leq 2 \lg n + 1
       \end{align*}
       Therefore, $E[X] = O(\lg n)$.
-
-      \section{[TC] Problem 11-2}
-      \begin{enumerate}
-        \item Let random variable $X_i$ denote the number of keys hashing to the $i$th slot. $X_i$ follows the binomial distribution with parameter $n$ and $p=1/n$. Therefore
-            $$Q_k = P(X_i=k) = \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} $$
-        \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore,
-            $$ P_k = P(M = k) = P\left(\bigcup_{i=1}^n E_{i,k}\right) \leq \sum_{i=1}^n P(E_{i,k}) \leq nQ_k $$
-        \item First, we have to bound the binomial coefficient
-        \begin{align*}
-          \binom{n}{k} &= \frac{n!}{(n-k)!k!} \\
-          &\leq \frac{n^k}{k!} \\
-          &\leq n^k \left(\frac{e}{k}\right)^k & \text{(By equation (3.18), Stirling's approximation)}
-        \end{align*} \\
-        Then we have
-        \begin{align*}
-          Q_k &= \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} \\
-          &< \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} n^k \left(\frac{e}{k}\right)^k \\
-          &\leq \left(\frac{1}{n}\right)^k n^k \left(\frac{e}{k}\right)^k \\
-          &= e^k/k^k
-        \end{align*}
-        \item Assume that $n \geq 3$, otherwise $c \lg n / \lg \lg n$ is undefined. Consider
-        \begin{align*}
-          \frac{\lg Q_{k_0}}{\lg n} &< \frac{k_0 \lg e - k_0 \lg k_0}{\lg n} \\
-          &= \frac{c \lg n (\lg e - \lg (c \lg n / \lg \lg n))}{\lg n \lg \lg n}\\
-          &= \frac{c (\lg e - \lg c - \lg \lg n + \lg \lg \lg n)}{\lg \lg n} \\
-          &= c \left(\frac{\lg e}{\lg \lg n} - \lg c - 1 + \frac{\lg \lg \lg n}{\lg \lg n} \right) \\
-          &\leq c \left(\frac{\lg e}{\lg \lg 3} - \lg c \right) \\
-          &\leq c (3 - \lg c)
-        \end{align*}
-        Take $c = 16$, we get $\lg Q_{k_0}/\lg n < -16 < -3$, i.e. $Q_{k_0} < 1/n^3$. \par
-        Since $Q_{k+1}/Q_k = (n-k)/((n-1)(k+1)) \leq 1$ when $k \geq 1$, $\{Q_k\}$ is a monotonously decreasing sequence, and by \emph{\textbf{b.}} we get $P_k < 1/n^2$ for $k \geq k_0 = c \lg n / \lg \lg n$.
-        \item We have
-        \begin{align*}
-          E[M] &= \sum_{k=1}^{n} k P_k \\
-          &= \sum_{k=1}^{ \lfloor \frac{c \lg n}{\lg \lg n} \rfloor} k P_k + \sum_{k= \lfloor \frac{c \lg n}{\lg \lg n} \rfloor + 1}^{ n } k P_k \\
-          &\leq P\left(M > \frac{c \lg n}{\lg \lg n} \right) n + P\left(M \leq \frac{c \lg n}{\lg \lg n} \right) \frac{c \lg n}{\lg \lg n} 
-        \end{align*}
-        and by \emph{\textbf{b.}}, we have
-        $$ E[M] < n \cdot 1/n^2 \cdot n + \frac{c \lg n}{\lg \lg n} = O(\lg n / \lg \lg n)$$
-      \end{enumerate}
   \end{enumerate}
+
+  \section{[TC] Problem 11-2}
+  \begin{enumerate}
+    \item Let random variable $X_i$ denote the number of keys hashing to the $i$th slot. $X_i$ follows the binomial distribution with parameter $n$ and $p=1/n$. Therefore
+        $$Q_k = P(X_i=k) = \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} $$
+    \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore,
+        $$ P_k = P(M = k) = P\left(\bigcup_{i=1}^n E_{i,k}\right) \leq \sum_{i=1}^n P(E_{i,k}) \leq nQ_k $$
+    \item First, we have to bound the binomial coefficient
+    \begin{align*}
+      \binom{n}{k} &= \frac{n!}{(n-k)!k!} \\
+      &\leq \frac{n^k}{k!} \\
+      &\leq n^k \left(\frac{e}{k}\right)^k & \text{(By equation (3.18), Stirling's approximation)}
+    \end{align*} \\
+    Then we have
+    \begin{align*}
+      Q_k &= \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} \\
+      &< \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} n^k \left(\frac{e}{k}\right)^k \\
+      &\leq \left(\frac{1}{n}\right)^k n^k \left(\frac{e}{k}\right)^k \\
+      &= e^k/k^k
+    \end{align*}
+    \item Assume that $n \geq 3$, otherwise $c \lg n / \lg \lg n$ is undefined. Consider
+    \begin{align*}
+      \frac{\lg Q_{k_0}}{\lg n} &< \frac{k_0 \lg e - k_0 \lg k_0}{\lg n} \\
+      &= \frac{c \lg n (\lg e - \lg (c \lg n / \lg \lg n))}{\lg n \lg \lg n}\\
+      &= \frac{c (\lg e - \lg c - \lg \lg n + \lg \lg \lg n)}{\lg \lg n} \\
+      &= c \left(\frac{\lg e}{\lg \lg n} - \lg c - 1 + \frac{\lg \lg \lg n}{\lg \lg n} \right) \\
+      &\leq c \left(\frac{\lg e}{\lg \lg 3} - \lg c \right) \\
+      &\leq c (3 - \lg c)
+    \end{align*}
+    Take $c = 16$, we get $\lg Q_{k_0}/\lg n < -16 < -3$, i.e. $Q_{k_0} < 1/n^3$. \par
+    Since $Q_{k+1}/Q_k = (n-k)/((n-1)(k+1)) \leq 1$ when $k \geq 1$, $\{Q_k\}$ is a monotonously decreasing sequence, and by \emph{\textbf{b.}} we get $P_k < 1/n^2$ for $k \geq k_0 = c \lg n / \lg \lg n$.
+    \item We have
+    \begin{align*}
+      E[M] &= \sum_{k=1}^{n} k P_k \\
+      &= \sum_{k=1}^{ \lfloor \frac{c \lg n}{\lg \lg n} \rfloor} k P_k + \sum_{k= \lfloor \frac{c \lg n}{\lg \lg n} \rfloor + 1}^{ n } k P_k \\
+      &\leq P\left(M > \frac{c \lg n}{\lg \lg n} \right) n + P\left(M \leq \frac{c \lg n}{\lg \lg n} \right) \frac{c \lg n}{\lg \lg n}
+    \end{align*}
+    and by \emph{\textbf{b.}}, we have
+    $$ E[M] < n \cdot 1/n^2 \cdot n + \frac{c \lg n}{\lg \lg n} = O(\lg n / \lg \lg n)$$
+  \end{enumerate}
+
 \end{document}
