@@ -65,7 +65,7 @@
   \node [empty, line width = 2pt] at (12, -3){};
   \node [right] at (12.5, -3) {Visited and outputted};
 
-  \node at (6, -4) {Both in left and right subtree of $a$, there is at most one visited but not outputted element in a level.};
+  \node at (6, -4) {Both in left and right subtree of $a$, there do not exist two elements visited but not outputted in the same level.};
   \draw [thin] (T01) -- (T11);
   \draw [thin] (T01) -- (T12);
   \draw [thin] (T11) -- (T21);
@@ -87,7 +87,7 @@
   \section{[TC] Problem 12.2-9}
   If $x$ is the left child of $y$, since $x$ is a leaf, $x$ is the rightmost node in $x$'s left subtree, so $\attrib{x}{key}$ is the largest key in $T$ smaller than $\attrib{y}{key}$, i.e. $\attrib{y}{key}$ is the smallest key in $T$ larger than $\attrib{x}{key}$. \par
   If $x$ is the right child of $y$, $x$ is the leftmost node in $x$'s right subtree because $x$ is a leaf, so $\attrib{x}{key}$ is the smallest key in $T$ larger than $\attrib{y}{key}$, i.e. $\attrib{y}{key}$ is the largest key in $T$ smaller than $\attrib{x}{key}$.
-  
+
   \section{[TC] Problem 12.3-5}
   \begin{codebox}
   \Procname{$\proc{Parent}(T, x)$}
@@ -110,7 +110,7 @@
          \End
   \li    \Return $y$
       \End
-  \end{codebox} 
+  \end{codebox}
   \begin{codebox}
   \Procname{$\proc{Tree-Search}(x, k)$}
   \li \If $x \isequal \const{nil}$ or $k \isequal \attrib{x}{key}$
@@ -119,7 +119,7 @@
   \li \If $k < \attrib{x}{key}$
   \li \Do \Return $\proc{Tree-Search}(\attrib{x}{left}, k)$
   \li \Else \Return $\proc{Tree-Search}(\attrib{x}{right}, k)$
-  \end{codebox} 
+  \end{codebox}
   TODO:
 %  \begin{codebox}
 %  \Procname{$\proc{Tree-Insert}(T, z)$}
@@ -145,4 +145,52 @@
 %  \li     $\attrib{z}{succ} \gets \attrib{y}{succ}$
 %  \li     $\attrib{y}{succ} \gets z$
 %  \end{codebox}
+
+  \section{[TC] Problem 12-1}
+  \begin{enumerate}
+    \item When all the keys are identical, the binary search tree is degenerate, i.e. it becomes a linked list, so inserting $n$ items with identical keys into an initially empty binary search tree takes a running time of $O(n^2)$.
+    \item The binary search tree is balanced, because this strategy ensures that, for every node, its larger subtree contains at most one more node than the other, which means, the height of an $n$-element tree is $\lceil \lg (n+1) \rceil$. Inserting an element to a balanced tree of height $h$ runs in $O(h)$ time. Therefore, inserting $n$ identical elements takes a running time of
+        $$ O\left(\sum_{i=1}^{n} \lceil \lg i \rceil \right) = O(n \lg n) $$
+    \item We have only to insert the node to the head of the list, which takes $O(1)$ time, and inserting $n$ items takes $O(n)$ time in total.
+    \item The worst case, is that, the tree is degenerate and becomes a linked list, and inserting $n$ items with identical keys takes a running time of $\Theta(n^2)$. \par
+        To derive the expected running time, consider the empty children in the tree. Let $h_1, h_2, \cdots h_k$ denote the height of the empty children in an $n$-element tree. We claim that $k=n+1$ and $\sum_{i=1}^{n+1} (1/2)^{h_i} = 1$. This can be easily proved by mathematical induction: when the tree is empty, the only empty child is the root, whose height is 0; for any tree with $n$ elements, a leaf of of height $h$ just occupies a children of the tree without the leaf, but gives two new children of height $h+1$. \par
+        The expected running time of inserting a node into an $n$-element binary search tree is $E(X) = \sum_{i=1}^{n+1} h_i(1/2)^{h_i}$. Substitution $H_i = (1/2)^{h_i}$ gives
+        $$ E(X) = - \sum_{i=1}^{n+1} H_i \lg H_i \qquad \text{with} \quad \sum_{i=1}^{n+1} H_i = 1$$
+        By Jensen's inequality, $E(X)$ is maximized when $H_1 = H_2 = \cdots = H_{n+1} = 1/(n+1)$, thus $E(X) \leq \lg (n+1) = O(\lg n)$. Therefore, the expected running time of inserting $n$ elements is $O(n \lg n)$.
+        
+        \vspace{0.3cm}
+        \scriptsize
+        \begin{centering}
+        \begin{tikzpicture}[line width = 1pt,
+                        solid/.style = {circle, draw, fill = black, minimum size = 0.3cm},
+                        empty/.style = {circle, draw, fill = white, minimum size = 0.3cm}]
+        \node [empty] (T01) at (6,0) {a};
+        \node [empty] (T11) at (4,-1) {b};
+        \node [empty] (T12) at (8,-1) {c};
+        \node [empty] (T21) at (3,-2) {d};
+        \node [solid] (T22) at (5,-2) {};    \node [align=center] at (5,-2.7) {$h_1=2$ \\ $\left(\frac{1}{2}\right)^{h_1} = \frac{1}{4}$};
+        \node [empty] (T23) at (7,-2) {e};
+        \node [solid] (T24) at (9,-2) {};    \node [align=center] at (9,-2.7) {$h_2=2$ \\ $\left(\frac{1}{2}\right)^{h_2} = \frac{1}{4}$};
+        \node [solid] (T31) at (2.5,-3) {};  \node [align=center] at (2.3,-3.7) {$h_3=3$ \\ $\left(\frac{1}{2}\right)^{h_3} = \frac{1}{8}$};
+        \node [solid] (T32) at (3.5,-3) {};  \node [align=center] at (3.7,-3.7) {$h_4=3$ \\ $\left(\frac{1}{2}\right)^{h_4} = \frac{1}{8}$};
+        \node [solid] (T33) at (6.5,-3) {};  \node [align=center] at (6.3,-3.7) {$h_5=3$ \\ $\left(\frac{1}{2}\right)^{h_5} = \frac{1}{8}$};
+        \node [solid] (T34) at (7.5,-3) {};  \node [align=center] at (7.7,-3.7) {$h_6=3$ \\ $\left(\frac{1}{2}\right)^{h_6} = \frac{1}{8}$};
+
+        \node [solid] at (12, -1){};
+        \node [right] at (12.5, -1) {Empty child};
+
+        \draw [thin] (T01) -- (T11);
+        \draw [thin] (T01) -- (T12);
+        \draw [thin] (T11) -- (T21);
+        \draw [thin] (T11) -- (T22);
+        \draw [thin] (T12) -- (T23);
+        \draw [thin] (T12) -- (T24);
+        \draw [thin] (T21) -- (T31);
+        \draw [thin] (T21) -- (T32);
+        \draw [thin] (T23) -- (T33);
+        \draw [thin] (T23) -- (T34);
+        \end{tikzpicture} \par
+        \end{centering}
+        \normalsize
+  \end{enumerate}
 \end{document}
