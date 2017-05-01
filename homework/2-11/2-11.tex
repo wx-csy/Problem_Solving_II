@@ -193,4 +193,22 @@
         \end{centering}
         \normalsize
   \end{enumerate}
+  \section{[TC] Problem 13.1-5}
+  The shortest simple path and the longest simple path contain the same number of black nodes, and the shortest possible path contains only black nodes, and the longest possible path contains alternately arranged red and black nodes. Since the leaf must be black, the longest simple path is at most twice as long as the shortest simple path.
+  
+  \section{[TC] Problem 13.1-6}
+  The smallest possible number is $2^k - 1$, which occurs when all the nodes are black. \par
+  The largest possible number is $4^k - 1$, which occurs when the red and black nodes are alternately arranged in every path.
+  
+  \section{[TC] Problem 13.1-7}
+  TODO
+  
+  \section{[TC] Problem 13.2-2}
+  If a node has a right child which is not \attrib{T}{nil}, we can perform a left rotation on it; if it has a left child which is not \attrib{T}{nil}, we can perform a right rotation on it. So the number of possible rotations is the number of the children which is not \attrib{T}{nil}. Note that every node in a binary search tree is a child of other node, except the root, so there are $n-1$ children which is not \attrib{T}{nil}, thus there are exactly $n-1$ possible rotations in every $n$-node rotation binary search tree.
+  
+  \section{[TC] Problem 13.3-1}
+  If we set $z$'s color to black, though property 4 would not be violated, property 5 will be violated, because the path to $z$ would have one more black nodes than other paths.
+  
+  \section{[TC] Problem 13.3-1}
+  If a red-black tree has no red node, it must be a tree with every level completely filled, otherwise, property 5 is violated. Suppose, to the contrary that inserting $n$ nodes with \proc{RB-Insert} can form such a tree. Consider the last element $z$ inserted to the tree. $z$'s parent must be black before insertion, otherwise, the other child of $z$'s parent must be black, and the property 5 is violated. Therefore, property 2 and property 4 will not be violated after insertion, the procedure \proc{RB-Insert-Fixup} does nothing and $z$ remains red, which leads to contradiction.
 \end{document}
