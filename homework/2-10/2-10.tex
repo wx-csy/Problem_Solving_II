@@ -49,7 +49,7 @@
   \section{[TC] Problem 11.2-3}
   Since the linked list is not randomly accessible, binary search does not apply and we can only use sequential search, so the modification does not affect the running time for successful searches and unsuccessful searches. \par
   We have to insert the item to the correct position in the list, so the average running time of insertions becomes $\Theta(1+ \alpha/2)$ where $\alpha$ is the load factor. \par
-  This modification does not affect the running time of deletions, which is still $O(1)$ if the lists are doubly linked.
+  This modification does not affect the running time for deletions, which is still $O(1)$ if the lists are doubly linked.
 
   \section{[TC] Problem 11.2-5}
   There are $|U|>nm$ elements (pigeons), but there are only $m$ slots (holes). By the pigeonhole principle, there exists a subset of $U$, consisting of $n$ keys that all hash to the same slot. If we want to search for the last element in the slot, the running time is $\Theta(n)$. Therefore, the worst-case searching time for hashing with chaining is $\Theta(n)$.
@@ -67,7 +67,7 @@
       \End
   \li \Return $t$
   \end{codebox} \par
-  In line 1-4, we repeat trying to choose a position in the hash table randomly, so the procedure chooses the key uniformly at random. \par
+  In line 1-4, we repeat trying to choose a position in the hash table randomly, and every position is equally likely to be chosen, so the procedure chooses the key uniformly at random. \par
   For each iteration in line 1-4, the probability of success is $n/mL = \alpha/L$. So the total number of iterations follows the geometric distribution with parameter $p=\alpha/L$, and its expectation is $1/p=L/\alpha$. In line 5-7, we search the element in a list, whose length is at most $L$, so the running time is $O(L)$. Therefore, the total expected running time is $O(L+L/\alpha) = O(L(1+1/\alpha))$.
 
   \section{[TC] Problem 11.3-3}
@@ -118,9 +118,9 @@
 
   \section{[TC] Problem 11-1}
   \begin{enumerate}
-    \item If an insertion requires strictly more than $k$ probes, the first $k$ probes are unsuccessful. For the $(i+1)$th probe, the probability of unsuccessful probe is $(n-i)/(m-i) \leq 1/2$, since the probe sequence is a random permutation of $0, 1, \cdots, m-1$ according to uniform hashing assumption, and the probability that all the $k$ probes are unsuccessful is less than $2^{-k}$. So the probability is at most $2^{-k}$.
+    \item If an insertion requires strictly more than $k$ probes, the first $k$ probes are unsuccessful. For the $(i+1)$th probe, the probability of unsuccessful probe is $(n-i)/(m-i) \leq 1/2$ because the probe sequence is a random permutation of $0, 1, \cdots, m-1$ according to uniform hashing assumption, and the probability that all the $k$ probes are unsuccessful is less than $2^{-k}$. So the probability is at most $2^{-k}$.
     \item Substituting $k = 2 \lg n$ into \emph{\textbf{a.}} yields that the probability is at most $2^{-2 \lg n} = n^{-2}$, i.e. the probability is $O(1/n^2)$.
-    \item Consider the complementary event, that $X \leq 2 \lg n$, which is equivalent to that for all $i$, $X_i \leq 2 \lg n$. Because $X_1, X_2, \cdots, X_n$ are independent, we have
+    \item Consider the complementary event, that $X \leq 2 \lg n$, which is equivalent to the event that for all $i$, $X_i \leq 2 \lg n$. Because $X_1, X_2, \cdots, X_n$ are independent, we have
         \begin{align*}
           P(X \leq 2 \lg n) &= \prod_{i=1}^n (1-P(X_i > 2 \lg n)) \\
           &\geq (1-n^{-2})^n \\
@@ -144,7 +144,7 @@
   \begin{enumerate}
     \item Let random variable $X_i$ denote the number of keys hashing to the $i$th slot. $X_i$ follows the binomial distribution with parameter $n$ and $p=1/n$. Therefore
         $$Q_k = P(X_i=k) = \left(\frac{1}{n}\right)^k \left(1-\frac{1}{n}\right)^{n-k} \binom{n}{k} $$
-    \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore,
+    \item Let $E_{i,k}$ denote the event that the $i$th slot contains the most keys and it contains exactly $k$ keys. Since $E_{i,k} \subset (X_i = k)$, we have $P(E_{i,k}) \leq Q_k$. Therefore,
         $$ P_k = P(M = k) = P\left(\bigcup_{i=1}^n E_{i,k}\right) \leq \sum_{i=1}^n P(E_{i,k}) \leq nQ_k $$
     \item First, we have to bound the binomial coefficient
     \begin{align*}
@@ -164,11 +164,10 @@
       \frac{\lg Q_{k_0}}{\lg n} &< \frac{k_0 \lg e - k_0 \lg k_0}{\lg n} \\
       &= \frac{c \lg n (\lg e - \lg (c \lg n / \lg \lg n))}{\lg n \lg \lg n}\\
       &= \frac{c (\lg e - \lg c - \lg \lg n + \lg \lg \lg n)}{\lg \lg n} \\
-      &= c \left(\frac{\lg e}{\lg \lg n} - \lg c - 1 + \frac{\lg \lg \lg n}{\lg \lg n} \right) \\
-      &\leq c \left(\frac{\lg e}{\lg \lg 3} - \lg c \right) \\
-      &\leq c (3 - \lg c)
+      &= c \left(\frac{\lg e - \lg c}{\lg \lg n}  - 1 + \frac{\lg \lg \lg n}{\lg \lg n} \right) \\
+      &\leq c \frac{\lg e - \lg c}{\lg \lg 3} \\
     \end{align*}
-    Take $c = 16$, we get $\lg Q_{k_0}/\lg n < -16 < -3$, i.e. $Q_{k_0} < 1/n^3$. \par
+    Take $c = 2e$, we get $\lg Q_{k_0}/\lg n < -4e / \lg \lg 3 < -3$, i.e. $Q_{k_0} < 1/n^3$. \par
     Since $Q_{k+1}/Q_k = (n-k)/((n-1)(k+1)) \leq 1$ when $k \geq 1$, $\{Q_k\}$ is a monotonously decreasing sequence, and by \emph{\textbf{b.}} we get $P_k < 1/n^2$ for $k \geq k_0 = c \lg n / \lg \lg n$.
     \item We have
     \begin{align*}
