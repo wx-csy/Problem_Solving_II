@@ -226,6 +226,7 @@ public:
             y->left->parent = y;
             y->color = z->color;
         }
+        delete z;
         if (y_original_color == BLACK){
             delete_fixup(x);
         }

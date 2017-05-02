@@ -157,7 +157,7 @@
         The expected running time of inserting a node into an $n$-element binary search tree is $E(X) = \sum_{i=1}^{n+1} h_i(1/2)^{h_i}$. Substitution $H_i = (1/2)^{h_i}$ gives
         $$ E(X) = - \sum_{i=1}^{n+1} H_i \lg H_i \qquad \text{with} \quad \sum_{i=1}^{n+1} H_i = 1$$
         By Jensen's inequality, $E(X)$ is maximized when $H_1 = H_2 = \cdots = H_{n+1} = 1/(n+1)$, thus $E(X) \leq \lg (n+1) = O(\lg n)$. Therefore, the expected running time of inserting $n$ elements is $O(n \lg n)$.
-        
+
         \vspace{0.3cm}
         \scriptsize
         \begin{centering}
@@ -195,20 +195,83 @@
   \end{enumerate}
   \section{[TC] Problem 13.1-5}
   The shortest simple path and the longest simple path contain the same number of black nodes, and the shortest possible path contains only black nodes, and the longest possible path contains alternately arranged red and black nodes. Since the leaf must be black, the longest simple path is at most twice as long as the shortest simple path.
-  
+
   \section{[TC] Problem 13.1-6}
   The smallest possible number is $2^k - 1$, which occurs when all the nodes are black. \par
   The largest possible number is $4^k - 1$, which occurs when the red and black nodes are alternately arranged in every path.
-  
+
   \section{[TC] Problem 13.1-7}
-  TODO
-  
+  TODO:
+
   \section{[TC] Problem 13.2-2}
   If a node has a right child which is not \attrib{T}{nil}, we can perform a left rotation on it; if it has a left child which is not \attrib{T}{nil}, we can perform a right rotation on it. So the number of possible rotations is the number of the children which is not \attrib{T}{nil}. Note that every node in a binary search tree is a child of other node, except the root, so there are $n-1$ children which is not \attrib{T}{nil}, thus there are exactly $n-1$ possible rotations in every $n$-node rotation binary search tree.
-  
+
   \section{[TC] Problem 13.3-1}
   If we set $z$'s color to black, though property 4 would not be violated, property 5 will be violated, because the path to $z$ would have one more black nodes than other paths.
-  
-  \section{[TC] Problem 13.3-1}
+
+  \section{[TC] Problem 13.3-5}
   If a red-black tree has no red node, it must be a tree with every level completely filled, otherwise, property 5 is violated. Suppose, to the contrary that inserting $n$ nodes with \proc{RB-Insert} can form such a tree. Consider the last element $z$ inserted to the tree. $z$'s parent must be black before insertion, otherwise, the other child of $z$'s parent must be black, and the property 5 is violated. Therefore, property 2 and property 4 will not be violated after insertion, the procedure \proc{RB-Insert-Fixup} does nothing and $z$ remains red, which leads to contradiction.
+  
+  \section{[TC] Problem 13.4-1}
+  In case 1, $x$'s sibling is red, the procedure switches the colors of $x$'s sibling and $x$'s parent, and then performs a left rotation on $x$'s parent, after which the parent node is black. \par
+  In case 2, the procedure only changes the color of $x$'s sibling, which will not affect the color of the root. \par
+  In case 3, the procedure switches the colors of $w$ and $w$'s left child, then performs a right rotation, after which the parent node is black. \par
+  In case 4, $x$ is assigned the root of the tree, which causes the \While loop to terminate, and then the color of $x$ is set black. \par
+  Therefore, after executing \proc{RB-Delete-Fixup}, the root of the tree must be black.
+  
+  \section{[TC] Problem 13.4-2}
+  When both $x$ and $\attrib{x}{p}$ are red, the \While loop in \proc{RB-Delete-Fixup} will not be executed, and the color of $x$ is set black, thus property 4 is restored.
+  
+  \section{[TC] Problem 13.4-7}
+  The resulting red-black tree might be changed. Here's an example. \par
+\begin{quote}
+  Before insertion: \par
+    \vspace{0.3cm}
+    \scriptsize
+    \begin{centering}
+    \begin{tikzpicture}[line width = 1pt,
+                    solid/.style = {circle, draw, fill = black, minimum size = 0.3cm},
+                    empty/.style = {circle, draw, fill = white, minimum size = 0.3cm}]
+    \node [white, solid] (T01) at (2,0) {\textbf{3}};
+    \node [empty] (T11) at (1,-1) {2};
+    \draw [thin] (T01) -- (T11);
+    \end{tikzpicture} \par
+    \end{centering}
+    \normalsize
+  Inserting $1$ to the red-black tree: \par
+    \vspace{0.3cm}
+    \scriptsize
+    \begin{centering}
+    \begin{tikzpicture}[line width = 1pt,
+                    solid/.style = {circle, draw, fill = black, minimum size = 0.3cm},
+                    empty/.style = {circle, draw, fill = white, minimum size = 0.3cm}]
+    \node [white, solid] (T01) at (3,0) {\textbf{3}};
+    \node [empty] (T11) at (2,-1) {2};
+    \node [empty] (T12) at (1,-2) {1};
+    \draw [thin] (T01) -- (T11) -- (T12);
+    \draw [->] (3.7,-1) -- (5.2,-1);
+    \node [right] at (2, -2.6) {$\proc{RB-Delete-Fixup}$, case 3 occurs:};
+    \node [right] at (2, -3.0) {Change the color of nodes 2 and 3, then right rotate.};
+    \node [white, solid] (U01) at (7, -0.5) {\textbf{2}};
+    \node [empty] (U11) at (6,-1.5) {1};
+    \node [empty] (U12) at (8,-1.5) {3};
+    \draw [thin] (U01) -- (U11);
+    \draw [thin] (U01) -- (U12);
+    \end{tikzpicture} \par
+    \end{centering}
+    \normalsize
+  Deleting $1$ from the red-black tree: \par
+    \vspace{0.3cm}
+    \scriptsize
+    \begin{centering}
+    \begin{tikzpicture}[line width = 1pt,
+                    solid/.style = {circle, draw, fill = black, minimum size = 0.3cm},
+                    empty/.style = {circle, draw, fill = white, minimum size = 0.3cm}]
+    \node [white, solid] (U01) at (7, -0.5) {\textbf{2}};
+    \node [empty] (U12) at (8,-1.5) {3};
+    \draw [thin] (U01) -- (U12);
+    \end{tikzpicture} \par
+    \end{centering}
+    \normalsize
+\end{quote}
 \end{document}
