@@ -112,40 +112,86 @@
       \End
   \end{codebox}
   \begin{codebox}
-  \Procname{$\proc{Tree-Search}(x, k)$}
-  \li \If $x \isequal \const{nil}$ or $k \isequal \attrib{x}{key}$
-  \li \Do \Return $x$
-      \End
-  \li \If $k < \attrib{x}{key}$
-  \li \Do \Return $\proc{Tree-Search}(\attrib{x}{left}, k)$
-  \li \Else \Return $\proc{Tree-Search}(\attrib{x}{right}, k)$
+  \Procname{$\proc{Tree-Search'}(x, k)$}
+  \zi \Comment Since this procedure does not visit the parent of a node,
+  \zi \Comment the implementation is exactly the same as the original one.
   \end{codebox}
-  TODO:
-%  \begin{codebox}
-%  \Procname{$\proc{Tree-Insert}(T, z)$}
-%  \li $y \gets \const{nil}$
-%  \li $x \gets \attrib{T}{root}$
-%  \li \While $x \neq \const{nil}$
-%  \li \Do $y \gets x$
-%  \li     \If $\attrib{z}{key} < \attrib{x}{key}$
-%  \li     \Do $x \gets \attrib{x}{left}$
-%  \li     \Else $x \gets \attrib{x}{right}$
-%          \End
-%      \End
-%  \li \If $y \isequal \const{nil}$
-%  \li \Do $\attrib{T}{root} \gets z$
-%  \li     $\attrib{z}{succ} \gets \const{nil}$
-%  \li \ElseIf $\attrib{z}{key} < \attrib{y}{key}$
-%  \li \Do $\attrib{z}{succ} \gets y$
-%  \li     $x \gets \proc{Tree-Predecessor}(y)$
-%  \li     \If $x \neq \const{nil}$
-%  \li     \Do $\attrib{x}{succ} \gets z$
-%          \End
-%  \li \Else
-%  \li     $\attrib{z}{succ} \gets \attrib{y}{succ}$
-%  \li     $\attrib{y}{succ} \gets z$
-%  \end{codebox}
-
+  \begin{codebox}
+  \Procname{$\proc{Tree-Insert'}(T, z)$}
+  \li $y \gets \const{nil}$
+  \li $x \gets \attrib{T}{root}$
+  \li $pred \gets \const{nil}$
+  \li \While $x \neq \const{nil}$
+  \li \Do $y \gets x$
+  \li     \If $\attrib{z}{key} < \attrib{x}{key}$
+  \li     \Do $x \gets \attrib{x}{left}$
+  \li     \Else
+  \li         $pred \gets x$
+  \li         $x \gets \attrib{x}{right}$
+          \End
+      \End
+  \li \If $y \isequal \const{nil}$
+  \li \Do $\attrib{T}{root} \gets z$
+  \li     $\attrib{z}{succ} \gets \const{nil}$ 
+  \li \ElseIf $\attrib{z}{key} < \attrib{y}{key}$
+  \li \Do $\attrib{y}{left} \gets z$
+  \li     $\attrib{z}{succ} \gets y$ \Comment maintain the successor
+  \li     $\attrib{pred}{succ} \gets z$
+  \li \Else
+  \li     $\attrib{y}{right} \gets z$
+  \li     $\attrib{z}{succ} \gets \attrib{y}{succ}$ \Comment maintain the successor
+  \li     $\attrib{y}{succ} \gets z$
+      \End
+  \end{codebox}
+  \begin{codebox}
+  \Procname{$\proc{Transplant'}(T, u, v)$}
+  \li $p \gets \proc{Parent}(T, u)$
+  \li \If $p \isequal \const{NIL}$
+  \li \Do $\attrib{T}{root} \gets v$
+  \li \ElseIf $u \isequal \attrib{p}{left} $
+  \li \Do $\attrib{p}{left} \gets v$
+  \li \Else 
+  \li     $\attrib{p}{right} \gets v$
+      \End
+  \end{codebox}
+  We should implement $\proc{Predecessor'}(T, x)$ to maintain its successor when deleting a node. When $x$'s left subtree is not empty, it is easy. However, when $x$'s left tree is empty, we have to follow a path up the tree. Visiting $x$'s parent takes a running time of $O(h)$, which is unacceptable. Instead, we try to search for $x$ from the root of the tree. This might go wrong if some nodes have identical keys: the node we found might not be $x$, but has the same key. However, we notice that the implementation of $\proc{Tree-Insert'}$ always insert a node to the rightmost empty child of the nodes with the same key. Hence, the nodes with the same key form a `linked list'. We could verify that the implementation of $\proc{Tree-Delete'}$ preserves this property. Therefore, we could use this property to find a node correctly.
+  \begin{codebox}
+  \Procname{$\proc{Predecessor'}(T, x)$}
+  \li \If $\attrib{x}{left} \neq \const{nil}$
+  \li \Do \Return $\proc{Tree-Maximum}(\attrib{x}{left})$
+  \li \Else
+  \li     $y \gets \attrib{T}{root}$
+  \li     $pred \gets \const{nil}$
+  \li \While $x \neq y$
+  \li \Do \If $\attrib{x}{key} < \attrib{y}{key}$
+  \li     \Do $y \gets \attrib{y}{left}$
+  \li     \Else
+  \li         $pred \gets y$
+  \li         $y \gets \attrib{y}{right}$
+          \End
+      \End
+  \li \Return $pred$
+  \end{codebox}
+  \begin{codebox}
+  \Procname{$\proc{Tree-Delete'}(T, z)$}
+  \li $pred \gets \proc{Predecessor'}(T, z)$
+  \li \If $\attrib{z}{left} \isequal \const{nil}$
+  \li \Do $\proc{Transplant}(T, z, \attrib{z}{right})$
+  \li \ElseIf $\attrib{z}{right} \isequal \const{nil}$
+  \li \Do $\proc{Transplant}(T, z, \attrib{z}{left})$
+  \li \Else
+  \li     $y \gets \proc{Tree-Minimum}(\attrib{z}{right})$
+  \li     \If $\proc{Parent}(T,y) \neq z$
+  \li     \Do $\proc{Transplant}(T, y, \attrib{y}{right})$
+  \li         $\attrib{y}{right} \gets \attrib{z}{right}$
+          \End
+  \li     $\proc{Transplant}(T, z, y)$
+  \li     $\attrib{y}{left} \gets \attrib{z}{left}$
+      \End
+  \li $\attrib{pred}{succ} \gets \attrib{z}{succ}$
+  \end{codebox}
+  Every procedure above runs in $O(h)$ time.
+  
   \section{[TC] Problem 12-1}
   \begin{enumerate}
     \item When all the keys are identical, the binary search tree is degenerate, i.e. it becomes a linked list, so inserting $n$ items with identical keys into an initially empty binary search tree takes a running time of $O(n^2)$.

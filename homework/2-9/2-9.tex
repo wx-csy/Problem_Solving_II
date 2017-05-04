@@ -105,7 +105,7 @@
   \section{[TC] Problem 6.5-5}
   \textbf{Initialization:} Before the \While loop. only $A[i]$ is increased, so it still satisfies the max-heap property, except that ``$A[i] \leq A[\proc{Parent}(i)]$'' may be violated. Therefore the loop invariant holds before the loop. \par
   \textbf{Maintenance:} Before each iteration to execute, we have $A[\proc{Parent}(i)] < A[i]$, and the tree rooted at $A[\proc{Parent}(i)]$ is the largest element except $A[i]$, according to the loop invariant. After exchanging $A[i]$ with $A[\proc{Parent}(i)]$, the tree rooted at $A[\proc{Parent}(i)]$ is a heap. Then, $i$ is assigned $A[\proc{Parent}(i)]$, and after the assignment ``$A[\proc{Parent}(i)] < A[i]$'' may be violated. Therefore, the loop invariant holds after each iteration. \par
-  \textbf{Maintenance:} After the loop, $i \isequal 1$ or $A[\proc{Parent}(i)] > A[i]$. In the former case, \proc{Parent}(i) does not exist, thus the whole array is a heap. In the latter case, ``$A[\proc{Parent}(i)] < A[i]$'' is in fact not violated, therefore the whole array is also a heap. Hence, the procedure is partially correct. \par
+  \textbf{Termination:} After the loop, $i \isequal 1$ or $A[\proc{Parent}(i)] > A[i]$. In the former case, \proc{Parent}(i) does not exist, thus the whole array is a heap. In the latter case, ``$A[\proc{Parent}(i)] < A[i]$'' is in fact not violated, therefore the whole array is also a heap. Hence, the procedure is partially correct. \par
   For each iteration, the depth of $A[i]$ is decremented by 1, so the procedure can terminate. Therefore, the procedure is totally correct.
 
   \section{[TC] Problem 6.5-7}
