@@ -112,9 +112,14 @@
       \End
   \end{codebox}
   \begin{codebox}
-  \Procname{$\proc{Tree-Search'}(x, k)$}
-  \zi \Comment Since this procedure does not visit the parent of a node,
-  \zi \Comment the implementation is exactly the same as the original one.
+  \Procname{$\proc{Tree-Search}(x, k)$}
+  \li \If $x \isequal \const{nil}$ or $k \isequal \attrib{x}{key}$
+  \li \Do \Return $x$
+      \End
+  \li \If $k < \attrib{x}{key}$
+  \li \Do \Return $\proc{Tree-Search}(\attrib{x}{left}, k)$
+  \li \Else
+  \li     \Return $\proc{Tree-Search}(\attrib{x}{right}, k)$
   \end{codebox}
   \begin{codebox}
   \Procname{$\proc{Tree-Insert'}(T, z)$}
@@ -154,7 +159,6 @@
   \li     $\attrib{p}{right} \gets v$
       \End
   \end{codebox}
-  We should implement $\proc{Predecessor'}(T, x)$ to maintain its successor when deleting a node. When $x$'s left subtree is not empty, it is easy. However, when $x$'s left tree is empty, we have to follow a path up the tree. Visiting $x$'s parent takes a running time of $O(h)$, which is unacceptable. Instead, we try to search for $x$ from the root of the tree. This might go wrong if some nodes have identical keys: the node we found might not be $x$, but has the same key. However, we notice that the implementation of $\proc{Tree-Insert'}$ always insert a node to the rightmost empty child of the nodes with the same key. Hence, the nodes with the same key form a `linked list'. We could verify that the implementation of $\proc{Tree-Delete'}$ preserves this property. Therefore, we could use this property to find a node correctly.
   \begin{codebox}
   \Procname{$\proc{Predecessor'}(T, x)$}
   \li \If $\attrib{x}{left} \neq \const{nil}$
