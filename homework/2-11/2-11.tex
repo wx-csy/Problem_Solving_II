@@ -26,8 +26,8 @@
   to the $\Omega(n \log n)$ lower bound for comparison-based sorting algorithm.
 
   \section{[TC] Problem 12.2-5}
-  When a node in a binary search tree has two children, then its successor is the minimum element in its right subtree. In \proc{Tree-Minimum}, line 1, the \While loop condition ``$\attrib{x}{left} \neq \const{nil}$'' guarantees that when the loop terminates, the minimum element, $x$ must not have a left child. \par
-  Likewise, the predecessor is the maximum element in its left subtree, and the \While loop condition in \proc{Tree-Maximum} guarantees that the maximum element must not have a right child.
+  When a node in a binary search tree has two children, then its successor is the minimum element in its right subtree. If the minimum has a left child, then it is smaller than the minimum, which leads to contradiction. \par
+  Likewise, the predecessor is the maximum element in its left subtree, which couldn't have a right child.
 
   \section{[TC] Problem 12.2-8}
   The $k$ successive calls to \proc{Tree-Successor} output a consecutive subsequence of the inorder traversal of the tree. During this process, every node, say $x$, in the tree, is visited at most three times: entering the tree rooted in $x$ from its parent, then visiting its left subtree; leaving its left subtree, outputting $x$ itself, and then visiting its right subtree; leaving the right subtree, then returning to its parent. The $k$ elements visited and outputted takes a running time of $O(k)$. Now, we are going to consider the elements visited but not outputted. \par
@@ -35,7 +35,7 @@
   So, there are at most $h$ elements visited but not outputted in the left subtree of $a$, and they take a running time of $O(h)$. Likewise the elements visited but not outputted in the right subtree of $a$ take a running time of $O(h)$. \par
   Therefore, the total running time is $O(k+h)$.
 
-    \vspace{0.3cm}
+  \vspace{0.3cm}
   \scriptsize
   \begin{centering}
   \begin{tikzpicture}[line width = 1pt,
@@ -137,7 +137,7 @@
       \End
   \li \If $y \isequal \const{nil}$
   \li \Do $\attrib{T}{root} \gets z$
-  \li     $\attrib{z}{succ} \gets \const{nil}$ 
+  \li     $\attrib{z}{succ} \gets \const{nil}$
   \li \ElseIf $\attrib{z}{key} < \attrib{y}{key}$
   \li \Do $\attrib{y}{left} \gets z$
   \li     $\attrib{z}{succ} \gets y$ \Comment maintain the successor
@@ -155,7 +155,7 @@
   \li \Do $\attrib{T}{root} \gets v$
   \li \ElseIf $u \isequal \attrib{p}{left} $
   \li \Do $\attrib{p}{left} \gets v$
-  \li \Else 
+  \li \Else
   \li     $\attrib{p}{right} \gets v$
       \End
   \end{codebox}
@@ -195,7 +195,7 @@
   \li $\attrib{pred}{succ} \gets \attrib{z}{succ}$
   \end{codebox}
   Every procedure above runs in $O(h)$ time.
-  
+
   \section{[TC] Problem 12-1}
   \begin{enumerate}
     \item When all the keys are identical, the binary search tree is degenerate, i.e. it becomes a linked list, so inserting $n$ items with identical keys into an initially empty binary search tree takes a running time of $O(n^2)$.
