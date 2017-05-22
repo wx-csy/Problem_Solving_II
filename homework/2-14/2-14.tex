@@ -1,0 +1,59 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{论题~2-14~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[TC] Problem 21.1-2}
+  ``If'': we use mathematical induction to prove this. For base step, $a$ and $a$ are in the same set, and $a$ and $a$ are in the same connected component. For induction step, if $S$ is a set, then $S$ is either a set with only one element, or a set which is a union of two disjoint sets, say $S_1$ and $S_2$, connected by edge $(u, v)$ where $u \in S_1$ and $v \in S_2$. In the latter case, for every two elements $x$ and $y$ in $S$, if both $x$ and $y$ are in $S_1$ or $S_2$, then $x$ and $y$ are in the same connected component by induction hypothesis. Otherwise, assume $x \in S_1$, $y \in S_2$, then $x$ has a path to $u$, $v$ has a path to $v$, and there exists edge $(u, v)$, thus $x$ and $y$ are connected. Therefore, if two elements are in the same set, they are in the same connected component. \par
+  ``Only if'': if $a$ and $b$ are in the same connected component, then there exists a path from $a$ to $b$. After the procedure executed, all edges in the path have been processed and all these vertices have been united, thus $a$ and $b$ are in the same set.
+  
+  \section{[TC] Problem 21.1-3}
+  There are $|E|$ edges, and for every edge, \proc{Find-Set} is called twice, thus \proc{Find-Set} is called $2|E|$ times in all. \par
+  The edges, where \proc{Union} is performed, constitute the spanning trees of the connected components. For the $i$th connected component, assume there are $|V_i|$ vertices, then its spanning tree has $|V_i|-1$ edges. Therefore, there are $|V| - k$ edges in the spanning trees, so \proc{Union} is called $|V| - k$ times in all.
+  
+  \section{[TC] Problem 21.2-1}
+  \begin{codebox}
+  \Procname{$\proc{Make-Set}()$}
+
+  \end{codebox}
+  
+  \section{[TC] Problem 21.2-3}
+  
+  \section{[TC] Problem 21.2-6}
+  
+  \section{[TC] Problem 21.3-1}
+  
+  \section{[TC] Problem 21.3-2}
+  \begin{codebox}
+  \Procname{$\proc{Find-Set}(x)$}
+  \li $y \gets x$
+  \li \While $\attrib{y}{p} \neq y$
+  \li \Do $y \gets \attrib{y}{p}$
+      \End
+  \li $z \gets x$
+  \li \While $z \neq y$
+  \li \Do $x \gets \attrib{z}{p}$
+  \li     $\attrib{z}{p} \gets y$
+  \li     $z \gets x$
+      \End
+  \li \Return $y$
+  \end{codebox}
+  
+  \section{[TC] Problem 21.3-3}
+  
+  \section{[TC] Problem 21-1}
+\end{document}
