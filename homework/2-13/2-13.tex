@@ -13,7 +13,7 @@
 \renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
 \newcommand{\NULL}{\const{null}}
 \begin{document}
-  \title{论题~2-12~作业}
+  \title{论题~2-13~作业}
   \author{姓名：陈劭源 \and 学号：161240004}
   \date{}
   \maketitle
@@ -30,7 +30,7 @@
   \section{[TC] Problem 16.1-3}
   Counterexample of the approach of selecting the activity of least duration from among those that are compatible with previously selected activity: there are three activities, whose start times are 0, 3, 5, and finish times are 4, 6, 9, respectively. This approach only chooses the second activity, while we can choose the first and the third activities which are compatible.
   \par
-  Counterexample of the approach of always selecting the compatible remaining activity that overlaps the fewest other remaining activities: there are 11 activities, whose start times are 0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, and finish times are 4, 7, 6, 5, 8, 9, 12, 15, 14, 13, 16, respectively. This approach chooses the first, the sixth and the last activities, while choosing the first, the fifth, the seventh and the last activities is a better solution.\par 
+  Counterexample of the approach of always selecting the compatible remaining activity that overlaps the fewest other remaining activities: there are 11 activities, whose start times are 0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, and finish times are 4, 7, 6, 5, 8, 9, 12, 15, 14, 13, 16, respectively. This approach chooses the first, the sixth and the last activities, while choosing the first, the fifth, the seventh and the last activities is a better solution.\par
   \vspace{0.5cm}
   \scriptsize
   \begin{centering}
@@ -50,7 +50,7 @@
   \end{centering}
   \normalsize
   \vspace{0.5cm}
-  Counterexample of always selecting the compatible remaining activity with the earliest start time: there are three activities, whose start times are 0, 1, 3, and finish times are 5, 2, 4, respectively. This approach only chooses the first activity, while we can choose the first and the third activities, which are compatible.
+  Counterexample of always selecting the compatible remaining activity with the earliest start time: there are three activities, whose start times are 0, 1, 3, and finish times are 5, 2, 4, respectively. This approach only chooses the first activity, while we can choose the second and the third activities, which are compatible.
 
   \section{[TC] Problem 16.2-1}
   The greedy-choice property of the fractional knapsack problem reads:
@@ -99,7 +99,7 @@
 
   \section{[TC] Problem 16-1}
   \begin{enumerate}
-  \item We can repeat choosing the coin with the largest denomination from those that do not exceed the remainder.
+  \item We can repeat choosing the coin with the largest denomination from those that do not exceed the remaining part.
   \begin{codebox}
   \Procname{$\proc{Make-Change-Greedy}(n)$}
   \li $quarters \gets \lfloor n/25 \rfloor$
@@ -110,13 +110,13 @@
   \li $pennies \gets n - 5 * nickels$
   \li print $quarters$, $dimes$, $nickels$, $pennies$
   \end{codebox}
-  Let $Q, D, N, P$ denote the number of the quarters, dimes, nickels and pennies, respectively. To prove the correctness of the algorithm, we have to prove $10D+5N+P<25$ (*), $5N+P<10$ (**) and $P<5$ (***). For optimal solution, we claim that $D<5$, $N<2$ and $P<5$. Otherwise, we can replace these coins with two quarters, a dime or a nickel, respectively, which yields a better solution. By $P<5$, the inequality (***) holds. By $P<5$ and $N<2$, the inequality (**) holds. When $D=3$, we can replace them with a quarter and a nickel; when $D=4$, we can replace then with a quarter, a dime and a nickel, which are all better solutions. When $D=2$ and $5N+P \geq 5$, by $P<5$ and $N<2$ we know that $N=1$. Replacing the two dimes and a nickel with a quarter yields a better solution. Hence, either $D<2$ or $D=2$ and $5N+P<5$ holds, thus inequality (*) holds. Therefore, this algorithm yields an optimal solution.
-  \item Let $p_0, p_1, \cdots, p_k$ denote the number of coins with denominations $c^0, c^1, \cdots c^k$, respectively. For optimal solution, we claim that $p_0, p_1, \cdots p_{k-1} < c$, otherwise, we can replace these coins with the coin with denomination $c, c^2, \cdots c^k$, respectively. Now we are going to prove that $\sum_{i=0}^{j} n_i c^i < c^{j+1}$ holds for all $j < k$:
+  Let $Q, D, N, P$ denote the numbers of the quarters, dimes, nickels and pennies, respectively. To prove the correctness of the algorithm, we have to prove $10D+5N+P<25$ (*), $5N+P<10$ (**) and $P<5$ (***). For optimal solution, we claim that $D<5$, $N<2$ and $P<5$. Otherwise, we can replace these coins with two quarters, a dime or a nickel, respectively, which yields a better solution. By $P<5$, the inequality (***) holds. By $P<5$ and $N<2$, the inequality (**) holds. When $D=3$, we can replace them with a quarter and a nickel; when $D=4$, we can replace then with a quarter, a dime and a nickel, which are all better solutions. When $D=2$ and $5N+P \geq 5$, by $P<5$ and $N<2$ we know that $N=1$. Replacing the two dimes and a nickel with a quarter yields a better solution. Hence, either $D<2$ or $D=2$ and $5N+P<5$ holds, thus inequality (*) holds. Therefore, this algorithm yields an optimal solution.
+  \item Let $p_0, p_1, \cdots, p_k$ denote the numbers of coins with denominations $c^0, c^1, \cdots c^k$, respectively. For optimal solution, we claim that $p_0, p_1, \cdots p_{k-1} < c$, otherwise, we can replace these coins with the coin with denomination $c, c^2, \cdots c^k$, respectively. Now we are going to prove that $\sum_{i=0}^{j} n_i c^i < c^{j+1}$ holds for all $j < k$:
       $$
-        \sum_{i=0}^{j} p_i c^i \leq \sum_{i=0}^{j} (c-1) c^i = \sum_{i=1}^{j+1} c^i - \sum_{i=0}^{j} = c^{j+1}-1 < c^{j+1}
+        \sum_{i=0}^{j} p_i c^i \leq \sum_{i=0}^{j} (c-1) c^i = \sum_{i=1}^{j+1} c^i - \sum_{i=0}^{j} c^i = c^{j+1}-1 < c^{j+1}
       $$
       Therefore, the greedy algorithm always yields an optimal solution.
-  \item The coins are in the denominations 1, 3 and 4 cents, and we are going to make a 6-cent change. The greedy algorithm gives a solution using one 4-cent coin and two 1-cent coin. However, using two 3-cent coin is a better solution.
+  \item The coins are in the denominations 1, 3 and 4 cents, and we are going to make a 6-cent change. The greedy algorithm gives a solution using one 4-cent coin and two 1-cent coins. However, using two 3-cent coins is a better solution.
   \item The pseudocode is shown below. $d$ is an array consisting of the denominations available. This procedure returns an array, consisting the number of every kind of coin.
   \begin{codebox}
   \Procname{$\proc{Make-Change-DP}(d, n)$}
