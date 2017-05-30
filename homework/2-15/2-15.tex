@@ -36,8 +36,8 @@
     \node [empty, label=below:$c_{10}$] (c10) at (4, 0){};
     \node [empty, label=below:$c_{11}$] (c11) at (5, 0){};
     \node [empty, label=below:$c_{12}$] (c12) at (6, 0){};
-    
-    \draw (c1) edge [bend left=30] (c5); 
+
+    \draw (c1) edge [bend left=30] (c5);
     \draw (c1) edge [bend left=45] (c6);
     \draw (c1) -- (c8);
     \draw (c1) -- (c9);
@@ -99,7 +99,7 @@
   \node [empty, label=right:$L5$] (L5) at (6, 0){};
   \node [empty, label=right:$L6$] (L6) at (7.5, 0){};
   \node [empty, label=right:$L7$] (L7) at (9, 0){};
-  
+
   \draw (L1) edge [bend left=25] (L3);
   \draw (L1) edge [bend left=30] (L4);
   \draw (L1) edge [bend left=35] (L5);
@@ -112,7 +112,7 @@
   \end{tikzpicture} \par
   \end{centering}
   \normalsize
-  
+
   \section{[CZ] Problem 1.14}
   Let $C$ denote a component of $G$. \par
   (1) $\rightarrow$ (2): Take any vertex $v_0$ in $C$. For any vertex $v_i$ which is connected to $v_0$, it must in $V(C)$, otherwise if we add $v_i$, along with the edges in the path from $v_0$ to $v_i$, to $C$, we get a proper connected supergraph of $C$, which leads to contradiction. Therefore, $V(C)$ is an equivalent class. Then we have to prove $C$ is the subgraph induced by $V(C)$. If not, let $C'$ be the subgraph induced by $V(C)$, and $E(C) \subset E(C')$, thus $C$ is a proper subgraph of $C'$, which leads to contradiction.  \par
@@ -463,5 +463,5 @@
   $|U| = |W|$ implies $|X| = 0$, i.e. $G$ contains no vertex $v$ of degree $n/2$.
 
   \section{[CZ] Problem 3.13}
-  This statement is true. Note that $d(i, j) = 1$ if and only if $i$ and $j$ are adjacent. Therefore, for every edge $uv \in V(G)$, $d_G(u, v) = 1$, thus $d_H(\phi(u),\phi(v)) = 1$, i.e $\phi(u)\phi(v)\in V(H)$. Likewise, if $\phi(u)\phi(v)\in V(H)$, then $uv \in V(G)$. By the definition of isomorphism, $H$ and $G$ are isomorphic.
+  This statement is true. Note that $d(i, j) = 1$ if and only if $i$ and $j$ are adjacent. Therefore, for every edge $uv \in E(G)$, $d_G(u, v) = 1$, thus $d_H(\phi(u),\phi(v)) = 1$, i.e $\phi(u)\phi(v)\in E(H)$. Likewise, if $\phi(u)\phi(v)\in E(H)$, then $uv \in E(G)$. By the definition of isomorphism, $H$ and $G$ are isomorphic.
 \end{document}
