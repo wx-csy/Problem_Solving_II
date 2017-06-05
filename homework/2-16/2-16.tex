@@ -1,0 +1,57 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{ctex}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\newcommand{\od}{\mathop{\mathrm{od}}}
+\begin{document}
+  \title{论题~2-16~作业}
+  \author{姓名：陈劭源 \and 学号：161240004}
+  \date{}
+  \maketitle
+
+  \section{[TC] Problem 22.1-3}
+  For adjacency-list representation:
+  \begin{codebox}
+  \Procname{$\proc{Transpose}(G)$}
+  \li let $\id{Adj}[1 \twodots |V(G)|]$ be a new array of lists
+  \li \For $i \gets 1$ \To $|V(G)|$
+  \li \Do  \For each $e$ in $\attrib{G}{Adj}[i]$
+  \li      \Do $\attribii{Adj[e]}{insert}(i)$
+           \End
+      \End
+  \li \Return graph $(V(G), \id{Adj})$
+  \end{codebox} \par
+  For adjacency-matrix representation:
+  \begin{codebox}
+  \Procname{$\proc{Transpose}(G)$}
+  \li let $\id{A}[1 \twodots |V(G)|, 1 \twodots |V(G)|]$ be a new array
+  \li \For $i \gets 1$ \To $|V(G)|$
+  \li \Do  \For $j \gets 1$ \To $|V(G)|$
+  \li      \Do $A(i, j) \gets \attrib{G}{A}(j, i)$
+           \End
+      \End
+  \li \Return graph $(V(G), A)$
+  \end{codebox}
+ 
+  \section{[TC] Problem 22.1-8}
+  If we use hash table with collision resolution by chaining, the expected time to determine whether an edge is in the graph is $O(1 + \alpha)$, where $\alpha$ is the load factor. (We will not adopt open addressing, because it is no better than adjacency-matrix, i.e. direct-address tables) \par
+  The disadvantage of this scheme is that, we still need a great number of memory space, even if the graph is very sparse. \par
+  Instead of a hash table, we can use binary search tree as array entry $\id{Adj[u]}$, containing the vertices $v$ for which $(u, v) \in E$. This alternative requires $O(\log n)$ time for determining whether an edge is in the graph, where $n$ is the out-degree of $u$, usually worse than hash table.
+  
+  \section{[TC] Problem 22.2-3}
+  
+  \section{[TC] Problem 22.2-4}
+  
+  \section{[TC] Problem 22.2-5}
+  
+  
+\end{document}
