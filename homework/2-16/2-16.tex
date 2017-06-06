@@ -13,6 +13,7 @@
 \allowdisplaybreaks[4]
 \renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
 \newcommand{\NIL}{\const{nil}}
+\newcommand{\od}{\mathop{\mathrm{od}}}
 \begin{document}
   \title{论题~2-16~作业}
   \author{姓名：陈劭源 \and 学号：161240004}
@@ -46,11 +47,11 @@
   \section{[TC] Problem 22.1-8}
   If we use hash table with collision resolution by chaining, the expected time to determine whether an edge is in the graph is $O(1 + \alpha)$, where $\alpha$ is the load factor. (We will not adopt open addressing, because it is no better than adjacency-matrix, i.e. direct-address tables) \par
   The disadvantage of this scheme is that, we still need a great number of memory space, even if the graph is very sparse. \par
-  Instead of a hash table, we can use binary search tree as array entry $\id{Adj[u]}$, containing the vertices $v$ for which $(u, v) \in E$. This alternative requires $O(\log n)$ time for determining whether an edge is in the graph, where $n$ is the out-degree of $u$, usually worse than hash table.
+  Instead of a hash table, we can use binary search tree as array entry $\id{Adj[u]}$, containing the vertices $v$ for which $(u, v) \in E$. This alternative requires $O(\log \od(u))$ time for determining whether an edge is in the graph, where $\od(u)$ is the out-degree of $u$, usually worse than hash table.
 
   \section{[TC] Problem 22.2-3}
   In \proc{BFS}, whether a vertex is black or gray does not affect the order in which the statements are executed, so we can remove line 18\footnote{According to the errata sheet (\url{http://www.cs.dartmouth.edu/~thc/clrs-bugs/bugs-3e.php}), the problem should be ``... if line 18 was removed''. This error has been corrected in the third printing of this book.}, i.e. leave the vertex gray after all its white adjacent nodes have been inserted to the queue, without changing the result the procedure produces.
-  
+
   \section{[TC] Problem 22.2-4}
   Instead of going through the adjacency list, we have to go through a row of the adjacency matrix to determine the edges in the graph, which takes a running time of $O(|V|^2)$.
 
@@ -107,17 +108,17 @@
     \node [empty, label=below:$w$] (w) at (2, 0){};
     \node [empty, label=below:$x$] (x) at (3, 0){};
     \node [empty, label=below:$y$] (y) at (4, 0){};
-    
+
     \draw (v) -- (r) -- (s) -- (w) -- (t);
     \draw (w) -- (x) -- (u);
     \draw (x) -- (y);
     \end{tikzpicture} \par
-  \end{centering} 
-  
+  \end{centering}
+
   \section{[TC] Problem 22.3-6}
     For every edge $(u, v)$ ($\attrib{u}{d} < \attrib{v}{d}$), if $(u, v)$ is encountered first, then $v$ must remain unvisited, because $(v, u)$ will be encountered when visiting $v$. Hence $(u, v)$ is a tree edge. If $(v, u)$ is encountered first, then both $u, v$ are visited, and thus $(u, v)$ is a back edge. \par
     Since, in an undirected graph, every edge is either a tree edge or a black edge, we conclude that $(u, v)$ ($\attrib{u}{d} < \attrib{v}{d}$) is encountered first iff $(u, v)$ is a tree edge, and $(v, u)$ ($\attrib{u}{d} < \attrib{v}{d}$) is encountered first iff $(u, v)$ is a back edge. Therefore, these two schemes are equivalent.
-    
+
   \section{[TC] Problem 22.3-7}
   \begin{codebox}
   \Procname{$\proc{DFS}(G)$}
@@ -148,7 +149,7 @@
           \End
       \End
   \end{codebox}
-  
+
   \section{[TC] Problem 22.3-8}
   Consider the following graph: \par
   \vspace{0.2cm}
@@ -165,7 +166,7 @@
     \draw [->] (b) -- (c);
     \draw [->] (c) -- (d);
     \end{tikzpicture} \par
-  \end{centering} 
+  \end{centering}
   In this graph, there exists a path from $y$ to $w$. If we perform depth-first search on this graph from $z$ in the order $z, x, y, w$, the depth-first forest is: \par
   \vspace{0.2cm}
   \begin{centering}
@@ -180,9 +181,9 @@
     \draw [->] (a) -- (b);
     \draw [->] (c) -- (d);
     \end{tikzpicture} \par
-  \end{centering} 
+  \end{centering}
   In such order of DFS, $\attrib{y}{d} < \attrib{w}{d}$, however, $w$ is not a descendant of $y$ in this forest.
-  
+
   \section{[TC] Problem 22.3-9}
   Consider the following graph: \par
   \vspace{0.2cm}
@@ -199,7 +200,7 @@
     \draw [->] (b) -- (c);
     \draw [->] (c) -- (d);
     \end{tikzpicture} \par
-  \end{centering} 
+  \end{centering}
   In this graph, there exists a path from $y$ to $w$. If we perform depth-first search on this graph from $z$ in the order $z, x, y, w$, $w$ is visited after the adjacency list of $y$ has been examined, i.e. $\attrib{w}{d} > \attrib{y}{f}$. \par
   \section{[TC] Problem 22.3-12}
   \begin{codebox}
@@ -216,7 +217,7 @@
   \end{codebox}
   \begin{codebox}
   \Procname{$\proc{DFS-Visit}(G, u, c)$}
-  \zi $\cdots \cdots$  
+  \zi $\cdots \cdots$
   \setlinenumberplus{}{4}
   \li $\attrib{u}{cc} \gets c$
   \li \For each vertex $v \in \attrib{G}{Adj}[u]$
@@ -227,7 +228,7 @@
       \End
   \zi $\cdots \cdots$
   \end{codebox}
-  
+
   \section{[TC] Problem 22.4-2}
   \begin{codebox}
   \Procname{$\proc{Count-Simple-Paths}(G, s, t)$}
@@ -245,7 +246,7 @@
       \End
   \li \Return $\id{count}[t]$
   \end{codebox}
-  
+
   \section{[TC] Problem 22.4-3}
   We can modify DFS to determine whether the undirected graph contains a cycle.
   \begin{codebox}
@@ -276,7 +277,7 @@
   \zi $\cdots \cdots$
   \end{codebox}
   In this algorithm, every vertex is visited at most once. If a vertex is to be visited for the second time, it means that the graph contains a cycle, and the procedure will be immediately terminated. Hence the algorithm run in $O(|V|)$ time, independent of $|E|$.
-  
+
   \section{[TC] Problem 22.5-5}
   \begin{codebox}
   \Procname{$\proc{Component-Graph}(G)$}
@@ -299,20 +300,20 @@
   \li \Return $G^{\id{scc}}$
   \end{codebox}
   In this procedure, line 1, line 2, line 3-6, line 7, line 8, line 9, line 10-11 cost $O(|V|+|E|)$ time respectively, and thus the algorithm takes a total running time of $O(|V|+|E|)$.
-  
+
   \section{[TC] Problem 22.5-6}
   \begin{codebox}
   \Procname{$\proc{Is-Semiconnected}(G)$}
   \li $G^{\id{scc}} \gets \proc{Component-Graph}(G)$
   \li $T \gets \proc{Topological-Sort}(G^{\id{scc}})$
   \li \For $i \gets 1$ \To $\attrib{T}{length} - 1$
-  \li \Do  \If $(T[i], T[i+1]) \notin \attrib{G^{\id{scc}}}{E}$ 
+  \li \Do  \If $(T[i], T[i+1]) \notin \attrib{G^{\id{scc}}}{E}$
   \li      \Do \Return \const{false}
            \End
       \End
   \li \Return \const{true}
   \end{codebox} \par
-  In this procedure, line 1, line 2 takes a running time of $O(|V|+|E|)$, line 3-4 takes a running time of $O(|V|)$, therefore the total running time is $O(|V|+|E|)$. \par
+  In this procedure, line 1, line 2 takes a running time of $O(|V|+|E|)$, respectively. Line 3-4 takes a running time of $O(1 + \od(v))$ for each vertex $v$ to verify whether or not $(T[i], T[i+1]) \in \attrib{G^{\id{scc}}}{E}$, where $\od(v)$ is the out-degree of $v$, and $O(|V|+|E|)$ in sum. Therefore, the total running time is $O(|V|+|E|)$. \par
   We break the proof of the correctness of this algorithm into the two steps: \par
   \textbf{Step 1:} A graph $G$ is semiconnected if and only if its component graph $G^{\id{scc}}$ is semiconnected. \par
   \emph{Proof} `if': for every two distinct nodes $u, v$ in $G$, if they are in the same strongly connected component, then they are semiconnected; otherwise, let $u \in C_1$, $v \in C_2$, where $C_1, C_2$ are two distinct strongly connected components. Since the component graph is semiconnected, we have $C_1 \rightsquigarrow C_2$ or $C_2 \rightsquigarrow C_1$. Without loss of generality, assume $C_1 \rightsquigarrow C_2$. For every edge $(C_i, C_j)$ in the path $C_1 \rightsquigarrow C_2$, replace it with two vertices $u \in C_i, v \in C_j$, where $(u, v) \in G$. For every two incident edges $(C_i, C_j), (C_j, C_k)$ and their corresponding vertices $u \in C_i, v, w \in C_j, x \in C_k$, since $v$ and $w$ are in the same component, we can add a path $v \rightsquigarrow w$ between $v$ and $w$. Finally, we get a path from $u$ to $v$. Therefore, $G$ is semiconnected.  \par
