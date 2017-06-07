@@ -58,12 +58,12 @@
   \normalsize
   \section{[CZ] Problem 1.8}
   \begin{enumerate}
-    \item The words in $S_1$ are (presented from left to right): cat, cap, tap, top. \par
+    \item The words in $S_1$ are (left to right): cat, cap, tap, top. \par
     The words in $S_2$ are: map (center) , mop, tap, mat (surrounding). \par
     The words in $S_3$ are: run (top left), gun (top right), sun (center), son (bottom). \par
-    The words in $S_4$ are (presented clockwise): slit, slot, slop, slip. \par
-    The words in $S_5$ are (presented clockwise from top left): pot, put, pet, poet. \par
-    The words in $S_6$ are (presented clockwise): lake, sake, take, make.
+    The words in $S_4$ are (clockwise): slit, slot, slop, slip. \par
+    The words in $S_5$ are (clockwise from top left): pot, put, pet, poet. \par
+    The words in $S_6$ are (clockwise): lake, sake, take, make.
     \item  The graph $H$ is: \par
       \small
       \begin{centering}
@@ -118,7 +118,7 @@
 
   \section{[CZ] Problem 1.14}
   Let $C$ denote a component of $G$. \par
-  (1) $\rightarrow$ (2): Take any vertex $v_0$ in $C$. For any vertex $v_i$ which is connected to $v_0$, it must in $V(C)$, otherwise if we add $v_i$, along with the edges in the path from $v_0$ to $v_i$, to $C$, we get a proper connected supergraph of $C$, which leads to contradiction. Therefore, $V(C)$ is an equivalent class. Then we have to prove $C$ is the subgraph induced by $V(C)$. If not, let $C'$ be the subgraph induced by $V(C)$, and $E(C) \subset E(C')$, thus $C$ is a proper subgraph of $C'$, which leads to contradiction.  \par
+  (1) $\rightarrow$ (2): Take any vertex $v_0$ in $C$. For any vertex $v_i$ which is connected to $v_0$, it must in $V(C)$, for otherwise if we add $v_i$, along with the edges and vertices in the path from $v_0$ to $v_i$, to $C$, we get a proper connected supergraph of $C$, which leads to contradiction. Therefore, $V(C)$ is an equivalent class. Then we have to prove $C$ is the subgraph induced by $V(C)$. If not, let $C'$ be the subgraph induced by $V(C)$, and $E(C) \subset E(C')$, thus $C$ is a proper subgraph of $C'$, which leads to contradiction.  \par
   (2) $\rightarrow$ (1): Suppose, to the contrary that $C$ is a proper subgraph of a connected subgraph of $G$, denoted by $C'$. If $V(C) \subset V(C')$, there exists some vertex connected to $C$ but not in the equivalent class, which leads to contradiction. It is impossible that $V(C) = V(C')$, because the subgraph induced by $V(C)$ is the maximal subgraph whose vertex set is $V(C)$.
 
   \section{[CZ] Problem 1.16}
@@ -128,14 +128,14 @@
 
   \section{[CZ] Problem 1.17}
   \begin{enumerate}
-    \item Assume that $P$ is an $x - z$ path and $Q$ is a $u - w$ path, where $x \neq u, v$ and $y \neq u, v$, and they do not have common vertex. Let $y$ be a vertex in $P$ and $v$ be a vertex in $Q$, then there exists a $y-v$ path $(p_0 = y, p_1, p_2, \cdots, p_n = v)$. If there exists $p_i$ such that $p_i$ ($0 < i < n$) is in $P$ or $Q$, since $P \cap Q = \varnothing$, there exists a segment of the path, from any vertex in $P$ (let it be $y$), to any vertex in $Q$ (let it be $v$), such that the vertices in the segment are not in $P$ or $Q$, except the first and the last one. Assume $x - y$ is longer than $y - z$, and $u - v$ is longer than $v - w$, consider the path $x - y - v - u$, it is longer than the $x - z$ path and the $u - v$ path, which leads to contradiction.
-    \item This is true. The geodesics are as well the longest paths in $G$, otherwise $\diam(G) > k$. Apply the conclusion we've proved in (1), we obtain that $P$ and $Q$ must have at least one common vertex.
+    \item Assume that $P$ is an $x - z$ path and $Q$ is a $u - w$ path, where $x \neq u, w$ and $y \neq u, w$, and they do not have common vertex. Let $y$ be a vertex in $P$ and $v$ be a vertex in $Q$, then there exists a $y-v$ path $(p_0 = y, p_1, p_2, \cdots, p_n = v)$ by the connectivity. Let $k = \min\limits_{P_i \in Q} i$, and $j = \max\limits_{P_i \in P, i < k} i$, then the path $(p_j, p_{j+1}, \cdots, p_k)$ connects $P$ and $Q$, and it has no vertex in $P$ or $Q$ except the first and the last one. Assume, without loss of generality, that $x - p_j$ is longer than $p_j - z$, and $u - p_k$ is longer than $p_k - w$. Consider the path $x - p_j - p_k - u$, it is longer than the $x - z$ path and the $u - v$ path, which leads to contradiction.
+    \item This is false. Consider $G = K_4$, whose diameter is $1$, and the vertices are $\set{v_1, v_2, v_3, v_4}$. In this graph, $(v_1, v_2)$ and $(v_3, v_4)$ are two geodesics of length 1, but they have no common vertex.
   \end{enumerate}
 
   \section{[CZ] Problem 1.18}
   \begin{enumerate}
-    \item The minimum size of such a subgraph contains only the vertices and edges in a $u-v$ geodesic. Any connected subgraph containing $u$ and $v$ must have a $u-v$ path, which is at least as long as the geodesic. So a subgraph contains only the vertices and edges in a $u-v$ geodesic has less edges or vertices than other graphs.
-    \item What is the maximum size of a connected subgraph of $G$ containing $u$ and $v$? It is $G$.
+    \item The minimum size of such a subgraph is the distance from $u$ to $v$. Any connected subgraph containing $u$ and $v$ must have a $u-v$ path, which is at least as long as the geodesic. So the geodesic has minimum size among all connected subgraphs of $G$.
+    \item What is the maximum size of a subgraph of $G$ where $u$ and $v$ are disconnected?
   \end{enumerate}
 
   \section{[CZ] Problem 1.22}
@@ -254,7 +254,7 @@
       \end{tikzpicture} \par
       \end{centering}
       \normalsize
-      Now we are going to prove that it is impossible that $k \geq 4$. Suppose, there exists distinct $u, v, x, y$, such that $d_G(u, v) = d_{\overline{G}}(x,y) = k \geq 4$. Let $(u = w_0, w_1, \cdots, w_k = v)$ be a $u-v$ geodesic, $(x = z_0, z_1, \cdots, z_k = y)$ be an $x-y$ geodesic. We claim that there exists $i \in \set{0,k}$, such that $z_0 w_i$ is not an edge in $G$, otherwise, $(w_0, z_0, w_k)$ is a $u-v$ path shorter than the geodesic in $G$. Likewise there exists $j \in \set{0,k}$, such that $z_k w_j$ is not an edge in $G$. Hence, $z_0 w_i$ and $z_k w_j$ are edges in $\overline{G}$. If $i = j$, $(z_0, w_i, z_k)$ is shorter than $x-y$ geodesic, which is impossible. If $i \neq j$, $w_i w_j = w_0 w_k = u v$ is an edge in $\overline{G}$, otherwise $d_G(u, v) = 1$, contradicting the provided condition. Note that $(x = z_0, w_i, w_j, z_k = y)$ is an $x-y$ path shorter than the geodesic, which is impossible. \par
+      Now we are going to prove that it is impossible that $k \geq 4$. Suppose, there exists distinct $u, v, x, y$, such that $d_G(u, v) = d_{\overline{G}}(x,y) = k \geq 4$. Let $(u = w_0, w_1, \cdots, w_k = v)$ be a $u-v$ geodesic, $(x = z_0, z_1, \cdots, z_k = y)$ be an $x-y$ geodesic. We claim that there exists $i \in \set{0,k}$, such that $z_0 w_i$ is not an edge in $G$, otherwise, $(w_0, z_0, w_k)$ is a $u-v$ path shorter than the geodesic in $G$. Likewise there exists $j \in \set{0,k}$, such that $z_k w_j$ is not an edge in $G$. Hence, $z_0 w_i$ and $z_k w_j$ are edges in $\overline{G}$. If $i = j$, $(z_0, w_i, z_k)$ is shorter than $x-y$ geodesic, which is impossible. If $i \neq j$, $w_i w_j = w_0 w_k = u v$ is an edge in $\overline{G}$, otherwise $d_G(u, v) = 1$, contradicting the given condition. Note that $(x = z_0, w_i, w_j, z_k = y)$ is an $x-y$ path shorter than the geodesic, which is impossible. \par
       Therefore, $k \leq 3$.
   \end{enumerate}
 
@@ -351,7 +351,7 @@
   \section{[CZ] Problem 2.6}
   Consider the sum of the degrees over all vertices:
   $$\sum_{v \in V(G)} \deg v = n(n-1) + n^2 + n(n+1) = 3n^2$$
-  By Theorem 2.1, $3n^2$ is even, thus $n$ is even.
+  By Theorem 2.1, $3n^2$ is even, therefore $n$ is even.
 
   \section{[CZ] Problem 2.7}
   \begin{enumerate}
@@ -365,7 +365,7 @@
   \end{enumerate}
 
   \section{[CZ] Problem 2.9}
-  Suppose that these odd vertices are not in the same component. Let $C$ be the component containing only one odd vertex. Component is an induced subgraph, so the degrees of its vertices do not change. The sum of the degrees over all vertices in $C$ is odd, which contradicts Theorem 2.1. \par
+  Suppose that these odd vertices are not in the same component. Let $C$ be the component containing only one odd vertex. Component is an induced subgraph of the original graph, so the degrees of its vertices do not change. The sum of the degrees of all vertices in $C$ is odd, which contradicts Theorem 2.1. \par
 
   \section{[CZ] Problem 2.10}
   \begin{enumerate}
@@ -377,11 +377,11 @@
   \section{[CZ] Problem 2.13}
   \begin{enumerate}
     \item Suppose, to the contrary that $G$ contains more than two components. The component containing minimum number of vertices contains at most $\lfloor n/3 \rfloor$ vertices. The degree of every vertex in this component is at most $\lfloor n/3 \rfloor - 1$, less than $(n-2)/3$, which leads to contradiction.
-    \item If $\deg v \geq (n-3)/3 = n/3 - 1$ for every vertex $v$ of $G$, $G$ might contain more than two components. For example, let $n$ be a multiple of 3, consider the graph $G = 3K_{n/3}$, for every $v \in V(G)$, $\deg v = n/3 - 1$, however, it contains three components.
+    \item If $\deg v \geq (n-3)/3 = n/3 - 1$ for every vertex $v$ of $G$, $G$ might contain more than two components. For example, let $n$ be a multiple of 3, consider the graph $G = 3K_{n/3}$, for every $v \in V(G)$, $\deg v = n/3 - 1$, however, it contains three components. Hence the bound in (a) is sharp.
   \end{enumerate}
 
   \section{[CZ] Problem 2.15}
-  For every cycle in graph $G$, let $u, v$ be two distinct vertices in the cycle, and thus the cycle consists two $u-v$ path, whose lengths have the same parity. Therefore the cycle is an even cycle. By Theorem 1.12 $G$ is bipartite.
+  For every cycle in graph $G$, let $u, v$ be two distinct vertices in the cycle, and thus the cycle can be divided into two $u-v$ path, whose lengths have the same parity. Therefore the cycle is an even cycle. By Theorem 1.12 $G$ is bipartite.
 
   \section{[CZ] Problem 2.20}
   Suppose, to the contrary that for every adjacent vertices $u$ and $v$, $\deg u = \deg v$. Since the graph is connected, for every distinct vertices $x$ and $y$, there exists an $x - y$ path. By transitivity of ``$=$'', we get $\deg x = \deg y$, i.e. $G$ is regular, which leads to contradiction.
@@ -459,7 +459,7 @@
   They are not isomorphic. Both $G_1$ and $G_2$ contain exactly two vertices of degree 2. In $G_1$, the two vertices of degree 2 (the leftmost one and the rightmost one) are adjacent to two vertices, however, in $G_2$, the two vertices of degree 2 (the top left one and the top right one) are adjacent to three vertices. Hence $G_1$ and $G_2$ are not isomorphic.
 
   \section{[CZ] Problem 3.11}
-  Let $X = \set{v \in V(G): \deg_G v = n/2}$, $Y = \set{v \in V(G): \deg_G yv < n/2}$. We have
+  Let $X = \set{v \in V(G): \deg_G v = n/2}$, $Y = \set{v \in V(G): \deg_G v < n/2}$. We have
   $$ U = X \cup Y = X \cup \set{v \in V(G): \deg_G v < n/2} = X \cup \set{v \in V(\overline{G}): \deg_{\overline{G}} v \geq n/2} $$ \par
   Since $G$ is self-complementary, we have
   $$ |W| = |\set{v \in V(G): \deg_G v \geq n/2}| = |\set{v \in V(\overline{G}): \deg_{\overline{G}} v \geq n/2}| $$ \par
