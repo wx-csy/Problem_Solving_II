@@ -284,22 +284,25 @@
   \li compute the strongly connected components of $G$
   \li assign each vertex $v$ an integer label $\attrib{v}{scc}$ between 1 and $k$, denoting which strongly \\ connected components $v$ belongs to, where $k$ is the number of the components.
   \li $\attrib{G^{\id{scc}}}{V} \gets\{1, 2, \cdots, k\}$
+  \li let $\id{edges}[1 \twodots k]$ be a new array of lists \Comment adjacent lists with duplicate edges and loops
   \li \For each edge $(u, v) \in \attrib{G}{E}$
-  \li \Do \If $\attrib{u}{scc} \neq \attrib{v}{scc}$
-  \li     \Do $\attribb{G^{\id{scc}}}{E}{insert}((\attrib{u}{scc}, \attrib{v}{scc}))$
-          \End
+  \li \Do  $\attrib{\id{edges}[\attrib{u}{scc}]}{insert}(\attrib{v}{scc})$
       \End
-  \zi \Comment use radix sort to sort the edges
-  \li perform counting sort on $\attrib{G^{\id{scc}}}{E}$, using the second endpoint of each edge as key
-  \li perform counting sort on $\attrib{G^{\id{scc}}}{E}$, using the first endpoint of each edge as key
-  \li delete the consecutive duplicate edges in ($\attrib{G^{\id{scc}}}{E}$) \Comment after sorting, duplicate edges must be consecutive
-  \zi \Comment construct adjacency lists
-  \li \For each edge $(u, v) \in \attrib{G^{\id{scc}}}{E}$
-  \li \Do  $\attribb{G^{\id{scc}}}{Adj[u]}{insert}(v)$
+  \li let $\id{mark}[1 \twodots k]$ be a new array
+  \li \For $i \gets 1$ \To $k$
+  \li \Do  $\id{mark}[i] \gets 0$
+      \End
+  \li \For $i \gets 1$ \To $k$
+  \li \Do \For each vertex $j \in \id{edges}[i]$
+  \li     \Do \If $i \neq j$ and $\id{mark}[j] \neq i$
+  \li         \Do $\attribb{G^{\id{scc}}}{Adj[i]}{insert}(j)$
+  \li             $\id{mark}[j] \gets i$
+              \End
+          \End
       \End
   \li \Return $G^{\id{scc}}$
   \end{codebox}
-  In this procedure, line 1, line 2, line 3-6, line 7, line 8, line 9, line 10-11 cost $O(|V|+|E|)$ time respectively, and thus the algorithm takes a total running time of $O(|V|+|E|)$.
+  In this procedure, line 1, line 2, line 3, line 4-6, line 7-14 cost $O(|V|+|E|)$ time respectively, and thus the algorithm takes a total running time of $O(|V|+|E|)$.
 
   \section{[TC] Problem 22.5-6}
   \begin{codebox}
@@ -313,13 +316,13 @@
       \End
   \li \Return \const{true}
   \end{codebox} \par
-  In this procedure, line 1, line 2 takes a running time of $O(|V|+|E|)$, respectively. Line 3-4 takes a running time of $O(1 + \od(v))$ for each vertex $v$ to verify whether or not $(T[i], T[i+1]) \in \attrib{G^{\id{scc}}}{E}$, where $\od(v)$ is the out-degree of $v$, and $O(|V|+|E|)$ in sum. Therefore, the total running time is $O(|V|+|E|)$. \par
-  We break the proof of the correctness of this algorithm into the two steps: \par
+  In this procedure, line 1, line 2 takes a running time of $O(|V|+|E|)$, respectively. Line 3-5 takes a running time of $O(1 + \od(v))$ for each vertex $v$ to verify whether or not $(T[i], T[i+1]) \in \attrib{G^{\id{scc}}}{E}$, where $\od(v)$ is the out-degree of $v$, and $O(|V|+|E|)$ in sum. Therefore, the total running time is $O(|V|+|E|)$. \par
+  We break the proof of the correctness of this algorithm into the following two steps: \par
   \textbf{Step 1:} A graph $G$ is semiconnected if and only if its component graph $G^{\id{scc}}$ is semiconnected. \par
   \emph{Proof} `if': for every two distinct nodes $u, v$ in $G$, if they are in the same strongly connected component, then they are semiconnected; otherwise, let $u \in C_1$, $v \in C_2$, where $C_1, C_2$ are two distinct strongly connected components. Since the component graph is semiconnected, we have $C_1 \rightsquigarrow C_2$ or $C_2 \rightsquigarrow C_1$. Without loss of generality, assume $C_1 \rightsquigarrow C_2$. For every edge $(C_i, C_j)$ in the path $C_1 \rightsquigarrow C_2$, replace it with two vertices $u \in C_i, v \in C_j$, where $(u, v) \in G$. For every two incident edges $(C_i, C_j), (C_j, C_k)$ and their corresponding vertices $u \in C_i, v, w \in C_j, x \in C_k$, since $v$ and $w$ are in the same component, we can add a path $v \rightsquigarrow w$ between $v$ and $w$. Finally, we get a path from $u$ to $v$. Therefore, $G$ is semiconnected.  \par
   `only if': for every two distinct nodes $C_1, C_2$ in $G^{\id{scc}}$, choose two elements $x \in C_1, y \in C_2$, then $x \rightsquigarrow y$ or $y \rightsquigarrow x$. Replace each node in $x \rightsquigarrow y$ (or $y \rightsquigarrow x$) with the component it belongs to, we obtain a path, or more precisely, a walk from $C_1$ to $C_2$ (or from $C_2$ to $C_1$), therefore $G^{\id{scc}}$ is semiconnected. \par
-  \textbf{Step 2:} A DAG $G$ is semiconnected if and only if for every two vertices $u, v$ adjacent in the topological sort $G$, then $u$ and $v$ are connected by a directed edge in $G$. \par
-  \emph{Proof} `if': for every distinct vertices $u, v$, assume, without loss of generality, that $u$ appears before $v$ in the topological sort, i.e. the topological sort is $\cdots, u, w_1, w_2, \cdots, w_n, v, \cdots$, then $(u, w_1), (w_1, w_2), \cdots, (w_n, v)$ are directed edges in $G$, i.e. $u \rightsquigarrow v$. Therefore, $G$ is semiconnected. \par
-  `only if': suppose, to the contrary, that there exists two vertices $u, v$ adjacent in the topological sort $G$, but $u$ and $v$ are not connected by a directed edge in $G$. It is impossible that $v \rightsquigarrow u$, because $u$ appears before $v$. Therefore $u \rightsquigarrow v$. Since they are not connected by a directed edge, the path from $u$ to $v$ must contain at least 3 vertices, i.e. there must exist another vertex $w$, such that $u \rightsquigarrow w \rightsquigarrow v$. By the property of topological sort, $w$ appears after $u$ but before $v$. However, $u$ and $v$ are adjacent in the topological sort, which leads to contradiction. \par
+  \textbf{Step 2:} A DAG $G$ is semiconnected if and only if for every two vertices $u, v$ adjacent in the topological sort of $G$, they are connected by a directed edge. \par
+  \emph{Proof} `if': for every two distinct vertices $u, v$, assume, without loss of generality, that $u$ appears before $v$ in the topological sort, i.e. the topological sort is $\cdots, u, w_1, w_2, \cdots, w_n, v, \cdots$, then $(u, w_1), (w_1, w_2), \cdots, (w_n, v)$ are directed edges in $G$, i.e. $u \rightsquigarrow v$. Therefore, $G$ is semiconnected. \par
+  `only if': suppose, to the contrary, that there exists two vertices $u, v$ adjacent in topological sort $G$, but they are not connected by a directed edge $(u, v)$. It is impossible that $v \rightsquigarrow u$, because $u$ appears before $v$ in topological sort. Therefore $u \rightsquigarrow v$. Since they are not connected by a directed edge, the path from $u$ to $v$ must contain at least 3 vertices, i.e. there must exist another vertex $w$, such that $u \rightsquigarrow w \rightsquigarrow v$. By the property of topological sort, $w$ appears after $u$ but before $v$. However, $u$ and $v$ are adjacent in the topological sort, which leads to contradiction. \par
   Note that the component graph is a DAG. Combine the two steps, we obtain a complete proof of the correctness of the algorithm.
 \end{document}
